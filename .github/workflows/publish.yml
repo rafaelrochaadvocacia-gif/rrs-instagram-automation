@@ -1,0 +1,44 @@
+name: Publicar carrossel no Instagram
+
+on:
+  schedule:
+    # 14:00 UTC = 11:00 horário de Brasília, segunda/quarta/sexta
+    - cron: "0 14 * * 1,3,5"
+  workflow_dispatch: {}   # permite rodar manualmente pela aba "Actions" do GitHub
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        account_key: [previdenciaria, isenta, tributaria, bancaria]
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Configurar Node.js (para o Claude Code CLI)
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Instalar Claude Code CLI
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Instalar dependências Python
+        run: pip install -r requirements.txt
+
+      - name: Publicar carrossel (${{ matrix.account_key }})
+        env:
+          ACCOUNT_KEY: ${{ matrix.account_key }}
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+          CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
+          INSTAGRAM_ACCOUNTS_JSON: ${{ secrets.INSTAGRAM_ACCOUNTS_JSON }}
+        run: python scripts/main.py

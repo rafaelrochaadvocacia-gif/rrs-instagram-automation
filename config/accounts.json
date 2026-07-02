@@ -1,0 +1,78 @@
+{
+    "_comment": "Tokens ficam SOMENTE no GitHub Secret INSTAGRAM_ACCOUNTS_JSON (mesmo formato, com o campo page_access_token preenchido). Este arquivo e so a referencia de configuracao de conteudo por conta, sem segredos.",
+    "accounts": [
+          {
+                  "key": "previdenciaria",
+                  "page_name": "RRS Advocacia Previdenciaria",
+                  "ig_username": "rrsadvocaciaprevidenciaria",
+                  "practice_area": "Direito Previdenciario",
+                  "author_name": "Fernanda A. Santos Rocha",
+                  "author_title": "Advogada Previdenciarista",
+                  "author_oab": "OAB/MG 199.347",
+                  "topics": [
+                            "BPC/LOAS",
+                            "auxilio-doenca e auxilio-incapacidade temporaria",
+                            "aposentadoria por idade e por tempo de contribuicao",
+                            "revisao de beneficios do INSS",
+                            "pensao por morte",
+                            "auxilio-acidente"
+                  ],
+                  "brand_color": "#1B2A4A",
+                  "accent_color": "#C9A227"
+          },
+          {
+                  "key": "isenta",
+                  "page_name": "RRS Advocacia Isenta",
+                  "ig_username": "rrsadvocacia.isenta",
+                  "practice_area": "Isencao de Imposto de Renda por Doenca Grave",
+                  "author_name": "Fernanda A. Santos Rocha",
+                  "author_title": "Advogada Previdenciarista",
+                  "author_oab": "OAB/MG 199.347",
+                  "topics": [
+                            "isencao de IR para aposentados e pensionistas com doenca grave",
+                            "quais doencas graves dao direito a isencao",
+                            "restituicao de imposto de renda retido indevidamente",
+                            "laudo medico pericial para isencao",
+                            "prazo para pedir a restituicao dos ultimos 5 anos"
+                  ],
+                  "brand_color": "#1B2A4A",
+                  "accent_color": "#C9A227"
+          },
+          {
+                  "key": "tributaria",
+                  "page_name": "RRS Advocacia Tributaria",
+                  "ig_username": "rrsadvocaciatributaria",
+                  "practice_area": "Direito Tributario",
+                  "author_name": "Rafael Rocha",
+                  "author_title": "Advogado Tributarista",
+                  "author_oab": "OAB/MG 193.958",
+                  "topics": [
+                            "equiparacao hospitalar para clinicas medicas",
+                            "execucao fiscal e divida ativa",
+                            "planejamento tributario para empresas",
+                            "recuperacao de tributos pagos indevidamente",
+                            "parcelamento de debitos fiscais"
+                  ],
+                  "brand_color": "#1B2A4A",
+                  "accent_color": "#7A1F2B"
+          },
+          {
+                  "key": "bancaria",
+                  "page_name": "Rafael Rocha e Santos Advocacia Bancaria",
+                  "ig_username": "rrsadvocaciabancaria",
+                  "practice_area": "Direito Bancario e do Consumidor",
+                  "author_name": "Rafael Rocha",
+                  "author_title": "Advogado Especialista em Direito Bancario",
+                  "author_oab": "OAB/MG 193.958",
+                  "topics": [
+                            "revisao de contratos bancarios com juros abusivos",
+                            "negativacao indevida no nome",
+                            "superendividamento e renegociacao de dividas",
+                            "cobranca indevida de tarifas bancarias",
+                            "golpes e fraudes bancarias: o que fazer"
+                  ],
+                  "brand_color": "#1B2A4A",
+                  "accent_color": "#2B5A7A"
+          }
+    ]
+}

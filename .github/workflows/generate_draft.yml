@@ -1,0 +1,102 @@
+name: Gerar rascunho de carrossel para revisão
+
+on:
+  schedule:
+    # 14:00 UTC = 11:00 horário de Brasília, segunda/quarta/sexta
+    - cron: "0 14 * * 1,3,5"
+  workflow_dispatch:   # permite rodar manualmente pela aba "Actions" do GitHub
+    inputs:
+      account_key:
+        description: "Conta específica a gerar (ou 'all' para as 4)"
+        required: false
+        default: "all"
+        type: choice
+        options:
+          - all
+          - previdenciaria
+          - isenta
+          - tributaria
+          - bancaria
+      extra_instruction:
+        description: "Instruções de alteração do revisor (em branco = geração normal, novo tema)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        account_key: [previdenciaria, isenta, tributaria, bancaria]
+    steps:
+      - name: Checkout do repositório
+        if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.account_key == '' || github.event.inputs.account_key == 'all' || github.event.inputs.account_key == matrix.account_key }}
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.account_key == '' || github.event.inputs.account_key == 'all' || github.event.inputs.account_key == matrix.account_key }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Configurar Node.js (para o Claude Code CLI)
+        if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.account_key == '' || github.event.inputs.account_key == 'all' || github.event.inputs.account_key == matrix.account_key }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Instalar Claude Code CLI
+        if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.account_key == '' || github.event.inputs.account_key == 'all' || github.event.inputs.account_key == matrix.account_key }}
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Instalar dependências Python
+        if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.account_key == '' || github.event.inputs.account_key == 'all' || github.event.inputs.account_key == matrix.account_key }}
+        run: pip install -r requirements.txt
+
+      - name: Pre-aprovar diretorio para o Claude Code
+        if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.account_key == '' || github.event.inputs.account_key == 'all' || github.event.inputs.account_key == matrix.account_key }}
+        run: |
+          python3 -c "
+          import json, os
+          path = os.path.expanduser('~/.claude.json')
+          cwd = os.environ['GITHUB_WORKSPACE']
+          data = {}
+          if os.path.exists(path):
+              with open(path) as f:
+                  data = json.load(f)
+          data.setdefault('projects', {})[cwd] = {'hasTrustDialogAccepted': True}
+          with open(path, 'w') as f:
+              json.dump(data, f)
+          "
+
+      - name: Gerar rascunho (${{ matrix.account_key }})
+        if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.account_key == '' || github.event.inputs.account_key == 'all' || github.event.inputs.account_key == matrix.account_key }}
+        env:
+          ACCOUNT_KEY: ${{ matrix.account_key }}
+          EXTRA_INSTRUCTION: ${{ github.event.inputs.extra_instruction }}
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+          CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
+        working-directory: scripts
+        run: python create_draft.py
+
+      - name: Salvar rascunho no repositório (com retry em caso de push concorrente)
+        if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.account_key == '' || github.event.inputs.account_key == 'all' || github.event.inputs.account_key == matrix.account_key }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          for i in 1 2 3 4 5; do
+            git add drafts/
+            git commit -m "Rascunho: ${{ matrix.account_key }}" || echo "nada para commitar"
+            if git pull --rebase origin main && git push origin main; then
+              echo "push ok"
+              break
+            fi
+            echo "Push falhou, tentando novamente ($i)..."
+            sleep $((RANDOM % 8 + 2))
+          done

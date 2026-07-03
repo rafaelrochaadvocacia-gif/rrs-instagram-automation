@@ -1,0 +1,54 @@
+name: Publicar rascunho aprovado no Instagram
+
+on:
+  workflow_dispatch:   # sempre manual -- só roda depois que Rafael aprovar o rascunho
+    inputs:
+      account_key:
+        description: "Conta cujo rascunho aprovado será publicado"
+        required: true
+        type: choice
+        options:
+          - previdenciaria
+          - isenta
+          - tributaria
+          - bancaria
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Instalar dependências Python
+        run: pip install -r requirements.txt
+
+      - name: Publicar rascunho aprovado (${{ github.event.inputs.account_key }})
+        env:
+          ACCOUNT_KEY: ${{ github.event.inputs.account_key }}
+          INSTAGRAM_ACCOUNTS_JSON: ${{ secrets.INSTAGRAM_ACCOUNTS_JSON }}
+        working-directory: scripts
+        run: python publish_draft.py
+
+      - name: Registrar publicação no repositório (com retry em caso de push concorrente)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          for i in 1 2 3 4 5; do
+            git add drafts/
+            git commit -m "Publicado: ${{ github.event.inputs.account_key }}" || echo "nada para commitar"
+            if git pull --rebase origin main && git push origin main; then
+              echo "push ok"
+              break
+            fi
+            echo "Push falhou, tentando novamente ($i)..."
+            sleep $((RANDOM % 8 + 2))
+          done

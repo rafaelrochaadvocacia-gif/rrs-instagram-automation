@@ -192,9 +192,13 @@ def research_topic(practice_area: str, topics: list[str]) -> tuple[str, str]:
             max_turns=12,
             timeout=240,
         )
-        return _parse_research(raw, topics)
+        topic, research = _parse_research(raw, topics)
+        print(f"[pesquisa] ok -- tema: {topic}")
+        print(f"[pesquisa] resumo (primeiros 500 chars): {research[:500]}")
+        return topic, research
     except Exception as e:
         topic = random.choice(topics)
+        print(f"[pesquisa] FALHOU, usando modo cauteloso sem pesquisa. Erro: {str(e)[:500]}")
         return topic, FALLBACK_RESEARCH_NOTE.format(error=str(e)[:300])
 
 

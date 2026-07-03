@@ -1,0 +1,48 @@
+{
+  "account_key": "isenta",
+  "page_name": "RRS Advocacia Isenta",
+  "ig_username": "rrsadvocacia.isenta",
+  "topic": "Laudo médico oficial x particular na isenção de IR por doença grave",
+  "slides": [
+    {
+      "headline": "Laudo médico oficial: sempre obrigatório?",
+      "body": ""
+    },
+    {
+      "headline": "Pelo INSS, o laudo oficial é a regra",
+      "body": "Segundo a Receita Federal, o pedido administrativo (direto ao INSS ou à fonte pagadora) normalmente exige laudo pericial de serviço médico oficial. Fazer isso pela própria fonte pagadora já evita a retenção do imposto na fonte."
+    },
+    {
+      "headline": "Na Justiça, o laudo particular pode bastar",
+      "body": "A Súmula 598 do STJ dispensa a exigência de laudo oficial em ação judicial: laudo particular ou outras provas idôneas podem ser suficientes, se o juiz considerar a doença grave devidamente comprovada. Um julgado do TJMG de maio de 2026 seguiu esse entendimento."
+    },
+    {
+      "headline": "Doença controlada não tira o direito",
+      "body": "Pela Súmula 627 do STJ, não é exigível comprovar sintomas atuais nem recidiva da doença. Uma vez enquadrada a moléstia grave prevista em lei, a isenção pode continuar valendo mesmo com o quadro estabilizado ou em remissão."
+    },
+    {
+      "headline": "Desde quando a isenção pode valer",
+      "body": "O entendimento do STJ é de que o direito retroage à data em que a doença foi comprovada por diagnóstico médico, e não à data do laudo oficial, que costuma ser posterior. Isso pode influenciar o valor a restituir."
+    },
+    {
+      "headline": "Isenção é para aposentadoria e pensão",
+      "body": "O benefício alcança proventos de aposentadoria, pensão ou reforma. Quem segue exercendo atividade remunerada após se aposentar continua pagando IR normalmente sobre esse rendimento, conforme entendimento do STJ."
+    },
+    {
+      "headline": "Vale a pena conversar com um advogado?",
+      "body": "Cada caso tem particularidades sobre qual laudo apresentar, prazos e provas aceitas. Se você ou um familiar convive com uma das doenças graves previstas em lei, uma conversa sem compromisso pode ajudar a entender o caminho possível. Rafael Rocha, Advogado Tributarista - OAB/MG 193.958."
+    }
+  ],
+  "caption": "Muita gente acredita que a isenção de Imposto de Renda por doença grave só é possível com laudo médico oficial, mas essa exigência é mais forte na via administrativa. Na Justiça, o STJ já entende que um laudo particular também pode ser aceito, desde que comprove a doença de forma consistente. Cada situação tem detalhes que podem mudar o resultado do pedido. Se esse é o seu caso, chame no direct ou WhatsApp para uma conversa sem compromisso. #ImpostoDeRenda #IsençãoIR #DoençaGrave #DireitoTributário #AdvogadoTributarista #JuizDeFora #DireitosDoContribuinte #RafaelRochaAdvocacia",
+  "image_urls": [
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783086792/kscvvehy2djpis763eje.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783086793/jh0myzrftyupavo6b65j.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783086793/bdkkdpxoxdkp3ncdnt0e.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783086794/az4brohg8mv1y35kd8mp.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783086794/uyubv9tuhzpvcqifmgvn.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783086795/jx6ho4xmqzn7ga6v5scb.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783086795/fzzu1eugxwdjbqslgf9d.png"
+  ],
+  "generated_at": "2026-07-03T13:53:16.209680+00:00",
+  "revision": 1
+}

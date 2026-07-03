@@ -81,7 +81,11 @@ def _run_claude_code(system_prompt: str, user_prompt: str) -> str:
         env=os.environ,
     )
     if result.returncode != 0:
-        raise RuntimeError(f"claude -p falhou (codigo {result.returncode}): {result.stderr[:2000]}")
+        raise RuntimeError(
+            f"claude -p falhou (codigo {result.returncode})\n"
+            f"stdout: {result.stdout[:2000]}\n"
+            f"stderr: {result.stderr[:2000]}"
+        )
 
     payload = json.loads(result.stdout)
     if payload.get("is_error"):

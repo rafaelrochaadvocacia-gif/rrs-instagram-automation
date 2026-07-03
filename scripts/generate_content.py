@@ -70,7 +70,7 @@ def _run_claude_code(system_prompt: str, user_prompt: str) -> str:
         "--append-system-prompt", system_prompt,
         "--output-format", "json",
         "--model", "claude-sonnet-5",
-        "--max-turns", "1",
+        "--max-turns", "5",
         "--allowedTools", "",
     ]
     result = subprocess.run(

@@ -17,17 +17,17 @@
         "pensão por morte",
         "auxílio-acidente"
       ],
-      "brand_color": "#1B2A4A",
-      "accent_color": "#C9A227"
+      "brand_color": "#000000",
+      "accent_color": "#D1A66F"
     },
     {
       "key": "isenta",
       "page_name": "RRS Advocacia Isenta",
       "ig_username": "rrsadvocacia.isenta",
       "practice_area": "Isenção de Imposto de Renda por Doença Grave",
-      "author_name": "Fernanda A. Santos Rocha",
-      "author_title": "Advogada Previdenciarista",
-      "author_oab": "OAB/MG 199.347",
+      "author_name": "Rafael Rocha",
+      "author_title": "Advogado Tributarista",
+      "author_oab": "OAB/MG 193.958",
       "topics": [
         "isenção de IR para aposentados e pensionistas com doença grave",
         "quais doenças graves dão direito à isenção",
@@ -35,8 +35,8 @@
         "laudo médico pericial para isenção",
         "prazo para pedir a restituição dos últimos 5 anos"
       ],
-      "brand_color": "#1B2A4A",
-      "accent_color": "#C9A227"
+      "brand_color": "#000000",
+      "accent_color": "#FFA500"
     },
     {
       "key": "tributaria",
@@ -53,17 +53,17 @@
         "recuperação de tributos pagos indevidamente",
         "parcelamento de débitos fiscais"
       ],
-      "brand_color": "#1B2A4A",
-      "accent_color": "#7A1F2B"
+      "brand_color": "#000000",
+      "accent_color": "#6E1A29"
     },
     {
       "key": "bancaria",
       "page_name": "Rafael Rocha e Santos Advocacia Bancária",
       "ig_username": "rrsadvocaciabancaria",
       "practice_area": "Direito Bancário e do Consumidor",
-      "author_name": "Rafael Rocha",
-      "author_title": "Advogado Especialista em Direito Bancário",
-      "author_oab": "OAB/MG 193.958",
+      "author_name": "",
+      "author_title": "",
+      "author_oab": "",
       "topics": [
         "revisão de contratos bancários com juros abusivos",
         "negativação indevida no nome",
@@ -71,8 +71,8 @@
         "cobrança indevida de tarifas bancárias",
         "golpes e fraudes bancárias: o que fazer"
       ],
-      "brand_color": "#1B2A4A",
-      "accent_color": "#2B5A7A"
+      "brand_color": "#000000",
+      "accent_color": "#4B4B4B"
     }
   ]
 }

@@ -38,7 +38,7 @@ para a area de atuacao "{practice_area}" do escritorio.
 
 Temas possiveis (escolha um, de preferencia um pouco diferente dos ultimos usados): {topics}
 
-Autor que assina: {author_name}, {author_title} - {author_oab}
+{author_line}
 
 Formato de resposta (JSON estrito):
 {{
@@ -54,7 +54,7 @@ Formato de resposta (JSON estrito):
 }}
 
 Slide 1 e so capa (headline forte, body vazio). Os demais tem headline curto + body explicativo. \
-Nunca prometa resultado, nunca use sensacionalismo. Assine o convite final com o nome do autor."""
+Nunca prometa resultado, nunca use sensacionalismo. {signing_instruction}"""
 
 
 def _run_claude_code(system_prompt: str, user_prompt: str) -> str:
@@ -98,12 +98,19 @@ def generate_carousel_content(account: dict, recent_topics=None) -> dict:
     if recent_topics:
         topics = sorted(topics, key=lambda t: t in recent_topics)
 
+    has_author = bool(account.get("author_name"))
+    if has_author:
+        author_line = f"Autor que assina: {account['author_name']}, {account['author_title']} - {account['author_oab']}"
+        signing_instruction = "Assine o convite final com o nome do autor."
+    else:
+        author_line = "Este perfil publica em nome institucional do escritorio, sem assinatura de um advogado especifico."
+        signing_instruction = "Nao assine com nome de pessoa nenhuma -- feche em nome do escritorio (ex: 'Fale com a nossa equipe')."
+
     user_prompt = USER_PROMPT_TEMPLATE.format(
         practice_area=account["practice_area"],
         topics=", ".join(topics),
-        author_name=account["author_name"],
-        author_title=account["author_title"],
-        author_oab=account["author_oab"],
+        author_line=author_line,
+        signing_instruction=signing_instruction,
     )
 
     text = _run_claude_code(SYSTEM_PROMPT, user_prompt).strip()

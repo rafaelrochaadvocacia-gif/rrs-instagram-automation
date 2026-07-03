@@ -16,7 +16,8 @@ FONT_MEDIUM = os.path.join(FONTS_DIR, "Poppins-Medium.ttf")
 FONT_REGULAR = os.path.join(FONTS_DIR, "Poppins-Regular.ttf")
 
 WHITE = "#FFFFFF"
-WHITE_SOFT = "#E7E9EF"
+WHITE_SOFT = "#FAF6F0"
+GRAY_MUTED = "#4B4B4B"
 
 
 def _hex_to_rgb(hex_color: str) -> tuple[int, int, int]:
@@ -71,7 +72,7 @@ def _footer(draw, index: int, total: int, ig_username: str, accent_color: str):
     for i in range(total):
         cx = start_x + i * dot_gap
         r = 6 if i == index else 4
-        color = _hex_to_rgb(accent_color) if i == index else _hex_to_rgb("#5A6478")
+        color = _hex_to_rgb(accent_color) if i == index else _hex_to_rgb(GRAY_MUTED)
         draw.ellipse((cx - r, dots_y - r, cx + r, dots_y + r), fill=color)
 
 
@@ -123,11 +124,12 @@ def render_closing_slide(headline: str, body: str, account: dict) -> Image.Image
     font_body = ImageFont.truetype(FONT_REGULAR, 36)
     y = _draw_wrapped(draw, body, font_body, 70, y + 40, WIDTH - 140, WHITE_SOFT, line_spacing=1.4)
 
-    font_author = ImageFont.truetype(FONT_MEDIUM, 30)
-    author_line = f"{account['author_name']} — {account['author_title']}"
-    oab_line = account["author_oab"]
-    draw.text((70, HEIGHT - 230), author_line, font=font_author, fill=_hex_to_rgb(accent))
-    draw.text((70, HEIGHT - 190), oab_line, font=ImageFont.truetype(FONT_REGULAR, 26), fill=WHITE_SOFT)
+    if account.get("author_name"):
+        font_author = ImageFont.truetype(FONT_MEDIUM, 30)
+        author_line = f"{account['author_name']} — {account['author_title']}"
+        oab_line = account["author_oab"]
+        draw.text((70, HEIGHT - 230), author_line, font=font_author, fill=_hex_to_rgb(accent))
+        draw.text((70, HEIGHT - 190), oab_line, font=ImageFont.truetype(FONT_REGULAR, 26), fill=WHITE_SOFT)
 
     return img
 

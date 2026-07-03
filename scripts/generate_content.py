@@ -3,6 +3,12 @@ Gera o conteudo textual de um carrossel juridico usando o Claude Code CLI (auten
 com a assinatura Pro/Max/Team via CLAUDE_CODE_OAUTH_TOKEN -- sem custo por token de API),
 seguindo o estilo da casa e as regras de publicidade da OAB (Provimento 205/2021).
 
+O processo tem DUAS etapas:
+  1. Pesquisa: o Claude pesquisa na web (WebSearch/WebFetch) as regras juridicas atuais
+     do tema escolhido, com fontes, para evitar publicar informacao juridica incorreta
+     ou desatualizada (ex.: exigencias documentais que na verdade nao sao obrigatorias).
+  2. Redacao: o carrossel e escrito com base SOMENTE no que a pesquisa confirmou.
+
 Saida: dict com:
   - topic: tema escolhido do carrossel
   - slides: lista de dicts {"headline": str, "body": str} (uma por slide)
@@ -27,16 +33,62 @@ sensacionalismo, "promocao", "oferta", urgencia artificial de venda, superlativo
 ("o melhor advogado"); comparar-se a outros escritorios; divulgar valores de honorarios; \
 usar casos reais identificaveis; garantir prazos como certos.
 
+PRECISAO JURIDICA (critico -- erros aqui viram desinformacao publica com o nome do escritorio): \
+nunca afirme um requisito, documento ou procedimento como obrigatorio se isso nao estiver \
+confirmado na pesquisa fornecida no prompt. Em caso de duvida, use linguagem de possibilidade \
+("normalmente", "pode ser necessario", "em geral") em vez de afirmar como regra absoluta. \
+Exemplo de erro real ja cometido e que NUNCA deve se repetir: para isencao de Imposto de Renda \
+por doenca grave, NAO e obrigatorio laudo medico oficial/pericial -- um laudo de medico \
+particular tambem e aceito para instruir o pedido. Nao presuma exigencias assim sem checar.
+
 Tom: tecnico mas acolhedor. O leitor geralmente chega com medo, duvida ou prejuizo \
 financeiro. Informe com autoridade, acolha a angustia, mostre que ha um caminho legal \
 seguro -- sem forcar a venda.
 
 Responda SEMPRE em JSON valido, sem markdown, sem texto fora do JSON."""
 
-USER_PROMPT_TEMPLATE = """Crie um carrossel de Instagram (5 a 7 slides) sobre um dos temas abaixo \
-para a area de atuacao "{practice_area}" do escritorio.
+RESEARCH_SYSTEM_PROMPT = """Voce e um pesquisador juridico que apura fatos para o escritorio Rafael \
+Rocha e Santos Advocacia (Juiz de Fora - MG) antes da publicacao de conteudo educativo no Instagram. \
+Sua unica funcao e pesquisar na web e resumir, de forma factual e com fontes, as regras juridicas \
+atuais sobre o tema pedido -- para evitar que o escritorio publique informacao incorreta ou \
+desatualizada com seu nome.
 
-Temas possiveis (escolha um, de preferencia um pouco diferente dos ultimos usados): {topics}
+Regras:
+- Pesquise em fontes oficiais e confiaveis: legislacao (planalto.gov.br), Receita Federal (gov.br), \
+INSS (gov.br), STJ, STF, Banco Central, Codigo de Defesa do Consumidor, e sites juridicos \
+reconhecidos (JusBrasil, Migalhas, Conjur) como apoio.
+- Para cada afirmacao relevante, indique a fonte (lei, artigo, orgao ou site).
+- Preste atencao especial a pontos que costumam ser mal compreendidos pelo publico leigo: quando \
+um documento OFICIAL/publico e realmente exigido versus quando um documento PARTICULAR e aceito; \
+prazos exatos; quem de fato tem direito; excecoes a regra geral.
+- Se nao encontrar confirmacao clara para algo, diga explicitamente "nao encontrei confirmacao \
+para X" em vez de supor ou inventar.
+- Responda em texto corrido objetivo, em portugues, sem markdown."""
+
+RESEARCH_PROMPT_TEMPLATE = """Pesquise na web para preparar o proximo carrossel de Instagram da area \
+de atuacao "{practice_area}" do escritorio.
+
+Temas possiveis (escolha UM, de preferencia diferente dos ultimos usados): {topics}
+
+Pesquise em profundidade sobre o tema escolhido:
+- Requisitos legais atuais para o direito/beneficio em questao (lei, artigo, prazo)
+- Documentos ou provas exigidas -- e se existem alternativas aceitas (ex.: laudo particular vs. \
+laudo oficial/pericial, onde muita gente erra)
+- Erros comuns de interpretacao do publico leigo sobre o tema
+- Fontes oficiais consultadas
+
+Responda EXATAMENTE neste formato (texto simples, sem markdown):
+TEMA ESCOLHIDO: <tema em poucas palavras>
+PESQUISA: <resumo factual, com fontes citadas inline>"""
+
+USER_PROMPT_TEMPLATE = """Crie um carrossel de Instagram (5 a 7 slides) sobre o tema abaixo para a \
+area de atuacao "{practice_area}" do escritorio.
+
+Tema: {topic}
+
+PESQUISA JURIDICA VERIFICADA (use como base factual do carrossel; NAO contradiga; se algo nao \
+estiver confirmado aqui, use linguagem de possibilidade e nao afirme como regra geral):
+{research}
 
 {author_line}
 
@@ -54,10 +106,24 @@ Formato de resposta (JSON estrito):
 }}
 
 Slide 1 e so capa (headline forte, body vazio). Os demais tem headline curto + body explicativo. \
-Nunca prometa resultado, nunca use sensacionalismo. {signing_instruction}"""
+Nunca prometa resultado, nunca use sensacionalismo. Nunca afirme exigencias documentais ou legais \
+que nao estejam confirmadas na pesquisa acima. {signing_instruction}"""
+
+FALLBACK_RESEARCH_NOTE = (
+    "(Pesquisa automatica na web indisponivel nesta execucao: {error}. Redija com cautela extra -- "
+    "use linguagem de possibilidade para qualquer requisito, prazo ou documento, evite afirmar como "
+    "regra absoluta, e nao presuma exigencias documentais especificas, como a necessidade de laudo "
+    "medico oficial quando um laudo particular pode ser aceito.)"
+)
 
 
-def _run_claude_code(system_prompt: str, user_prompt: str) -> str:
+def _run_claude_code(
+    system_prompt: str,
+    user_prompt: str,
+    allowed_tools: str = "",
+    max_turns: int = 5,
+    timeout: int = 180,
+) -> str:
     """
     Chama o Claude Code CLI em modo nao interativo (-p) para gerar texto.
     Autentica via CLAUDE_CODE_OAUTH_TOKEN (assinatura Pro/Max/Team/Enterprise),
@@ -70,14 +136,14 @@ def _run_claude_code(system_prompt: str, user_prompt: str) -> str:
         "--append-system-prompt", system_prompt,
         "--output-format", "json",
         "--model", "claude-sonnet-5",
-        "--max-turns", "5",
-        "--allowedTools", "",
+        "--max-turns", str(max_turns),
+        "--allowedTools", allowed_tools,
     ]
     result = subprocess.run(
         cmd,
         capture_output=True,
         text=True,
-        timeout=180,
+        timeout=timeout,
         env=os.environ,
     )
     if result.returncode != 0:
@@ -93,10 +159,51 @@ def _run_claude_code(system_prompt: str, user_prompt: str) -> str:
     return payload["result"]
 
 
+def _parse_research(raw_text: str, fallback_topics: list[str]) -> tuple[str, str]:
+    """Extrai (topico, resumo_pesquisa) da resposta da etapa de pesquisa. Se o formato
+    esperado nao vier, cai em um topico aleatorio e usa o texto inteiro como pesquisa."""
+    text = raw_text.strip()
+    if "TEMA ESCOLHIDO:" in text and "PESQUISA:" in text:
+        try:
+            before, research = text.split("PESQUISA:", 1)
+            topic = before.split("TEMA ESCOLHIDO:", 1)[1].strip().splitlines()[0].strip()
+            research = research.strip()
+            if topic and research:
+                return topic, research
+        except Exception:
+            pass
+    return random.choice(fallback_topics), text
+
+
+def research_topic(practice_area: str, topics: list[str]) -> tuple[str, str]:
+    """Etapa 1: pesquisa na web as regras juridicas atuais do tema, com fontes.
+    Retorna (topico_escolhido, resumo_da_pesquisa). Nunca lanca excecao -- em caso de
+    falha (ex.: WebSearch indisponivel no ambiente), cai em um aviso de cautela para
+    a etapa de redacao nao afirmar fatos nao verificados."""
+    prompt = RESEARCH_PROMPT_TEMPLATE.format(
+        practice_area=practice_area,
+        topics=", ".join(topics),
+    )
+    try:
+        raw = _run_claude_code(
+            RESEARCH_SYSTEM_PROMPT,
+            prompt,
+            allowed_tools="WebSearch,WebFetch",
+            max_turns=12,
+            timeout=240,
+        )
+        return _parse_research(raw, topics)
+    except Exception as e:
+        topic = random.choice(topics)
+        return topic, FALLBACK_RESEARCH_NOTE.format(error=str(e)[:300])
+
+
 def generate_carousel_content(account: dict, recent_topics=None) -> dict:
     topics = account["topics"]
     if recent_topics:
         topics = sorted(topics, key=lambda t: t in recent_topics)
+
+    topic, research = research_topic(account["practice_area"], topics)
 
     has_author = bool(account.get("author_name"))
     if has_author:
@@ -108,7 +215,8 @@ def generate_carousel_content(account: dict, recent_topics=None) -> dict:
 
     user_prompt = USER_PROMPT_TEMPLATE.format(
         practice_area=account["practice_area"],
-        topics=", ".join(topics),
+        topic=topic,
+        research=research,
         author_line=author_line,
         signing_instruction=signing_instruction,
     )

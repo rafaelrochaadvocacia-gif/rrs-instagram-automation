@@ -68,7 +68,7 @@ para X" em vez de supor ou inventar.
 RESEARCH_PROMPT_TEMPLATE = """Pesquise na web para preparar o proximo carrossel de Instagram da area \
 de atuacao "{practice_area}" do escritorio.
 
-Temas possiveis (escolha UM, de preferencia diferente dos ultimos usados): {topics}
+{topic_instruction}
 
 Pesquise em profundidade sobre o tema escolhido:
 - Requisitos legais atuais para o direito/beneficio em questao (lei, artigo, prazo)
@@ -107,7 +107,12 @@ Formato de resposta (JSON estrito):
 
 Slide 1 e so capa (headline forte, body vazio). Os demais tem headline curto + body explicativo. \
 Nunca prometa resultado, nunca use sensacionalismo. Nunca afirme exigencias documentais ou legais \
-que nao estejam confirmadas na pesquisa acima. {signing_instruction}"""
+que nao estejam confirmadas na pesquisa acima. {signing_instruction}{extra_instruction_block}"""
+
+EXTRA_INSTRUCTION_BLOCK = """
+
+INSTRUCOES ADICIONAIS DO REVISOR HUMANO (aplique estas mudancas em relacao a versao anterior, \
+tem prioridade sobre o resto): {extra_instruction}"""
 
 FALLBACK_RESEARCH_NOTE = (
     "(Pesquisa automatica na web indisponivel nesta execucao: {error}. Redija com cautela extra -- "
@@ -175,15 +180,27 @@ def _parse_research(raw_text: str, fallback_topics: list[str]) -> tuple[str, str
     return random.choice(fallback_topics), text
 
 
-def research_topic(practice_area: str, topics: list[str]) -> tuple[str, str]:
+def research_topic(practice_area: str, topics: list[str], forced_topic: str | None = None) -> tuple[str, str]:
     """Etapa 1: pesquisa na web as regras juridicas atuais do tema, com fontes.
     Retorna (topico_escolhido, resumo_da_pesquisa). Nunca lanca excecao -- em caso de
     falha (ex.: WebSearch indisponivel no ambiente), cai em um aviso de cautela para
-    a etapa de redacao nao afirmar fatos nao verificados."""
+    a etapa de redacao nao afirmar fatos nao verificados.
+
+    Se forced_topic for passado (caso de regeneracao pedida por um revisor humano sobre
+    um rascunho ja existente), a pesquisa e feita sobre esse tema especifico, sem escolher
+    um novo."""
+    if forced_topic:
+        topic_instruction = f'O tema ja foi definido como: "{forced_topic}". Nao escolha outro tema.'
+    else:
+        topic_instruction = (
+            f"Temas possiveis (escolha UM, de preferencia diferente dos ultimos usados): "
+            f"{', '.join(topics)}"
+        )
     prompt = RESEARCH_PROMPT_TEMPLATE.format(
         practice_area=practice_area,
-        topics=", ".join(topics),
+        topic_instruction=topic_instruction,
     )
+    fallback_topics = [forced_topic] if forced_topic else topics
     try:
         raw = _run_claude_code(
             RESEARCH_SYSTEM_PROMPT,
@@ -192,22 +209,36 @@ def research_topic(practice_area: str, topics: list[str]) -> tuple[str, str]:
             max_turns=12,
             timeout=240,
         )
-        topic, research = _parse_research(raw, topics)
+        topic, research = _parse_research(raw, fallback_topics)
+        if forced_topic:
+            topic = forced_topic
         print(f"[pesquisa] ok -- tema: {topic}")
         print(f"[pesquisa] resumo (primeiros 500 chars): {research[:500]}")
         return topic, research
     except Exception as e:
-        topic = random.choice(topics)
+        topic = forced_topic or random.choice(topics)
         print(f"[pesquisa] FALHOU, usando modo cauteloso sem pesquisa. Erro: {str(e)[:500]}")
         return topic, FALLBACK_RESEARCH_NOTE.format(error=str(e)[:300])
 
 
-def generate_carousel_content(account: dict, recent_topics=None) -> dict:
+def generate_carousel_content(
+    account: dict,
+    recent_topics=None,
+    forced_topic: str | None = None,
+    extra_instruction: str = "",
+) -> dict:
+    """Gera o conteudo de um carrossel.
+
+    forced_topic: quando informado (regeneracao pedida por revisor humano sobre um
+        rascunho ja existente), mantem o mesmo tema em vez de sortear um novo.
+    extra_instruction: feedback do revisor humano a ser aplicado nesta nova versao
+        (ex.: "troque a assinatura", "corrija o slide 3, pesquise de novo esse ponto").
+    """
     topics = account["topics"]
     if recent_topics:
         topics = sorted(topics, key=lambda t: t in recent_topics)
 
-    topic, research = research_topic(account["practice_area"], topics)
+    topic, research = research_topic(account["practice_area"], topics, forced_topic=forced_topic)
 
     has_author = bool(account.get("author_name"))
     if has_author:
@@ -217,12 +248,19 @@ def generate_carousel_content(account: dict, recent_topics=None) -> dict:
         author_line = "Este perfil publica em nome institucional do escritorio, sem assinatura de um advogado especifico."
         signing_instruction = "Nao assine com nome de pessoa nenhuma -- feche em nome do escritorio (ex: 'Fale com a nossa equipe')."
 
+    extra_instruction_block = (
+        EXTRA_INSTRUCTION_BLOCK.format(extra_instruction=extra_instruction.strip())
+        if extra_instruction and extra_instruction.strip()
+        else ""
+    )
+
     user_prompt = USER_PROMPT_TEMPLATE.format(
         practice_area=account["practice_area"],
         topic=topic,
         research=research,
         author_line=author_line,
         signing_instruction=signing_instruction,
+        extra_instruction_block=extra_instruction_block,
     )
 
     text = _run_claude_code(SYSTEM_PROMPT, user_prompt).strip()

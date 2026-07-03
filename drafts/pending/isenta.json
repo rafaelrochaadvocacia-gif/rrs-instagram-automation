@@ -2,47 +2,47 @@
   "account_key": "isenta",
   "page_name": "RRS Advocacia Isenta",
   "ig_username": "rrsadvocacia.isenta",
-  "topic": "Laudo médico oficial x particular na isenção de IR por doença grave",
+  "topic": "Laudo médico oficial x laudo particular na isenção de IR por doença grave",
   "slides": [
     {
-      "headline": "Laudo médico oficial: sempre obrigatório?",
+      "headline": "Laudo médico errado pode travar sua isenção",
       "body": ""
     },
     {
-      "headline": "Pelo INSS, o laudo oficial é a regra",
-      "body": "Segundo a Receita Federal, o pedido administrativo (direto ao INSS ou à fonte pagadora) normalmente exige laudo pericial de serviço médico oficial. Fazer isso pela própria fonte pagadora já evita a retenção do imposto na fonte."
+      "headline": "Quais doenças dão direito à isenção",
+      "body": "A lei lista doenças como câncer, cegueira, esclerose múltipla, Parkinson, AIDS, cardiopatia e nefropatia graves, entre outras. O STJ entende que essa lista é taxativa: doença grave fora dela, mesmo debilitante, normalmente não gera isenção."
     },
     {
-      "headline": "Na Justiça, o laudo particular pode bastar",
-      "body": "A Súmula 598 do STJ dispensa a exigência de laudo oficial em ação judicial: laudo particular ou outras provas idôneas podem ser suficientes, se o juiz considerar a doença grave devidamente comprovada. Um julgado do TJMG de maio de 2026 seguiu esse entendimento."
+      "headline": "Quem pode pedir a isenção",
+      "body": "Vale para aposentados, reformados e pensionistas com uma dessas doenças, mesmo se o diagnóstico vier depois da aposentadoria. Segundo o STJ, quem ainda está na ativa não tem direito à isenção, mesmo estando doente."
     },
     {
-      "headline": "Doença controlada não tira o direito",
-      "body": "Pela Súmula 627 do STJ, não é exigível comprovar sintomas atuais nem recidiva da doença. Uma vez enquadrada a moléstia grave prevista em lei, a isenção pode continuar valendo mesmo com o quadro estabilizado ou em remissão."
+      "headline": "Via administrativa: laudo oficial costuma ser exigido",
+      "body": "Para pedir direto à Receita Federal ou ao órgão pagador do benefício, normalmente é exigido laudo de serviço médico oficial (União, Estados, DF ou Municípios), com CRM, registro e CID. Laudo particular isolado, em geral, não é aceito nessa via."
     },
     {
-      "headline": "Desde quando a isenção pode valer",
-      "body": "O entendimento do STJ é de que o direito retroage à data em que a doença foi comprovada por diagnóstico médico, e não à data do laudo oficial, que costuma ser posterior. Isso pode influenciar o valor a restituir."
+      "headline": "Na Justiça, o caminho pode ser diferente",
+      "body": "A Súmula 598 do STJ permite que o juiz reconheça a isenção sem laudo oficial, se a doença estiver bem comprovada por outras provas médicas. Também não é necessário provar que a doença está 'ativa' no momento do pedido."
     },
     {
-      "headline": "Isenção é para aposentadoria e pensão",
-      "body": "O benefício alcança proventos de aposentadoria, pensão ou reforma. Quem segue exercendo atividade remunerada após se aposentar continua pagando IR normalmente sobre esse rendimento, conforme entendimento do STJ."
+      "headline": "Imposto pago a mais pode ser restituído",
+      "body": "Quem teve IR retido indevidamente pode pedir a devolução na via administrativa ou judicial. O prazo é de 5 anos, contado a partir da comprovação da doença por diagnóstico, com correção pela Selic."
     },
     {
       "headline": "Vale a pena conversar com um advogado?",
-      "body": "Cada caso tem particularidades sobre qual laudo apresentar, prazos e provas aceitas. Se você ou um familiar convive com uma das doenças graves previstas em lei, uma conversa sem compromisso pode ajudar a entender o caminho possível. Rafael Rocha, Advogado Tributarista - OAB/MG 193.958."
+      "body": "Cada caso tem particularidades sobre o tipo de laudo, o histórico do diagnóstico e os valores já retidos. Se você ou um familiar está nessa situação, agende uma consulta sem compromisso. Dr. Rafael Rocha, Advogado Tributarista — OAB/MG 193.958."
     }
   ],
-  "caption": "Muita gente acredita que a isenção de Imposto de Renda por doença grave só é possível com laudo médico oficial, mas essa exigência é mais forte na via administrativa. Na Justiça, o STJ já entende que um laudo particular também pode ser aceito, desde que comprove a doença de forma consistente. Cada situação tem detalhes que podem mudar o resultado do pedido. Se esse é o seu caso, chame no direct ou WhatsApp para uma conversa sem compromisso. #ImpostoDeRenda #IsençãoIR #DoençaGrave #DireitoTributário #AdvogadoTributarista #JuizDeFora #DireitosDoContribuinte #RafaelRochaAdvocacia",
+  "caption": "Quem enfrenta uma doença grave já lida com muita coisa — não precisa também perder tempo (ou dinheiro) por causa de um laudo que não serve para o pedido de isenção do Imposto de Renda. Entender a diferença entre a via administrativa e a via judicial pode fazer toda a diferença no resultado. Ficou com dúvidas sobre o seu caso? Chame a gente no direct ou no WhatsApp para uma conversa sem compromisso. #IsençãoDeIR #DoençaGrave #DireitoTributário #AposentadoriaEDireitos #ImpostoDeRenda #DireitoPrevidenciário #AdvocaciaJuizDeFora #RafaelRochaAdvocacia",
   "image_urls": [
-    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783086792/kscvvehy2djpis763eje.png",
-    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783086793/jh0myzrftyupavo6b65j.png",
-    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783086793/bdkkdpxoxdkp3ncdnt0e.png",
-    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783086794/az4brohg8mv1y35kd8mp.png",
-    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783086794/uyubv9tuhzpvcqifmgvn.png",
-    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783086795/jx6ho4xmqzn7ga6v5scb.png",
-    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783086795/fzzu1eugxwdjbqslgf9d.png"
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783096544/myyyobkxrffsp728uu0m.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783096545/pkukddxvbduffo806ljz.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783096545/ridwgv36252gapv4rdi5.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783096546/lmrbqxjndmo6vrx72prl.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783096547/p6vx4q05hdjfityt8mul.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783096547/kdxpficwbkfhgaycem2u.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783096548/gfjzvdoujux6vf7id7ru.png"
   ],
-  "generated_at": "2026-07-03T13:53:16.209680+00:00",
+  "generated_at": "2026-07-03T16:35:48.682331+00:00",
   "revision": 1
 }

@@ -33,6 +33,21 @@ jobs:
       - name: Instalar dependências Python
         run: pip install -r requirements.txt
 
+      - name: Pre-aprovar diretorio para o Claude Code
+        run: |
+          python3 -c "
+          import json, os
+          path = os.path.expanduser('~/.claude.json')
+          cwd = os.environ['GITHUB_WORKSPACE']
+          data = {}
+          if os.path.exists(path):
+              with open(path) as f:
+                  data = json.load(f)
+          data.setdefault('projects', {})[cwd] = {'hasTrustDialogAccepted': True}
+          with open(path, 'w') as f:
+              json.dump(data, f)
+          "
+
       - name: Publicar carrossel (${{ matrix.account_key }})
         env:
           ACCOUNT_KEY: ${{ matrix.account_key }}

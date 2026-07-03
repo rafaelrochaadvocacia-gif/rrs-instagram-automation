@@ -10,6 +10,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 WIDTH, HEIGHT = 1080, 1350
 FONTS_DIR = os.path.join(os.path.dirname(__file__), "..", "assets", "fonts")
+LOGO_PATH = os.path.join(os.path.dirname(__file__), "..", "assets", "logo", "logo_mark.png")
 
 FONT_BOLD = os.path.join(FONTS_DIR, "Poppins-Bold.ttf")
 FONT_MEDIUM = os.path.join(FONTS_DIR, "Poppins-Medium.ttf")
@@ -18,6 +19,34 @@ FONT_REGULAR = os.path.join(FONTS_DIR, "Poppins-Regular.ttf")
 WHITE = "#FFFFFF"
 WHITE_SOFT = "#FAF6F0"
 GRAY_MUTED = "#4B4B4B"
+
+LOGO_HEIGHT = 56  # px de altura do selo da logo nos slides
+LOGO_MARGIN = 50
+
+_logo_cache: Image.Image | None = None
+
+
+def _get_logo() -> Image.Image | None:
+    """Carrega e redimensiona a marca (monograma) do escritório, com cache em memória."""
+    global _logo_cache
+    if _logo_cache is None:
+        if not os.path.exists(LOGO_PATH):
+            return None
+        logo = Image.open(LOGO_PATH).convert("RGBA")
+        ratio = LOGO_HEIGHT / logo.height
+        new_size = (max(1, int(logo.width * ratio)), LOGO_HEIGHT)
+        _logo_cache = logo.resize(new_size, Image.LANCZOS)
+    return _logo_cache
+
+
+def _apply_logo(img: Image.Image) -> None:
+    """Cola a marca do escritório no canto superior direito do slide."""
+    logo = _get_logo()
+    if logo is None:
+        return
+    x = WIDTH - LOGO_MARGIN - logo.width
+    y = LOGO_MARGIN
+    img.paste(logo, (x, y), logo)
 
 
 def _hex_to_rgb(hex_color: str) -> tuple[int, int, int]:
@@ -153,6 +182,7 @@ def render_carousel(content: dict, account: dict, output_dir: str) -> list[str]:
 
         draw = ImageDraw.Draw(img)
         _footer(draw, i, total, account["ig_username"], account["accent_color"])
+        _apply_logo(img)
 
         path = os.path.join(output_dir, f"slide_{i+1:02d}.png")
         img.save(path, "PNG")

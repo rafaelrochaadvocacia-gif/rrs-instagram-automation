@@ -102,12 +102,32 @@ Formato de resposta (JSON estrito):
     {{"headline": "titulo curto do ponto 4", "body": "1-2 frases explicando, ate 220 caracteres"}},
     {{"headline": "Vale a pena conversar com um advogado?", "body": "fechamento acolhedor + convite sutil para consulta, sem prometer resultado"}}
   ],
-  "caption": "legenda para o post, 2-4 frases + convite para DM/WhatsApp sem ser vendedor + 5 a 8 hashtags relevantes em portugues no final"
+  "caption": "legenda formatada em paragrafos curtos separados por linha em branco (\\n\\n dentro da string JSON), seguindo ESTA estrutura: (1) gancho de acolhimento em 1 frase curta; (2) paragrafo curto com o contexto/problema; (3) paragrafo curto com o diferencial ou insight principal do carrossel; (4) convite para falar com a equipe, 1-2 frases, sem forcar venda; (5) linha de CTA comecando com o emoji de envelope seguido de convite objetivo para mensagem no WhatsApp/direct; (6) ultima linha com 5 a 8 hashtags relevantes em portugues, separadas por espaco"
 }}
 
 Slide 1 e so capa (headline forte, body vazio). Os demais tem headline curto + body explicativo. \
 Nunca prometa resultado, nunca use sensacionalismo. Nunca afirme exigencias documentais ou legais \
-que nao estejam confirmadas na pesquisa acima. {signing_instruction}{extra_instruction_block}"""
+que nao estejam confirmadas na pesquisa acima.
+
+Exemplo do formato exato esperado para o campo "caption" (siga esta estrutura de paragrafos curtos \
+e quebras de linha, adaptando o conteudo ao tema do carrossel):
+
+Quem enfrenta uma doenca grave ja lida com muita coisa.
+
+Nao faz sentido perder tempo -- ou dinheiro -- por causa de um laudo medico que nao atende aos \
+requisitos para o pedido de isencao do Imposto de Renda.
+
+Entender a diferenca entre a via administrativa e a via judicial pode fazer toda a diferenca no \
+resultado do seu pedido.
+
+Se voce tem duvidas sobre o seu caso, fale com nossa equipe. Estamos prontos para analisar sua \
+situacao e orientar voce sobre o melhor caminho.
+
+[emoji de envelope] Envie uma mensagem no WhatsApp para uma conversa sem compromisso.
+
+#Hashtag1 #Hashtag2 #Hashtag3 #Hashtag4 #Hashtag5 #Hashtag6 #Hashtag7 #Hashtag8
+
+{signing_instruction}{extra_instruction_block}"""
 
 EXTRA_INSTRUCTION_BLOCK = """
 

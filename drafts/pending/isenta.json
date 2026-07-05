@@ -2,42 +2,47 @@
   "account_key": "isenta",
   "page_name": "RRS Advocacia Isenta",
   "ig_username": "rrsadvocacia.isenta",
-  "topic": "Laudo médico para isenção de IR por doença grave",
+  "topic": "Laudo médico para isenção de Imposto de Renda por doença grave",
   "slides": [
     {
-      "headline": "Laudo médico: o que realmente vale pra isenção?",
+      "headline": "Laudo errado pode travar sua isenção de IR",
       "body": ""
     },
     {
-      "headline": "O medo mais comum",
-      "body": "Muita gente acredita que só um laudo oficial, feito por perícia pública, pode ser usado no pedido de isenção do Imposto de Renda. Essa ideia nem sempre corresponde à realidade e pode fazer a pessoa desistir sem necessidade."
+      "headline": "Quem tem direito à isenção",
+      "body": "A isenção vale para aposentados, pensionistas e reformados que recebem proventos, inclusive 13º salário. Em 2026, o STJ decidiu que quem está na ativa não tem direito, mesmo com doença grave (Tema 1.037)."
     },
     {
-      "headline": "Laudo particular também pode servir",
-      "body": "Em geral, um laudo emitido por médico particular também pode instruir o pedido de isenção, desde que traga as informações necessárias sobre o quadro clínico. Isso pode facilitar bastante o caminho."
+      "headline": "Nem toda doença grave garante isenção",
+      "body": "A lei lista doenças específicas que dão direito à isenção, como cardiopatia grave, neoplasia maligna e Parkinson. Doenças fora dessa lista não geram o benefício, mesmo sendo graves (Tema 250, STJ)."
     },
     {
-      "headline": "O que o documento costuma precisar mostrar",
-      "body": "De modo geral, o laudo costuma precisar indicar o diagnóstico da doença de forma clara. Cada situação tem suas particularidades e merece uma análise individual antes de qualquer pedido."
+      "headline": "Via administrativa exige laudo oficial",
+      "body": "Para pedir a isenção à fonte pagadora ou à Receita Federal, é exigido laudo de serviço médico oficial — laudo particular não é aceito nessa via. O laudo precisa indicar a data em que a doença foi contraída."
     },
     {
-      "headline": "Caminho administrativo ou judicial?",
-      "body": "Dependendo do caso, a Receita Federal pode ou não aceitar o laudo apresentado na via administrativa, sendo possível que seja necessário buscar a via judicial. Avaliar isso com cuidado pode evitar desgaste."
+      "headline": "Justiça aceita laudo particular",
+      "body": "A Súmula 598 do STJ permite que a Justiça dispense o laudo oficial, se a doença estiver bem comprovada por outras provas. Por isso, escolher entre a via administrativa e a judicial é uma decisão estratégica no caso."
+    },
+    {
+      "headline": "Direito pode retroagir ao diagnóstico",
+      "body": "Pela Súmula 627 do STJ, não é preciso provar que os sintomas continuam presentes, e o direito à isenção pode retroagir à data do diagnóstico da doença — não apenas à data de emissão do laudo."
     },
     {
       "headline": "Vale a pena conversar com um advogado?",
-      "body": "Cada caso tem suas particularidades, e entender qual laudo e qual caminho se aplicam à sua situação faz diferença. Fale sem compromisso com quem pode orientar você com atenção."
+      "body": "Cada caso tem particularidades que podem mudar o resultado do pedido. Fale com quem entende do tema, sem compromisso.\n\nDr. Rafael Rocha, Advogado – Isenção de IR | OAB/MG 193.958"
     }
   ],
-  "caption": "Quem recebe o diagnóstico de uma doença grave já carrega peso suficiente.\n\nÉ comum pensar que só um laudo médico oficial, feito por perícia pública, serve para pedir a isenção do Imposto de Renda -- e essa dúvida faz muita gente desistir do pedido antes mesmo de tentar.\n\nEm geral, um laudo de médico particular também pode instruir o pedido, desde que traga as informações necessárias sobre o quadro clínico. Entender isso pode abrir um caminho que parecia fechado.\n\nSe você tem dúvidas sobre o seu laudo ou sobre qual caminho seguir, fale com nossa equipe. Estamos prontos para analisar sua situação com atenção e sem compromisso.\n\n✉️ Envie uma mensagem no WhatsApp para uma conversa sem compromisso.\n\n#IsençãoDeIR #ImpostoDeRenda #DoençaGrave #DireitoTributário #ReceitaFederal #DireitosDoPaciente #AdvocaciaJuizDeFora\n\nDr. Rafael Rocha, Advogado Especialista em Isenção de Imposto de Renda - OAB/MG 193.958",
+  "caption": "Enfrentar uma doença grave já é difícil o suficiente.\n\nMuita gente perde tempo com laudos que não atendem ao pedido de isenção do Imposto de Renda, ou acredita ter direito a um benefício que a lei não prevê para o seu caso.\n\nA escolha entre pedir a isenção pela via administrativa ou pela via judicial pode mudar completamente as exigências de prova — e essa decisão é estratégica em cada caso.\n\nSe você ou um familiar enfrenta essa situação, fale com nossa equipe. Podemos analisar seu caso e orientar sobre o melhor caminho, sem compromisso.\n\nDr. Rafael Rocha, Advogado Especialista em Isenção de Imposto de Renda – OAB/MG 193.958\n\n📩 Envie uma mensagem no WhatsApp para uma conversa sem compromisso.\n\n#IsençãoDeIR #ImpostoDeRenda #DoençaGrave #DireitoTributário #AposentadoriaINSS #DireitosDoContribuinte #AdvocaciaJuizDeFora",
   "image_urls": [
-    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783104566/zblv0alnnhiuz1o2uuka.png",
-    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783104566/k1aq3e38e1yhcmilnt7r.png",
-    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783104567/haj00wvqpdsc0sy0mugd.png",
-    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783104568/raiikvhj4mito1zocueb.png",
-    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783104568/dkp8kmhkezgzfrnuc7ne.png",
-    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783104569/q56oahvgsnsmp4xgtbzv.png"
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783259694/fuucyphjmeqtczppkxfb.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783259696/lttdtvnozazgojt1rkxa.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783259696/tdtn53xs5ug1ms62sbgb.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783259697/l6raf4cprppixwpvzku2.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783259698/olfqnamsuovybefoxuzq.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783259699/whooafcewcgl8dccpekh.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783259700/e7f7wjlmjxmcoxprsxzl.png"
   ],
-  "generated_at": "2026-07-03T18:49:29.957870+00:00",
-  "revision": 1
+  "generated_at": "2026-07-05T13:55:01.278893+00:00",
+  "revision": 2
 }

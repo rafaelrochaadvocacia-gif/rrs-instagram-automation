@@ -1,0 +1,61 @@
+name: Aplicar edição manual no rascunho
+
+on:
+  workflow_dispatch:
+    inputs:
+      account_key:
+        description: "Conta do rascunho a editar"
+        required: true
+        type: choice
+        options:
+          - previdenciaria
+          - isenta
+          - tributaria
+          - bancaria
+      edited_content:
+        description: "JSON com slides e legenda editados (gerado pela prévia editável)"
+        required: true
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  edit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Instalar dependências Python
+        run: pip install -r requirements.txt
+
+      - name: Aplicar edição (${{ github.event.inputs.account_key }})
+        env:
+          ACCOUNT_KEY: ${{ github.event.inputs.account_key }}
+          EDITED_CONTENT: ${{ github.event.inputs.edited_content }}
+          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+          CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
+        working-directory: scripts
+        run: python apply_manual_edit.py
+
+      - name: Salvar rascunho editado no repositório (com retry em caso de push concorrente)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          for i in 1 2 3 4 5; do
+            git add drafts/
+            git commit -m "Edição manual do rascunho: ${{ github.event.inputs.account_key }}" || echo "nada para commitar"
+            if git pull --rebase origin main && git push origin main; then
+              echo "push ok"
+              break
+            fi
+            echo "Push falhou, tentando novamente ($i)..."
+            sleep $((RANDOM % 8 + 2))
+          done

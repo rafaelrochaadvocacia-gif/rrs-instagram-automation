@@ -173,9 +173,15 @@ def render_closing_slide(headline, body, account):
 
     if has_author:
         font_author = ImageFont.truetype(FONT_MEDIUM, 30)
+        font_oab = ImageFont.truetype(FONT_REGULAR, 26)
         author_line = account["author_name"] + " - " + account["author_title"]
-        draw.text((70, HEIGHT - 230), author_line, font=font_author, fill=_hex_to_rgb(accent))
-        draw.text((70, HEIGHT - 190), account["author_oab"], font=ImageFont.truetype(FONT_REGULAR, 26), fill=WHITE_SOFT)
+        author_lines = _wrap(draw, author_line, font_author, max_width)
+        line_h = font_author.size * 1.25
+        author_y = HEIGHT - 230 - (len(author_lines) - 1) * line_h
+        for j, line in enumerate(author_lines):
+            draw.text((70, author_y + j * line_h), line, font=font_author, fill=_hex_to_rgb(accent))
+        oab_y = author_y + len(author_lines) * line_h + 12
+        draw.text((70, oab_y), account["author_oab"], font=font_oab, fill=WHITE_SOFT)
     return img
 
 

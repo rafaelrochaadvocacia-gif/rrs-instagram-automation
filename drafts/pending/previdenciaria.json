@@ -1,0 +1,48 @@
+{
+  "account_key": "previdenciaria",
+  "page_name": "RRS Advocacia Previdenciária",
+  "ig_username": "rrsadvocaciaprevidenciaria",
+  "topic": "BPC/LOAS - Beneficio Assistencial para Idosos e Pessoas com Deficiencia",
+  "slides": [
+    {
+      "headline": "BPC/LOAS: voce pode ter esse direito",
+      "body": ""
+    },
+    {
+      "headline": "O que e o BPC/LOAS?",
+      "body": "O BPC/LOAS e um beneficio assistencial pago pelo INSS a quem comprova baixa renda, sem exigir contribuicao previdenciaria anterior -- diferente da aposentadoria."
+    },
+    {
+      "headline": "Idosos podem ter direito",
+      "body": "Pessoas com 65 anos ou mais podem ter direito ao BPC quando a renda familiar for considerada baixa, mesmo sem nunca terem contribuido ao INSS."
+    },
+    {
+      "headline": "Pessoas com deficiencia tambem",
+      "body": "Pessoas com deficiencia de qualquer idade tambem podem ter direito, quando ha impedimento de longo prazo que dificulte a participacao plena na sociedade, associado a baixa renda."
+    },
+    {
+      "headline": "O criterio de renda pode variar",
+      "body": "O criterio de renda costuma ser analisado com cautela: alem do valor per capita, a Justica pode considerar despesas com saude e outras provas da vulnerabilidade da familia."
+    },
+    {
+      "headline": "Pontos que geram duvida",
+      "body": "O BPC nao e aposentadoria: nao gera 13o salario nem pensao por morte. Pode passar por reavaliacoes periodicas, e pedidos negados na via administrativa podem, em muitos casos, ser reanalisados judicialmente."
+    },
+    {
+      "headline": "Vale a pena conversar com um advogado?",
+      "body": "Cada familia tem uma realidade diferente, e entender se ha direito ao BPC/LOAS exige uma analise cuidadosa da saude e da renda. Fale com nossa equipe para uma conversa sem compromisso sobre o seu caso."
+    }
+  ],
+  "caption": "Cuidar de um familiar idoso ou de uma pessoa com deficiencia ja traz desafios suficientes no dia a dia.\n\nMuita gente nao sabe que existe um beneficio assistencial, o BPC/LOAS, que pode ajudar familias de baixa renda -- mesmo sem nunca terem contribuido ao INSS.\n\nO criterio de renda pode ser interpretado de formas diferentes, e mesmo pedidos negados na via administrativa podem, em muitos casos, ser reanalisados judicialmente.\n\nSe voce tem duvidas sobre o seu caso ou o de um familiar, fale com nossa equipe. Estamos prontos para analisar sua situacao com atencao e cuidado.\n\n📩 Envie uma mensagem no WhatsApp para uma conversa sem compromisso.\n\nDra. Fernanda Santos | Advogada Previdenciarista | OAB/MG 199.347\n\n#BPCLOAS #DireitoPrevidenciario #INSS #PessoaComDeficiencia #IdosoBrasileiro #AssistenciaSocial #JuizDeFora",
+  "image_urls": [
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783448113/tdc3kwvqix2gjnjm982s.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783448114/jlftuspwz63u3m2b36mq.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783448115/pky07whgtifvbui0ddzu.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783448115/fkqigm0kob8v8gvcsac5.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783448116/k5gqxxue8gkdsvxte148.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783448117/yhck1ozabu4h8olbjo79.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783448118/jjczfsk3w0lfabmdmqxr.png"
+  ],
+  "generated_at": "2026-07-07T18:15:18.918760+00:00",
+  "revision": 1
+}

@@ -1,0 +1,43 @@
+{
+  "account_key": "isenta",
+  "page_name": "RRS Advocacia Isenta",
+  "ig_username": "rrsadvocacia.isenta",
+  "topic": "Laudo médico pericial para isenção de IR por doença grave",
+  "slides": [
+    {
+      "headline": "Laudo particular garante a isenção de IR?",
+      "body": ""
+    },
+    {
+      "headline": "O rol de doenças é taxativo",
+      "body": "A Lei 7.713/88 lista as doenças que dão direito à isenção: câncer, cardiopatia grave, Parkinson, AIDS, esclerose múltipla, entre outras. O STJ (Tema 250) definiu que essa lista é taxativa, não exemplificativa."
+    },
+    {
+      "headline": "Laudo oficial x laudo particular",
+      "body": "No pedido administrativo (INSS ou fonte pagadora), normalmente é exigido laudo pericial oficial. Já na via judicial, a Súmula 598 do STJ permite comprovar a doença por outros meios de prova."
+    },
+    {
+      "headline": "Isenção pode ser permanente",
+      "body": "A Súmula 627 do STJ garante que, uma vez comprovada a doença grave, a isenção continua valendo mesmo em caso de remissão ou cura aparente, sem precisar provar sintomas recentes."
+    },
+    {
+      "headline": "Restituição tem prazo de 5 anos",
+      "body": "A isenção vale a partir do diagnóstico comprovado, mas a restituição de valores retidos indevidamente alcança apenas os últimos 5 anos antes do pedido, corrigidos pela taxa Selic."
+    },
+    {
+      "headline": "Vale a pena conversar com um advogado?",
+      "body": "Cada caso tem particularidades sobre o tipo de laudo e a via mais adequada. Conversar com um advogado, sem compromisso, pode ajudar a entender o melhor caminho para o seu pedido."
+    }
+  ],
+  "caption": "Descobrir uma doença grave já traz desafios suficientes.\n\nMuita gente perde tempo com o pedido de isenção do Imposto de Renda por não saber que tipo de laudo médico é aceito em cada via -- administrativa ou judicial.\n\nEntender a diferença entre laudo oficial e laudo particular, e saber que a isenção pode ser permanente mesmo sem sintomas atuais, pode fazer toda a diferença no resultado do pedido.\n\nSe você ou alguém da sua família enfrenta essa situação, fale com nossa equipe. Podemos analisar seu caso e orientar sobre o caminho mais adequado.\n\n📩 Envie uma mensagem no WhatsApp para uma conversa sem compromisso.\n\nDr. Rafael Rocha, Advogado Especialista em Isenção de Imposto de Renda - OAB/MG 193.958\n\n#IsençãoDeIR #ImpostoDeRenda #DoençaGrave #DireitoTributário #DireitoPrevidenciário #AdvocaciaJuizDeFora #RafaelRochaeSantos",
+  "image_urls": [
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783448002/z6rhhgslc4sr5heci8gh.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783448003/vgou06e1chvlqjtfsy4v.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783448003/oadlmu8tnt3vmconr2vv.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783448004/ucktwaaakj3988jw7emy.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783448005/jyosbqhmbzctdkz5jlmi.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783448005/b7fsiva1uxupnnmmls3e.png"
+  ],
+  "generated_at": "2026-07-07T18:13:26.360374+00:00",
+  "revision": 1
+}

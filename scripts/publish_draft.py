@@ -1,10 +1,16 @@
 """
-Publica no Instagram um rascunho ja aprovado por Rafael (drafts/pending/{account_key}.json).
+Publica no Instagram (e, em seguida, na Pagina do Facebook vinculada) um rascunho ja
+aprovado por Rafael (drafts/pending/{account_key}.json).
 
 As imagens ja estao hospedadas no Cloudinary (feito na etapa de geracao do rascunho),
 entao aqui so criamos os containers do carrossel na Graph API e publicamos.
 
-Depois de publicar com sucesso, move o rascunho de drafts/pending/ para
+A publicacao no Facebook usa o mesmo Page Access Token da conta (uma Page Access Token
+ja autoriza postar na propria Pagina). Se a publicacao no Facebook falhar (ex.: token
+sem a permissao pages_manage_posts), isso NAO impede a publicacao no Instagram -- o
+erro fica registrado no rascunho publicado para revisao posterior.
+
+Depois de publicar com sucesso no Instagram, move o rascunho de drafts/pending/ para
 drafts/published/ (com timestamp), para manter historico e liberar o slot "pendente"
 da conta para o proximo carrossel.
 """
@@ -13,7 +19,7 @@ import os
 import shutil
 from datetime import datetime, timezone
 
-from publish_instagram import publish_carousel
+from publish_instagram import publish_carousel, publish_facebook_carousel
 
 DRAFTS_PENDING_DIR = os.path.join(os.path.dirname(__file__), "..", "drafts", "pending")
 DRAFTS_PUBLISHED_DIR = os.path.join(os.path.dirname(__file__), "..", "drafts", "published")
@@ -38,20 +44,34 @@ def run(account_key: str):
 
     secrets = load_secrets_for_account(account_key)
 
-    print(f"[{account_key}] publicando carrossel aprovado -- tema: {draft['topic']}")
+    print(f"[{account_key}] publicando carrossel aprovado no Instagram -- tema: {draft['topic']}")
     media_id = publish_carousel(
         ig_business_id=secrets["ig_business_id"],
         access_token=secrets["page_access_token"],
         image_urls=draft["image_urls"],
         caption=draft["caption"],
     )
-    print(f"[{account_key}] publicado! media_id={media_id}")
+    print(f"[{account_key}] publicado no Instagram! media_id={media_id}")
+
+    draft["published_at"] = datetime.now(timezone.utc).isoformat()
+    draft["media_id"] = media_id
+
+    print(f"[{account_key}] publicando o mesmo carrossel na Pagina do Facebook...")
+    try:
+        facebook_post_id = publish_facebook_carousel(
+            access_token=secrets["page_access_token"],
+            image_urls=draft["image_urls"],
+            caption=draft["caption"],
+        )
+        draft["facebook_post_id"] = facebook_post_id
+        print(f"[{account_key}] publicado no Facebook! post_id={facebook_post_id}")
+    except Exception as e:
+        draft["facebook_error"] = str(e)[:500]
+        print(f"[{account_key}] AVISO: falha ao publicar no Facebook (Instagram ja publicado com sucesso). Erro: {str(e)[:500]}")
 
     os.makedirs(DRAFTS_PUBLISHED_DIR, exist_ok=True)
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     dest = os.path.join(DRAFTS_PUBLISHED_DIR, f"{account_key}_{stamp}.json")
-    draft["published_at"] = datetime.now(timezone.utc).isoformat()
-    draft["media_id"] = media_id
     with open(dest, "w", encoding="utf-8") as f:
         json.dump(draft, f, ensure_ascii=False, indent=2)
     os.remove(draft_path)

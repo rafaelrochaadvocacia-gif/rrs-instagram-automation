@@ -1,8 +1,11 @@
 """
 Sobe as imagens do carrossel no Cloudinary (para obter URLs públicas) e publica o
 carrossel na conta do Instagram correspondente via Instagram Graph API (Facebook Login
-for Business), usando o Page Access Token de longa duração da conta.
+for Business), usando o Page Access Token de longa duração da conta. Também publica o
+mesmo carrossel como post de múltiplas fotos na Página do Facebook vinculada, usando o
+mesmo Page Access Token (uma Page Access Token já autoriza ações na própria Página).
 """
+import json
 import os
 import time
 
@@ -109,3 +112,48 @@ def publish_from_local_files(ig_business_id: str, access_token: str, image_paths
     """Sobe as imagens locais no Cloudinary e publica o carrossel."""
     image_urls = [upload_to_cloudinary(p) for p in image_paths]
     return publish_carousel(ig_business_id, access_token, image_urls, caption)
+
+
+def _get_page_id(access_token: str) -> str:
+    """Descobre o ID da Página do Facebook a partir do proprio Page Access Token
+    (uma Page Access Token, ao chamar /me, retorna os dados da propria Pagina)."""
+    resp = requests.get(f"{GRAPH_API_BASE}/me", params={"access_token": access_token}, timeout=30)
+    resp.raise_for_status()
+    return resp.json()["id"]
+
+
+def publish_facebook_carousel(access_token: str, image_urls: list[str], caption: str) -> str:
+    """Publica o mesmo carrossel como um post de multiplas fotos na Pagina do Facebook
+    vinculada ao Page Access Token. Retorna o ID do post publicado.
+
+    Fluxo da Graph API: sobe cada foto sem publicar (published=false) para obter um
+    media_fbid, depois cria um post no feed da Pagina anexando todos os media_fbid.
+    """
+    page_id = _get_page_id(access_token)
+
+    media_ids = []
+    for image_url in image_urls:
+        resp = requests.post(
+            f"{GRAPH_API_BASE}/{page_id}/photos",
+            data={
+                "url": image_url,
+                "published": "false",
+                "access_token": access_token,
+            },
+            timeout=60,
+        )
+        resp.raise_for_status()
+        media_ids.append(resp.json()["id"])
+
+    attached_media = json.dumps([{"media_fbid": media_id} for media_id in media_ids])
+    resp = requests.post(
+        f"{GRAPH_API_BASE}/{page_id}/feed",
+        data={
+            "message": caption,
+            "attached_media": attached_media,
+            "access_token": access_token,
+        },
+        timeout=60,
+    )
+    resp.raise_for_status()
+    return resp.json()["id"]

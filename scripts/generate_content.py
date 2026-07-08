@@ -9,7 +9,8 @@ O processo tem DUAS etapas:
      do tema escolhido, com fontes, para evitar publicar informacao juridica incorreta
      ou desatualizada (ex.: exigencias documentais que na verdade nao sao obrigatorias).
   2. Redacao: o carrossel e escrito com base SOMENTE no que a pesquisa confirmou, seguindo
-     tecnicas de copywriting para maximizar retencao, salvamentos e engajamento.
+     tecnicas de copywriting (AIDA, PNL/metamodelo, gatilhos mentais) para maximizar
+     retencao, salvamentos e engajamento.
 
 Saida: dict com:
   - topic: tema escolhido do carrossel
@@ -59,6 +60,49 @@ CTA de contato, nunca como primeira linha.
 - Varie os ganchos e estruturas entre carrosseis diferentes -- nao repita a mesma formula de \
 capa ou o mesmo fechamento sempre. Cada carrossel deve parecer escrito por alguem que pensou \
 especificamente naquele tema, nao um molde preenchido.
+
+ESTRUTURA AIDA (organize a sequencia de slides seguindo esta logica, do primeiro ao ultimo, \
+dentro do numero de slides pedido no formato abaixo):
+- ATENCAO (slide 1, capa): gancho que interrompe o scroll, conforme os padroes ja descritos acima.
+- INTERESSE (primeiros slides internos): desenvolva a dor ou duvida especifica do tema, mostrando \
+que voce entende a situacao do leitor melhor do que ele mesmo consegue explicar -- sustente com \
+fatos da pesquisa, nunca com generalidades.
+- DESEJO (slides finais internos): mostre o caminho possivel e o que muda quando a pessoa entende \
+ou resolve isso -- sem prometer resultado, deixando claro o beneficio real de agir com informacao \
+correta.
+- ACAO (ultimo slide + legenda): convite claro ao proximo passo (falar com a equipe), sem pressao \
+nem urgencia artificial.
+
+PNL -- MODELO DE METALINGUAGEM (metamodelo) para aumentar precisao e conexao com o leitor:
+- Evite generalizacoes vagas ("todo mundo", "sempre", "nunca", "e importante") -- troque por \
+especificidade factual baseada na pesquisa: o que, para quem, sob qual condicao.
+- Troque nominalizacoes abstratas por verbos concretos e sensoriais: prefira "perder dinheiro \
+todo mes" a "prejuizo financeiro"; prefira "descontar na folha" a "questao tributaria".
+- Escreva em segunda pessoa ("voce"), como se falasse com uma unica pessoa especifica, nao com \
+uma audiencia generica -- isso cria rapport imediato.
+- Use pressuposicoes leves e licitas para gerar identificacao (ex.: "quando voce percebe que \
+pagou imposto sem precisar..." pressupoe a situacao sem afirma-la como fato universal, e faz \
+quem se identifica sentir que o texto fala diretamente com ele).
+- Embuta convites de forma sutil dentro de frases explicativas (ex.: "por isso vale a pena \
+entender se o seu caso se encaixa" contem o convite "entenda" sem soar como ordem ou venda).
+
+GATILHOS MENTAIS permitidos (sempre subordinados as regras da OAB -- gatilhos de escassez e \
+urgencia artificial continuam PROIBIDOS, ver secao NAO PODE abaixo):
+- Dor -> alivio: nomeie a dor ou duvida especifica antes de apresentar o caminho de solucao.
+- Autoridade: demonstre dominio tecnico citando fundamentos reais confirmados na pesquisa, com \
+precisao e sem jargao excessivo -- autoridade vem de precisao, nao de arrogancia.
+- Curiosidade (gap): abra um "loop" de informacao que so fecha no proximo slide ou na legenda, \
+conforme ja orientado acima.
+- Reciprocidade: entregue uma informacao pratica e util de graca (um prazo, um alerta, uma \
+distincao importante) antes de qualquer convite a contato -- gera sensacao de troca justa.
+- Especificidade: numeros, prazos e situacoes concretas geram mais confianca e retencao do que \
+afirmacoes genericas.
+- Prova social etica: frases como "essa e uma das duvidas que mais recebemos" ou "muita gente \
+nao sabe disso" geram identificacao coletiva sem citar casos reais ou depoimentos, que continuam \
+proibidos.
+- Contraste: mostre a diferenca entre agir com informacao correta e nao agir (ex.: quem entende \
+o prazo vs. quem perde o prazo por desinformacao) -- sempre em linguagem de possibilidade, nunca \
+como garantia de resultado.
 
 PODE: informar e educar sobre direitos, leis e prazos; mencionar areas de atuacao; usar \
 exemplos hipoteticos rotulados como ilustracao; convidar para consulta "sem compromisso"; \
@@ -131,9 +175,10 @@ estiver confirmado aqui, use linguagem de possibilidade e nao afirme como regra 
 {author_line}
 
 Lembre-se: voce e um(a) copywriter senior de crescimento de Instagram, nao apenas um redator \
-juridico. O gancho da capa e a estrutura de curiosidade entre os slides sao tao importantes \
-quanto a precisao juridica -- pense em como prender a atencao de alguem que esta rolando o feed \
-rapido, sem soar generico.
+juridico. Aplique a estrutura AIDA (Atencao/Interesse/Desejo/Acao), a precisao do metamodelo de \
+PNL e os gatilhos mentais permitidos descritos nas suas instrucoes -- o gancho da capa e a \
+estrutura de curiosidade entre os slides sao tao importantes quanto a precisao juridica -- pense \
+em como prender a atencao de alguem que esta rolando o feed rapido, sem soar generico.
 
 Formato de resposta (JSON estrito):
 {{

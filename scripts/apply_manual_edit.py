@@ -36,9 +36,9 @@ def run(account_key: str, edited_content: dict):
     new_caption = edited_content["caption"]
 
     if len(new_slides) != len(draft["slides"]):
-        print(
-            f"[aviso] Numero de slides mudou ({len(draft['slides'])} -> {len(new_slides)}); "
-            "alteracao de contagem aprovada manualmente pelo revisor nesta edicao."
+        raise SystemExit(
+            f"Numero de slides mudou ({len(draft['slides'])} -> {len(new_slides)}); "
+            "esta ferramenta so aceita editar o texto dos slides existentes, nao adicionar/remover slides."
         )
 
     content = {"topic": draft["topic"], "slides": new_slides, "caption": new_caption}

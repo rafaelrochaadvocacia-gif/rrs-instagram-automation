@@ -422,7 +422,18 @@ def generate_carousel_content(
         signing_instruction = "Assine o convite final com o nome do autor."
     else:
         author_line = "Este perfil publica em nome institucional do escritorio, sem assinatura de um advogado especifico."
-        signing_instruction = "Nao assine com nome de pessoa nenhuma -- feche em nome do escritorio (ex: 'Fale com a nossa equipe')."
+        firm_specialty = (account.get("firm_specialty") or "").strip()
+        if firm_specialty:
+            signing_instruction = (
+                f"Nao assine com nome de pessoa nenhuma e NUNCA atribua a especializacao a um unico "
+                f"advogado (nao mencione 'Dr. Rafael' nem nenhum outro nome proprio como especialista) "
+                f"-- feche deixando claro que o ESCRITORIO Rafael Rocha e Santos Advocacia e "
+                f"especializado em {firm_specialty}, e convide a falar com a equipe (ex: 'O escritorio "
+                f"Rafael Rocha e Santos Advocacia e especializado em {firm_specialty}. Fale com a nossa "
+                f"equipe.')."
+            )
+        else:
+            signing_instruction = "Nao assine com nome de pessoa nenhuma -- feche em nome do escritorio (ex: 'Fale com a nossa equipe')."
 
     extra_instruction_block = (
         EXTRA_INSTRUCTION_BLOCK.format(extra_instruction=extra_instruction.strip())

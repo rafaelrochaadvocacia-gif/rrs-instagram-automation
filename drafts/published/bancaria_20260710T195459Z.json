@@ -40,5 +40,8 @@
   ],
   "generated_at": "2026-07-10T14:25:47.764456+00:00",
   "revision": 2,
-  "manually_edited_at": "2026-07-10T19:49:20.137365+00:00"
+  "manually_edited_at": "2026-07-10T19:49:20.137365+00:00",
+  "published_at": "2026-07-10T19:54:59.315903+00:00",
+  "media_id": "17874727311529156",
+  "facebook_error": "403 Client Error: Forbidden for url: https://graph.facebook.com/v25.0/267232820867028/photos"
 }

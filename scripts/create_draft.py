@@ -9,6 +9,10 @@ Se a variavel de ambiente EXTRA_INSTRUCTION estiver definida (pedido de alteraca
 por um revisor humano sobre um rascunho ja existente), este script:
   - reaproveita o mesmo tema do rascunho anterior (nao sorteia um tema novo)
   - aplica o feedback na nova geracao de conteudo
+
+Para evitar repetir tema, este script tambem le o historico de rascunhos JA PUBLICADOS
+desta conta (drafts/published/{account_key}_*.json) e passa os temas mais recentes para
+o gerador de conteudo, que e instruido a nao repetir esses temas (ver generate_content.py).
 """
 import json
 import os
@@ -21,6 +25,9 @@ from render_carousel import render_carousel
 
 CONFIG_PATH = os.path.join(os.path.dirname(__file__), "..", "config", "accounts.json")
 DRAFTS_DIR = os.path.join(os.path.dirname(__file__), "..", "drafts", "pending")
+PUBLISHED_DIR = os.path.join(os.path.dirname(__file__), "..", "drafts", "published")
+
+RECENT_TOPICS_LIMIT = 10
 
 
 def load_accounts() -> list[dict]:
@@ -34,6 +41,39 @@ def _existing_draft(account_key: str) -> dict | None:
         with open(path, encoding="utf-8") as f:
             return json.load(f)
     return None
+
+
+def _recent_published_topics(account_key: str, limit: int = RECENT_TOPICS_LIMIT) -> list[str]:
+    """Le os rascunhos ja publicados desta conta em drafts/published/ e retorna os temas
+    mais recentes (mais novo primeiro, sem repetir), para o gerador de conteudo evitar
+    repetir assunto em publicacoes futuras. Nunca lanca excecao -- se a pasta nao existir
+    ou algum arquivo estiver corrompido, apenas ignora e retorna o que conseguiu ler."""
+    if not os.path.isdir(PUBLISHED_DIR):
+        return []
+    entries = []
+    for fname in os.listdir(PUBLISHED_DIR):
+        if not fname.startswith(f"{account_key}_") or not fname.endswith(".json"):
+            continue
+        path = os.path.join(PUBLISHED_DIR, fname)
+        try:
+            with open(path, encoding="utf-8") as f:
+                data = json.load(f)
+        except Exception:
+            continue
+        topic = (data.get("topic") or "").strip()
+        if not topic:
+            continue
+        when = data.get("published_at") or data.get("generated_at") or fname
+        entries.append((when, topic))
+
+    entries.sort(key=lambda e: e[0], reverse=True)
+    seen: list[str] = []
+    for _, topic in entries:
+        if topic not in seen:
+            seen.append(topic)
+        if len(seen) >= limit:
+            break
+    return seen
 
 
 def run(account_key: str, extra_instruction: str = ""):
@@ -53,8 +93,17 @@ def run(account_key: str, extra_instruction: str = ""):
     elif previous:
         print(f"[{account_key}] AVISO: ja existia um rascunho pendente (tema '{previous.get('topic')}') ainda nao aprovado -- ele sera substituido por este novo.")
 
+    recent_topics = _recent_published_topics(account_key)
+    if recent_topics and not forced_topic:
+        print(f"[{account_key}] temas ja publicados recentemente (evitar repetir): {recent_topics}")
+
     print(f"[{account_key}] gerando conteudo...")
-    content = generate_carousel_content(account, forced_topic=forced_topic, extra_instruction=extra_instruction)
+    content = generate_carousel_content(
+        account,
+        recent_topics=recent_topics,
+        forced_topic=forced_topic,
+        extra_instruction=extra_instruction,
+    )
     print(f"[{account_key}] tema: {content['topic']}")
 
     with tempfile.TemporaryDirectory() as tmp_dir:

@@ -9,6 +9,9 @@ O processo tem DUAS etapas:
   1. Pesquisa: o Claude pesquisa na web (WebSearch/WebFetch) as regras juridicas atuais
      do tema escolhido, com fontes, para evitar publicar informacao juridica incorreta
      ou desatualizada (ex.: exigencias documentais que na verdade nao sao obrigatorias).
+     Nesta etapa tambem evita repetir temas ja publicados recentemente na conta (ver
+     parametro recent_topics, alimentado pelo historico de drafts/published/ em
+     create_draft.py).
   2. Redacao: o carrossel e escrito com base SOMENTE no que a pesquisa confirmou, usando
      um planejamento estrategico interno (publico, dor, objecoes, transformacao,
      framework escolhido) que NAO aparece no resultado final -- so a copy em si.
@@ -356,7 +359,12 @@ def _parse_research(raw_text: str, fallback_topics: list[str]) -> tuple[str, str
     return random.choice(fallback_topics), text
 
 
-def research_topic(practice_area: str, topics: list[str], forced_topic: str | None = None) -> tuple[str, str]:
+def research_topic(
+    practice_area: str,
+    topics: list[str],
+    forced_topic: str | None = None,
+    avoid_topics: list[str] | None = None,
+) -> tuple[str, str]:
     """Etapa 1: pesquisa na web as regras juridicas atuais do tema, com fontes.
     Retorna (topico_escolhido, resumo_da_pesquisa). Nunca lanca excecao -- em caso de
     falha (ex.: WebSearch indisponivel no ambiente), cai em um aviso de cautela para
@@ -364,14 +372,25 @@ def research_topic(practice_area: str, topics: list[str], forced_topic: str | No
 
     Se forced_topic for passado (caso de regeneracao pedida por um revisor humano sobre
     um rascunho ja existente), a pesquisa e feita sobre esse tema especifico, sem escolher
-    um novo."""
+    um novo.
+
+    avoid_topics: temas ja publicados recentemente nesta conta (historico real, vindo de
+    drafts/published/), para o modelo evitar repetir o mesmo tema ou uma variacao muito
+    proxima."""
     if forced_topic:
         topic_instruction = f'O tema ja foi definido como: "{forced_topic}". Nao escolha outro tema.'
     else:
-        topic_instruction = (
-            f"Temas possiveis (escolha UM, de preferencia diferente dos ultimos usados): "
-            f"{', '.join(topics)}"
-        )
+        topic_instruction = f"Temas possiveis (escolha UM): {', '.join(topics)}."
+        if avoid_topics:
+            topic_instruction += (
+                "\n\nIMPORTANTE -- HISTORICO DE PUBLICACOES DESTA CONTA: os temas abaixo ja foram "
+                "publicados recentemente. NAO escolha o mesmo tema nem uma variacao muito proxima de "
+                "nenhum deles. Prefira um tema da lista acima que ainda nao apareca aqui embaixo; se "
+                "todos os temas da lista ja tiverem sido usados recentemente, escolha um angulo, "
+                "situacao especifica ou duvida diferente dentro da mesma area de atuacao, mesmo que "
+                "nao esteja literalmente na lista de temas possiveis:\n"
+                + "\n".join(f"- {t}" for t in avoid_topics)
+            )
     prompt = RESEARCH_PROMPT_TEMPLATE.format(
         practice_area=practice_area,
         topic_instruction=topic_instruction,
@@ -399,22 +418,27 @@ def research_topic(practice_area: str, topics: list[str], forced_topic: str | No
 
 def generate_carousel_content(
     account: dict,
-    recent_topics=None,
+    recent_topics: list[str] | None = None,
     forced_topic: str | None = None,
     extra_instruction: str = "",
 ) -> dict:
     """Gera o conteudo de um carrossel.
 
+    recent_topics: temas ja publicados recentemente nesta conta (do historico real de
+        drafts/published/), usados para instruir o modelo a nao repetir assunto.
     forced_topic: quando informado (regeneracao pedida por revisor humano sobre um
         rascunho ja existente), mantem o mesmo tema em vez de sortear um novo.
     extra_instruction: feedback do revisor humano a ser aplicado nesta nova versao
         (ex.: "troque a assinatura", "corrija o slide 3, pesquise de novo esse ponto").
     """
     topics = account["topics"]
-    if recent_topics:
-        topics = sorted(topics, key=lambda t: t in recent_topics)
 
-    topic, research = research_topic(account["practice_area"], topics, forced_topic=forced_topic)
+    topic, research = research_topic(
+        account["practice_area"],
+        topics,
+        forced_topic=forced_topic,
+        avoid_topics=recent_topics,
+    )
 
     has_author = bool(account.get("author_name"))
     if has_author:

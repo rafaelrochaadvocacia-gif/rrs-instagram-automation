@@ -1,0 +1,63 @@
+{
+  "account_key": "tributaria",
+  "page_name": "RRS Advocacia Tributária",
+  "ig_username": "rrsadvocaciatributaria",
+  "topic": "Execução fiscal e responsabilização de sócios",
+  "slides": [
+    {
+      "headline": "Seu patrimônio pessoal pode pagar dívida da empresa?",
+      "body": ""
+    },
+    {
+      "headline": "Como a Justiça cobra a dívida da empresa",
+      "body": "Quando a empresa não paga um tributo, o valor entra na dívida ativa e a Fazenda cobra na Justiça: é a execução fiscal, prevista na Lei 6.830/80."
+    },
+    {
+      "headline": "O documento que sustenta a cobrança",
+      "body": "A ação usa a Certidão de Dívida Ativa (CDA), que tem presunção de certeza e liquidez. Mas essa presunção não é absoluta: pode ser derrubada com provas no processo."
+    },
+    {
+      "headline": "Só não pagar o imposto não basta",
+      "body": "O STJ é claro na Súmula 430: o simples fato de a empresa não pagar o tributo não torna o sócio-gerente responsável pela dívida. É preciso mais que isso."
+    },
+    {
+      "headline": "Quando o sócio pode ser alcançado",
+      "body": "O art. 135 do CTN permite atingir o sócio-administrador em três hipóteses: excesso de poderes, infração à lei ou ao contrato social, ou dissolução irregular da empresa."
+    },
+    {
+      "headline": "O erro que mais complica: sumir sem avisar",
+      "body": "Encerrar as atividades e não comunicar a mudança de endereço aos órgãos competentes pode ser interpretado como dissolução irregular (Súmula 435) — e abre caminho para o redirecionamento."
+    },
+    {
+      "headline": "Nem todo sócio responde do mesmo jeito",
+      "body": "O STJ entende que responde quem tinha poderes de administração no momento da dissolução irregular. Quem já havia se retirado antes, de forma regular, tende a não ser alcançado."
+    },
+    {
+      "headline": "Um detalhe que muda o processo: o ônus da prova",
+      "body": "Se o nome do sócio já está na CDA, cabe a ele provar que não houve irregularidade. Se não está, é a Fazenda quem precisa comprovar o ato ilícito antes de incluir seu nome."
+    },
+    {
+      "headline": "Existe defesa, e ela tem prazo certo",
+      "body": "Após a citação, é possível apresentar embargos à execução ou, em casos específicos, exceção de pré-executividade sem garantir o juízo. A prescrição também pode ser analisada."
+    },
+    {
+      "headline": "Guarde esse post para quando precisar dele",
+      "body": "Se esse tema faz sentido pra sua empresa, salva, comenta ou compartilha com quem também é sócio. Se quiser entender melhor o seu caso, nossa equipe pode te orientar sem compromisso."
+    }
+  ],
+  "caption": "Fechar a empresa não fecha sempre a dívida com o Fisco.\n\nMuita gente acredita que ser sócio de uma empresa com dívida com a Receita coloca o patrimônio pessoal em risco automaticamente. Não é bem assim — e entender a diferença evita decisões erradas na hora de administrar ou encerrar um negócio.\n\nA lei e o STJ já definiram quando o sócio pode, de fato, responder por dívida tributária da empresa — e quando essa cobrança pode ser barrada. Conhecer esses limites é o primeiro passo para se defender com segurança.\n\nJá se perguntou se isso poderia acontecer com você? Comenta aqui embaixo, marca aquele sócio ou empresário amigo, e salva esse post pra consultar quando precisar.\n\nSe você é sócio de uma empresa com dívida em execução fiscal, ou já foi citado num processo assim, nossa equipe pode analisar o seu caso com calma e mostrar os caminhos possíveis.\n\n✉️ Envie uma mensagem no WhatsApp para uma conversa sem compromisso.\n\nDr. Rafael Rocha, Advogado Tributarista - OAB/MG 193.958\n\n#DireitoTributario #ExecucaoFiscal #DividaAtiva #DireitoEmpresarial #AdvogadoTributarista #JuizDeFora #MinasGerais #RafaelRochaESantos #ResponsabilidadeTributaria #DireitoDosSocios #PlanejamentoTributario #AdvocaciaEmpresarial #DividaComOFisco #DireitoAdministrativo #ContenciosoTributario",
+  "image_urls": [
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783868227/z6y9rpfdpkuyiv8yvajr.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783868228/hyobkoazovqnnmndhesj.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783868229/v60uwgnqpigy1n7fqwnu.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783868230/tudyzauvpq8dnwbgiffe.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783868231/vvjd6wrdw8mkebg2vsfg.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783868232/egdxmfleppw6uicmzvd9.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783868233/lqfvoeu7xs8nmpmodszq.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783868234/iqi6grriggxv97cwdgh0.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783868235/ziqbzsudnu3w5pay6ujk.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783868235/t7spxua1jns9sruuppia.png"
+  ],
+  "generated_at": "2026-07-12T14:57:16.362444+00:00",
+  "revision": 1
+}

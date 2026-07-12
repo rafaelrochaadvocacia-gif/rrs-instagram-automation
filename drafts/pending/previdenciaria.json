@@ -1,0 +1,63 @@
+{
+  "account_key": "previdenciaria",
+  "page_name": "RRS Advocacia Previdenciária",
+  "ig_username": "rrsadvocaciaprevidenciaria",
+  "topic": "Auxílio-doença (auxílio por incapacidade temporária) do INSS",
+  "slides": [
+    {
+      "headline": "Seu atestado pode não bastar pro INSS",
+      "body": ""
+    },
+    {
+      "headline": "O que garante esse direito",
+      "body": "A lei chama de auxílio por incapacidade temporária, o antigo auxílio-doença. É devido quando você fica incapaz de trabalhar por mais de 15 dias seguidos, por doença ou acidente (art. 59, Lei 8.213/91)."
+    },
+    {
+      "headline": "Quem paga os primeiros 15 dias",
+      "body": "Se você é CLT, a empresa paga os 15 primeiros dias com salário integral. O INSS assume a partir do 16º dia, mas só se você pedir em até 30 dias do afastamento. Depois disso, o valor não volta ao início."
+    },
+    {
+      "headline": "3 requisitos que precisam existir juntos",
+      "body": "Vínculo ativo (ou período de graça) com o INSS, carência de 12 contribuições -- dispensada em acidentes e em doenças graves listadas em lei -- e incapacidade comprovada por perícia. Falta um, o pedido trava."
+    },
+    {
+      "headline": "Atestado do médico já garante o pedido?",
+      "body": "Não automaticamente. O INSS pode analisar só os documentos, sem perícia presencial, pelo sistema Atestmed -- mas apenas quando o atestado cumpre regras técnicas rígidas. Sem elas, o caminho muda."
+    },
+    {
+      "headline": "O que faz um atestado valer",
+      "body": "Emitido há até 90 dias, com CID, assinatura e registro do médico, data de início e prazo de afastamento, sem rasura. Faltando algum desses pontos, o INSS pode negar ou marcar perícia presencial."
+    },
+    {
+      "headline": "Atestmed não vale pra qualquer pedido",
+      "body": "Aposentadoria por incapacidade permanente, BPC/LOAS e auxílio-acidente normalmente ainda exigem perícia presencial ou avaliação mais aprofundada. Cada benefício tem sua própria análise."
+    },
+    {
+      "headline": "Não é o nome da doença que decide",
+      "body": "O INSS não concede o benefício pelo diagnóstico isolado. O que conta é a incapacidade que aquela condição gera para o seu trabalho específico, avaliada caso a caso."
+    },
+    {
+      "headline": "Dois detalhes que travam muitos pedidos",
+      "body": "Doença que já existia antes de você entrar na Previdência, em regra, não dá direito ao benefício -- salvo se piorou depois. E a prorrogação precisa ser pedida até 15 dias antes da data de alta prevista."
+    },
+    {
+      "headline": "Guarde esse post antes de pedir o seu",
+      "body": "Salva para consultar quando precisar, compartilha com quem está afastado do trabalho agora e comenta se ainda ficou com dúvida. Se quiser entender o seu caso com calma, nossa equipe pode te ouvir, sem compromisso."
+    }
+  ],
+  "caption": "Um atestado fora das regras do INSS pode custar meses de benefício.\n\nO auxílio por incapacidade temporária parece simples: fica doente, tira atestado, recebe. Mas o INSS só analisa o pedido direto pelo documento quando ele cumpre requisitos técnicos específicos -- CID, assinatura, registro do médico, prazo de afastamento. Sem isso, o pedido pode ser negado ou virar perícia presencial.\n\nNeste carrossel você entende os 3 requisitos do benefício, a diferença entre atestado e perícia, quem paga os primeiros 15 dias de afastamento e os detalhes que mais derrubam pedidos no INSS.\n\nJá passou por essa dúvida na hora de pedir o auxílio? Comenta aqui embaixo e marca quem está afastado do trabalho agora -- e salva esse post para consultar quando precisar.\n\nSe você quer entender se o seu caso se encaixa nos requisitos, nossa equipe pode analisar sua situação com calma e te orientar sobre o próximo passo.\n\nDra. Fernanda Santos, Advogada Previdenciarista - OAB/MG 199.347\n\n📩 Envie uma mensagem no WhatsApp para uma conversa sem compromisso.\n\n#DireitoPrevidenciario #AuxilioDoenca #INSS #BeneficiosINSS #IncapacidadeTemporaria #PericiaMedica #JuizDeFora #JuizDeForaMG #AdvogadaPrevidenciaria #DireitosDoTrabalhador #Previdencia #AdvocaciaPrevidenciaria #SaudeETrabalho #RafaelRochaESantos #DireitoDoTrabalho",
+  "image_urls": [
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783868178/pdhuj2oh10fqtcphp0ng.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783868179/gqvpyu7gp3yavoeei4yz.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783868180/fzylxuwomibleqwyjs03.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783868181/jmybcmeyom8q83ga5oga.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783868182/wse2cfewhjetgvga7oo2.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783868183/ipcswypuij8ququfdzaf.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783868184/fhyxa55xy20b5i0unc7n.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783868184/gza9birxy552udxtylic.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783868185/rvjjtof23lcwo9cmtl1h.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1783868186/uzrmzakujp1fqyibm6fr.png"
+  ],
+  "generated_at": "2026-07-12T14:56:26.905899+00:00",
+  "revision": 1
+}

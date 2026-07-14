@@ -19,7 +19,7 @@ O processo tem DUAS etapas:
 Saida: dict com:
   - topic: tema escolhido do carrossel
   - slides: lista de dicts {"headline": str, "body": str} (uma por slide, 8 a 10 slides)
-  - caption: legenda para o post (com CTA sobrio e hashtags)
+  - caption: legenda para o post (com CTA sobrio e hashtags, sem numero de OAB)
 """
 import json
 import os
@@ -254,7 +254,7 @@ Formato de resposta (JSON estrito):
     {{"headline": "titulo curto do proximo ponto", "body": "1-2 frases explicando, concreto e especifico, ate 220 caracteres -- repita este padrao de slide de conteudo ate somar 8 a 10 slides no TOTAL (incluindo capa e fechamento)"}},
     {{"headline": "fechamento: prioriza salvar/compartilhar/comentar antes do contato direto", "body": "reforco acolhedor + convite sutil para consulta, sem prometer resultado, so depois de incentivar salvar/compartilhar/comentar"}}
   ],
-  "caption": "legenda formatada em paragrafos curtos separados por linha em branco (\\n\\n dentro da string JSON), seguindo ESTA estrutura: (1) gancho que funciona sozinho, sem depender do carrossel, 1 frase curta; (2) paragrafo curto com o contexto/problema, especifico ao tema; (3) paragrafo curto com o diferencial ou insight principal do carrossel, reforcando autoridade tecnica; (4) quando fizer sentido, uma linha convidando a comentar, salvar e/ou compartilhar (ex: comentar se ja passou por isso, marcar um amigo, salvar o post); (5) convite para falar com a equipe, 1-2 frases, sem forcar venda; (6) linha de CTA comecando com o emoji de envelope seguido de convite objetivo para mensagem no WhatsApp/direct; (7) ultima linha com 10 a 15 hashtags relevantes em portugues, misturando amplas, nichadas, locais (Juiz de Fora/MG) e juridicas, separadas por espaco"
+  "caption": "legenda formatada em paragrafos curtos separados por linha em branco (\\n\\n dentro da string JSON), seguindo ESTA estrutura: (1) gancho que funciona sozinho, sem depender do carrossel, 1 frase curta; (2) paragrafo curto com o contexto/problema, especifico ao tema; (3) paragrafo curto com o diferencial ou insight principal do carrossel, reforcando autoridade tecnica; (4) quando fizer sentido, uma linha convidando a comentar, salvar e/ou compartilhar (ex: comentar se ja passou por isso, marcar um amigo, salvar o post); (5) convite para falar com a equipe, 1-2 frases, sem forcar venda; (6) linha de CTA comecando com o emoji de envelope seguido de convite objetivo para mensagem no WhatsApp/direct; (7) ultima linha com 10 a 15 hashtags relevantes em portugues, misturando amplas, nichadas, locais (Juiz de Fora/MG) e juridicas, separadas por espaco. IMPORTANTE: em nenhum ponto da legenda inclua numero de registro na OAB (nem 'OAB/MG', nem numeros de inscricao) -- assine so com nome e titulo/especialidade quando houver autor."
 }}
 
 Slide 1 e so capa (headline forte e especifico, body vazio). Os slides do meio tem headline \
@@ -442,8 +442,12 @@ def generate_carousel_content(
 
     has_author = bool(account.get("author_name"))
     if has_author:
-        author_line = f"Autor que assina: {account['author_name']}, {account['author_title']} - {account['author_oab']}"
-        signing_instruction = "Assine o convite final com o nome do autor."
+        author_line = f"Autor que assina: {account['author_name']}, {account['author_title']}"
+        signing_instruction = (
+            "Assine o convite final com o nome do autor e o titulo/especialidade. NUNCA inclua "
+            "o numero de registro na OAB (nem 'OAB/MG', nem o numero) na legenda -- isso nao deve "
+            "aparecer em nenhuma hipotese."
+        )
     else:
         author_line = "Este perfil publica em nome institucional do escritorio, sem assinatura de um advogado especifico."
         firm_specialty = (account.get("firm_specialty") or "").strip()

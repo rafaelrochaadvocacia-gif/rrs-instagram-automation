@@ -283,7 +283,7 @@ def render_closing_slide(headline, body, account):
     block_h = _block_height(len(h_lines), len(b_lines), font_headline.size, font_body.size, 1.2, 1.4, 40)
 
     has_author = bool(account.get("author_name"))
-    reserved_bottom = 160 if has_author else 0
+    reserved_bottom = 220 if has_author else 0
     top = 170
     bottom = HEIGHT - 170 - reserved_bottom
     y = top + max(0, (bottom - top - block_h) / 2)
@@ -293,18 +293,22 @@ def render_closing_slide(headline, body, account):
         _draw_wrapped(draw, body, font_body, MARGIN_X, y + 40, max_width, WHITE_SOFT, line_spacing=1.4)
 
     if has_author:
-        # Assinatura sem numero de OAB, por pedido do Rafael -- so nome e titulo/especialidade.
-        divider_y = HEIGHT - 260
+        # Assinatura sem numero de OAB (pedido do Rafael): nome, titulo/especialidade e,
+        # por pedido posterior, mencao explicita ao escritorio em todo fechamento.
+        divider_y = HEIGHT - 300
         _divider(draw, MARGIN_X, divider_y, 64, accent)
 
         font_name = ImageFont.truetype(FONT_MEDIUM, 30)
         font_meta = ImageFont.truetype(FONT_REGULAR, 26)
+        font_firm = ImageFont.truetype(FONT_REGULAR, 24)
 
         name_y = divider_y + 26
         draw.text((MARGIN_X, name_y), account["author_name"], font=font_name, fill=WHITE)
 
         title_y = name_y + 40
-        _draw_wrapped(draw, account["author_title"], font_meta, MARGIN_X, title_y, CONTENT_MAX_WIDTH, WHITE_SOFT, line_spacing=1.25)
+        firm_y = _draw_wrapped(draw, account["author_title"], font_meta, MARGIN_X, title_y, CONTENT_MAX_WIDTH, WHITE_SOFT, line_spacing=1.25)
+
+        draw.text((MARGIN_X, firm_y + 8), "Escritorio Rafael Rocha e Santos Advocacia", font=font_firm, fill=WHITE_SOFT)
     return img
 
 

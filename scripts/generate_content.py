@@ -444,9 +444,11 @@ def generate_carousel_content(
     if has_author:
         author_line = f"Autor que assina: {account['author_name']}, {account['author_title']}"
         signing_instruction = (
-            "Assine o convite final com o nome do autor e o titulo/especialidade. NUNCA inclua "
-            "o numero de registro na OAB (nem 'OAB/MG', nem o numero) na legenda -- isso nao deve "
-            "aparecer em nenhuma hipotese."
+            "Assine o convite final da legenda com o nome do autor, o titulo/especialidade E uma "
+            "mencao explicita ao escritorio Rafael Rocha e Santos Advocacia (ex.: 'Dr. Fulano, "
+            "Advogado Especialista em X -- Escritorio Rafael Rocha e Santos Advocacia'). NUNCA "
+            "inclua o numero de registro na OAB (nem 'OAB/MG', nem o numero) na legenda -- isso "
+            "nao deve aparecer em nenhuma hipotese."
         )
     else:
         author_line = "Este perfil publica em nome institucional do escritorio, sem assinatura de um advogado especifico."

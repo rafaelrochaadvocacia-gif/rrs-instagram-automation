@@ -23,7 +23,6 @@ LOGO_MARGIN = 50
 
 _logo_cache = None
 
-
 def _get_logo():
     global _logo_cache
     if _logo_cache is None:
@@ -35,7 +34,6 @@ def _get_logo():
         _logo_cache = logo.resize(new_size, Image.LANCZOS)
     return _logo_cache
 
-
 def _apply_logo(img):
     logo = _get_logo()
     if logo is None:
@@ -44,37 +42,43 @@ def _apply_logo(img):
     y = LOGO_MARGIN
     img.paste(logo, (x, y), logo)
 
-
 def _hex_to_rgb(hex_color):
     hex_color = hex_color.lstrip("#")
     return tuple(int(hex_color[i:i + 2], 16) for i in (0, 2, 4))
 
-
 def _wrap(draw, text, font, max_width):
+    """Quebra o texto em linhas que cabem em max_width, respeitando as quebras de
+    linha explicitas do texto original (\n). Uma linha em branco no texto original
+    (ex.: \n\n entre paragrafos) vira uma linha vazia na saida, preservando o
+    espacamento visual pretendido por quem editou o texto."""
     if not text:
         return []
-    words = text.split()
-    lines, current = [], ""
-    for word in words:
-        trial = (current + " " + word).strip()
-        if draw.textlength(trial, font=font) <= max_width:
-            current = trial
-        else:
-            if current:
-                lines.append(current)
-            current = word
-    if current:
-        lines.append(current)
+    lines = []
+    for paragraph in text.split("\n"):
+        if not paragraph.strip():
+            lines.append("")
+            continue
+        words = paragraph.split()
+        current = ""
+        for word in words:
+            trial = (current + " " + word).strip()
+            if draw.textlength(trial, font=font) <= max_width:
+                current = trial
+            else:
+                if current:
+                    lines.append(current)
+                current = word
+        if current:
+            lines.append(current)
     return lines
-
 
 def _draw_wrapped(draw, text, font, x, y, max_width, fill, line_spacing=1.3):
     lines = _wrap(draw, text, font, max_width)
     line_height = font.size * line_spacing
     for i, line in enumerate(lines):
-        draw.text((x, y + i * line_height), line, font=font, fill=fill)
+        if line:
+            draw.text((x, y + i * line_height), line, font=font, fill=fill)
     return y + len(lines) * line_height
-
 
 def _block_height(headline_lines, body_lines, headline_size, body_size,
                    headline_spacing, body_spacing, gap):
@@ -83,10 +87,8 @@ def _block_height(headline_lines, body_lines, headline_size, body_size,
         h += gap + body_lines * body_size * body_spacing
     return h
 
-
 def _base_slide(brand_color):
     return Image.new("RGB", (WIDTH, HEIGHT), _hex_to_rgb(brand_color))
-
 
 def _footer(draw, index, total, ig_username, accent_color):
     font_small = ImageFont.truetype(FONT_MEDIUM, 26)
@@ -100,7 +102,6 @@ def _footer(draw, index, total, ig_username, accent_color):
         r = 6 if i == index else 4
         color = _hex_to_rgb(accent_color) if i == index else _hex_to_rgb(GRAY_MUTED)
         draw.ellipse((cx - r, dots_y - r, cx + r, dots_y + r), fill=color)
-
 
 def render_cover(headline, practice_area, account):
     img = _base_slide(account["brand_color"])
@@ -124,7 +125,6 @@ def render_cover(headline, practice_area, account):
     draw.text((70, HEIGHT - 170), "Arraste para o lado >>", font=font_cta, fill=WHITE_SOFT)
     return img
 
-
 def render_content_slide(headline, body, account):
     img = _base_slide(account["brand_color"])
     draw = ImageDraw.Draw(img)
@@ -146,7 +146,6 @@ def render_content_slide(headline, body, account):
     if body:
         _draw_wrapped(draw, body, font_body, 70, y + 40, max_width, WHITE_SOFT, line_spacing=1.4)
     return img
-
 
 def render_closing_slide(headline, body, account):
     img = _base_slide(account["brand_color"])
@@ -183,7 +182,6 @@ def render_closing_slide(headline, body, account):
         oab_y = author_y + len(author_lines) * line_h + 12
         draw.text((70, oab_y), account["author_oab"], font=font_oab, fill=WHITE_SOFT)
     return img
-
 
 def render_carousel(content, account, output_dir):
     os.makedirs(output_dir, exist_ok=True)

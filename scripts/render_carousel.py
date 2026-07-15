@@ -3,9 +3,9 @@ Renderiza os slides de um carrossel como imagens PNG 1080x1350 com a identidade
 visual do escritorio: fundo com leve gradiente/vinheta na cor de marca, uma marca
 d'agua grande e translucida do logo ao fundo, uma barra vertical de acento na
 lateral esquerda (assinatura visual consistente em todo slide), brilho suave no
-canto (cor de destaque da conta), selo numerico nos slides de conteudo, linha
-divisoria entre titulo e corpo, e uma barra de progresso fina no rodape alem dos
-pontos de paginacao. Centraliza o bloco de texto verticalmente em cada slide.
+canto (cor de destaque da conta), linha divisoria entre titulo e corpo com espaco
+generoso ao redor, e uma barra de progresso fina no rodape alem dos pontos de
+paginacao. Centraliza o bloco de texto verticalmente em cada slide.
 """
 import os
 
@@ -23,9 +23,9 @@ WHITE = "#FFFFFF"
 WHITE_SOFT = "#FAF6F0"
 GRAY_MUTED = "#4B4B4B"
 
-WATERMARK_HEIGHT_RATIO = 0.62   # altura da marca d'agua em relacao a altura do slide
-WATERMARK_OPACITY = 0.16        # 0 a 1
-WATERMARK_Y_RATIO = 0.46        # posicao vertical do centro da marca d'agua
+WATERMARK_HEIGHT_RATIO = 0.62  # altura da marca d'agua em relacao a altura do slide
+WATERMARK_OPACITY = 0.16  # 0 a 1
+WATERMARK_Y_RATIO = 0.46  # posicao vertical do centro da marca d'agua
 
 MARGIN_X = 96
 MARGIN_RIGHT = 70
@@ -163,8 +163,9 @@ def _pill_badge(draw, text, x, y, accent_color, font, text_color=None):
 
 
 def _number_badge(img, number, x, y, accent_color):
-    """Circulo numerado (selo de indice) usado nos slides de conteudo -- reforca
-    estrutura de lista/passo a passo, comum em carrosseis premium."""
+    """Circulo numerado (selo de indice). Nao Ã© mais usado nos slides de conteudo
+    (removido a pedido do Rafael), mas a funcao fica disponivel caso volte a ser
+    necessaria em outro lugar."""
     d = 64
     overlay = Image.new("RGBA", img.size, (0, 0, 0, 0))
     odraw = ImageDraw.Draw(overlay)
@@ -194,10 +195,8 @@ def _footer(draw, index, total, ig_username, accent_color):
     font_small = ImageFont.truetype(FONT_MEDIUM, 26)
     draw.text((MARGIN_X, HEIGHT - 100), "@" + ig_username, font=font_small, fill=WHITE_SOFT)
 
-    counter_text = f"{index + 1:02d} / {total:02d}"
-    font_counter = ImageFont.truetype(FONT_MEDIUM, 24)
-    cw = draw.textlength(counter_text, font=font_counter)
-    draw.text((WIDTH - MARGIN_RIGHT - cw, HEIGHT - 100), counter_text, font=font_counter, fill=accent_rgb)
+    # Numeracao "NN / NN" removida do rodape a pedido do Rafael -- mantidos apenas
+    # o @usuario, a barra de progresso e os pontos de paginacao abaixo.
 
     dots_y = HEIGHT - 62
     dot_gap = 20
@@ -238,10 +237,7 @@ def render_content_slide(headline, body, account, slide_number=None):
     accent = account["accent_color"]
     img = _base_slide(account["brand_color"], accent)
 
-    badge_d = 0
-    if slide_number is not None:
-        img, badge_d = _number_badge(img, slide_number, MARGIN_X, 96, accent)
-
+    # Selo numerico removido dos slides de conteudo a pedido do Rafael.
     draw = ImageDraw.Draw(img)
     _left_accent_bar(draw, accent)
 
@@ -251,19 +247,20 @@ def render_content_slide(headline, body, account, slide_number=None):
 
     h_lines = _wrap(draw, headline, font_headline, max_width)
     b_lines = _wrap(draw, body, font_body, max_width) if body else []
-    block_h = _block_height(len(h_lines), len(b_lines), font_headline.size, font_body.size, 1.2, 1.4, 40)
+    # gap aumentado (era 40) para dar mais respiro entre headline e corpo
+    block_h = _block_height(len(h_lines), len(b_lines), font_headline.size, font_body.size, 1.2, 1.4, 96)
     if b_lines:
         block_h += 36  # espaco extra para a linha divisoria
 
-    top = 96 + badge_d + 36 if slide_number is not None else 170
+    top = 170
     bottom = HEIGHT - 170
     y = top + max(0, (bottom - top - block_h) / 2)
 
     y = _draw_wrapped(draw, headline, font_headline, MARGIN_X, y, max_width, WHITE, line_spacing=1.2)
     if body:
-        y += 18
+        y += 56  # espaco antes da linha divisoria (era 18)
         _divider(draw, MARGIN_X, y, 64, accent)
-        y += 36
+        y += 74  # espaco depois da linha divisoria, antes do corpo (era 36)
         _draw_wrapped(draw, body, font_body, MARGIN_X, y, max_width, WHITE_SOFT, line_spacing=1.4)
     return img
 

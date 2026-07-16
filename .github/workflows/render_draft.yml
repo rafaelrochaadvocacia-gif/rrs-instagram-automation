@@ -1,0 +1,62 @@
+name: Renderizar carrossel a partir do texto aprovado
+
+on:
+  workflow_dispatch: # disparado pelo Claude no Cowork, depois que Rafael aprova o texto
+    inputs:
+      account_key:
+        description: "Conta para a qual renderizar o carrossel"
+        required: true
+        type: choice
+        options:
+          - previdenciaria
+          - isenta
+          - tributaria
+          - bancaria
+      approved_content:
+        description: "JSON com topic, slides e legenda ja aprovados por Rafael no Cowork"
+        required: true
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Instalar dependências Python
+        run: pip install -r requirements.txt
+
+      - name: Renderizar carrossel (${{ github.event.inputs.account_key }})
+        env:
+          ACCOUNT_KEY: ${{ github.event.inputs.account_key }}
+          APPROVED_CONTENT: ${{ github.event.inputs.approved_content }}
+          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+          CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
+        working-directory: scripts
+        run: python render_draft.py
+
+      - name: Salvar rascunho no repositório (com retry em caso de push concorrente)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git rm --ignore-unmatch -q "drafts/pending_text/${{ github.event.inputs.account_key }}.json"
+          for i in 1 2 3 4 5; do
+            git add drafts/
+            git commit -m "Carrossel renderizado (texto aprovado no Cowork): ${{ github.event.inputs.account_key }}" || echo "nada para commitar"
+            if git pull --rebase origin main && git push origin main; then
+              echo "push ok"
+              break
+            fi
+            echo "Push falhou, tentando novamente ($i)..."
+            sleep $((RANDOM % 8 + 2))
+          done

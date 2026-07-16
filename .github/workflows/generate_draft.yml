@@ -1,10 +1,17 @@
 name: Gerar rascunho de carrossel para revisão
 
+# ATENÇÃO: o gatilho automático (schedule) foi REMOVIDO por pedido do Rafael -- a copy
+# (tema, headlines, body e legenda) agora é pesquisada e escrita pelo Claude diretamente
+# no Cowork, e revisada/aprovada por Rafael no chat, ANTES de qualquer imagem ser gerada.
+# As imagens só são renderizadas depois dessa aprovação, pelo workflow
+# "render_draft.yml" (disparado pelo Claude assim que Rafael aprova o texto).
+#
+# Este workflow continua aqui apenas como fallback manual (pipeline antigo, com o
+# Claude Code CLI escrevendo a copy dentro do GitHub Actions), caso um dia seja
+# necessário. Para o uso normal do dia a dia, ele não é mais acionado automaticamente.
+
 on:
-  schedule:
-    # 09:00 UTC = 06:00 horário de Brasília, segunda/quarta/sexta
-    - cron: "0 9 * * 1,3,5"
-  workflow_dispatch:   # permite rodar manualmente pela aba "Actions" do GitHub
+  workflow_dispatch:   # permite rodar manualmente pela aba "Actions" do GitHub, se necessário
     inputs:
       account_key:
         description: "Conta específica a gerar (ou 'all' para as 4)"

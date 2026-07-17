@@ -5,7 +5,7 @@
   "topic": "Penhora online (SisbaJud) na execução fiscal e seus limites",
   "slides": [
     {
-      "headline": "Sua conta pode ser bloqueada sem aviso",
+      "headline": "Em uma Execução Fiscal, sua conta pode ser bloqueada sem aviso?",
       "body": ""
     },
     {
@@ -18,7 +18,7 @@
     },
     {
       "headline": "Mas existe um limite que protege você",
-      "body": "O artigo 833 do Código de Processo Civil considera impenhoráveis salários, aposentadorias, pensões e outras verbas de natureza alimentar. Se o bloqueio recair sobre esse tipo de valor, ele pode -- e deve -- ser revertido."
+      "body": "O artigo 833 do Código de Processo Civil considera impenhoráveis salários, aposentadorias, pensões e outras verbas de natureza alimentar. Se o bloqueio recair sobre esse tipo de valor, ele pode -- e deve -- ser desfeito.\n\nPor isso é importante guardar documentos que comprovem a origem dos valores. "
     },
     {
       "headline": "E os valores guardados na poupança?",
@@ -26,18 +26,18 @@
     },
     {
       "headline": "Atenção: essa proteção não é automática",
-      "body": "O STJ já decidiu que o juiz não pode reconhecer essa impenhorabilidade por conta própria. É necessário que o executado alegue e comprove a natureza do valor bloqueado -- quem fica em silêncio pode ficar com o dinheiro preso sem necessidade."
+      "body": "O STJ já decidiu que o juiz não pode reconhecer essa impenhorabilidade por conta própria. É necessário que o executado alegue e comprove a natureza do valor bloqueado -- quem fica em silêncio pode ficar com o dinheiro preso e, até mesmo, vir a perder ele."
     },
     {
       "headline": "O prazo de 5 dias que pode salvar o seu caixa",
-      "body": "Após o bloqueio, existe um prazo processual para o executado se manifestar, demonstrar excesso de penhora ou comprovar que o valor bloqueado é impenhorável. Perder esse prazo pode complicar a liberação dos valores."
+      "body": "Após o bloqueio, o executado tem um prazo para se manifestar, demonstrar eventual excesso de penhora ou comprovar que os valores bloqueados são impenhoráveis. Perder esse prazo pode dificultar a liberação dos recursos e gerar prejuízos desnecessários. Por isso, agir rapidamente faz toda a diferença."
     },
     {
-      "headline": "Um bloqueio não significa uma dívida perdida",
+      "headline": "Um bloqueio não significa que a dívida é legal",
       "body": "A Certidão de Dívida Ativa que fundamenta a execução tem presunção de certeza e liquidez, mas essa presunção pode ser contestada com provas e defesa técnica adequada -- o bloqueio não encerra a discussão sobre o débito."
     },
     {
-      "headline": "Guarde este post antes que aconteça com você",
+      "headline": "Guarde este post, ele pode ser útil para você",
       "body": "Entender os limites da penhora online pode evitar que dinheiro essencial para a operação da sua empresa fique bloqueado indevidamente. Salva esse conteúdo, compartilha com quem administra um negócio e comenta se já passou por uma situação parecida."
     },
     {
@@ -46,5 +46,18 @@
     }
   ],
   "caption": "Sua conta pode ser bloqueada de um dia para o outro por uma dívida tributária -- e muita gente só descobre isso quando já aconteceu.\n\nO SisbaJud permite que o Judiciário bloqueie valores em contas bancárias de forma direta, sem precisar esgotar antes outras tentativas de encontrar bens do devedor. O que pouca gente sabe é que existem limites legais para esse bloqueio, e que boa parte deles só funciona se o executado souber alegar e provar no momento certo.\n\nNeste carrossel, explicamos como o sistema funciona, o que é protegido por lei (salário, verbas alimentares e até 40 salários mínimos em poupança) e por que essa proteção não acontece de forma automática.\n\nJá teve uma conta bloqueada por dívida tributária ou conhece alguém nessa situação? Comenta aqui embaixo, salva esse post e compartilha com quem administra uma empresa.\n\nSe você foi surpreendido por um bloqueio ou quer entender como se proteger antes que isso aconteça, nossa equipe pode analisar o seu caso com calma.\n\n📩 Envie uma mensagem no WhatsApp para uma conversa sem compromisso.\n\nDr. Rafael Rocha, Advogado Tributarista -- Escritório Rafael Rocha e Santos Advocacia\n\n#DireitoTributario #ExecucaoFiscal #SisbaJud #PenhoraOnline #DividaAtiva #AdvocaciaTributaria #DireitoEmpresarial #JuizDeFora #MinasGerais #PlanejamentoTributario #STJ #GestaoEmpresarial #ContenciosoTributario #RafaelRochaESantos",
-  "generated_at": "2026-07-17T13:29:56Z"
+  "image_urls": [
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1784297633/ciow9tfpo65dkp9w0fzm.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1784297634/wwttgboq9qndpukhd3ec.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1784297636/nvonzn6bl6ap2xygtatq.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1784297637/ihs8fpbjkdtbtpmkwdk5.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1784297637/j1yxfm5hentmoa1wwzlc.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1784297638/ezqsqj5q1c2j7exgj2ka.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1784297639/re0let076as23fkwgpyx.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1784297639/o683varf4frtiazpcao3.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1784297640/l0jo72zc6hmy5h9nfn6c.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1784297641/krtuz4csydkqweigyi5v.png"
+  ],
+  "generated_at": "2026-07-17T14:14:02.458761+00:00",
+  "revision": 1
 }

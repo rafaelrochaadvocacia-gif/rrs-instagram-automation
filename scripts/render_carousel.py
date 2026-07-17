@@ -163,7 +163,7 @@ def _pill_badge(draw, text, x, y, accent_color, font, text_color=None):
 
 
 def _number_badge(img, number, x, y, accent_color):
-    """Circulo numerado (selo de indice). Nao Ã© mais usado nos slides de conteudo
+    """Circulo numerado (selo de indice). Nao e mais usado nos slides de conteudo
     (removido a pedido do Rafael), mas a funcao fica disponivel caso volte a ser
     necessaria em outro lugar."""
     d = 64
@@ -209,7 +209,10 @@ def _footer(draw, index, total, ig_username, accent_color):
         draw.ellipse((cx - r, dots_y - r, cx + r, dots_y + r), fill=color)
 
 
-def render_cover(headline, practice_area, account):
+def render_cover(headline, body, practice_area, account):
+    """Capa do carrossel. Suporta um subtitulo opcional (body) abaixo do headline
+    principal -- usado quando a copy inclui uma linha de contexto logo na capa,
+    alem do gancho. Se body vier vazio, o layout fica identico ao anterior."""
     accent = account["accent_color"]
     img = _base_slide(account["brand_color"], accent)
     draw = ImageDraw.Draw(img)
@@ -219,14 +222,19 @@ def render_cover(headline, practice_area, account):
     badge_h = _pill_badge(draw, practice_area.upper(), MARGIN_X, 130, accent, font_eyebrow)
 
     font_headline = ImageFont.truetype(FONT_BOLD, 76)
+    font_sub = ImageFont.truetype(FONT_REGULAR, 32)
     max_width = CONTENT_MAX_WIDTH
-    lines = _wrap(draw, headline, font_headline, max_width)
-    block_h = _block_height(len(lines), 0, font_headline.size, 0, 1.15, 1.4, 40)
+
+    h_lines = _wrap(draw, headline, font_headline, max_width)
+    b_lines = _wrap(draw, body, font_sub, max_width) if body else []
+    block_h = _block_height(len(h_lines), len(b_lines), font_headline.size, font_sub.size, 1.15, 1.4, 32)
 
     top = 130 + badge_h + 50
     bottom = HEIGHT - 220
     y = top + max(0, (bottom - top - block_h) / 2)
-    _draw_wrapped(draw, headline, font_headline, MARGIN_X, y, max_width, WHITE, line_spacing=1.15)
+    y = _draw_wrapped(draw, headline, font_headline, MARGIN_X, y, max_width, WHITE, line_spacing=1.15)
+    if body:
+        _draw_wrapped(draw, body, font_sub, MARGIN_X, y + 32, max_width, WHITE_SOFT, line_spacing=1.4)
 
     font_cta = ImageFont.truetype(FONT_REGULAR, 30)
     draw.text((MARGIN_X, HEIGHT - 170), "Arraste para o lado >>", font=font_cta, fill=WHITE_SOFT)
@@ -316,7 +324,7 @@ def render_carousel(content, account, output_dir):
     paths = []
     for i, slide in enumerate(slides):
         if i == 0:
-            img = render_cover(slide["headline"], account["practice_area"], account)
+            img = render_cover(slide["headline"], slide.get("body", ""), account["practice_area"], account)
         elif i == total - 1:
             img = render_closing_slide(slide["headline"], slide["body"], account)
         else:

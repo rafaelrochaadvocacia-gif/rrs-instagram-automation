@@ -1,7 +1,7 @@
 name: Renderizar carrossel a partir do texto aprovado
 
 on:
-  workflow_dispatch: # disparado pelo Claude no Cowork, depois que Rafael aprova o texto
+  workflow_dispatch:  # disparado pelo Claude no Cowork, depois que Rafael aprova o texto
     inputs:
       account_key:
         description: "Conta para a qual renderizar o carrossel"
@@ -34,6 +34,9 @@ jobs:
 
       - name: Instalar dependências Python
         run: pip install -r requirements.txt
+
+      - name: Instalar Chromium do Playwright (renderizador HTML dos slides)
+        run: python -m playwright install --with-deps chromium
 
       - name: Renderizar carrossel (${{ github.event.inputs.account_key }})
         env:

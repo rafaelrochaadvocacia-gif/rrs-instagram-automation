@@ -1,68 +1,51 @@
 """
-Renderiza os slides de um carrossel como imagens PNG 1080x1350 com a identidade
-visual do escritorio: fundo com leve gradiente/vinheta na cor de marca, uma marca
-d'agua grande e translucida do logo ao fundo, uma barra vertical de acento na
-lateral esquerda (assinatura visual consistente em todo slide), brilho suave no
-canto (cor de destaque da conta), linha divisoria entre titulo e corpo com espaco
-generoso ao redor, e uma barra de progresso fina no rodape alem dos pontos de
-paginacao. Centraliza o bloco de texto verticalmente em cada slide.
+Renderiza os slides de um carrossel como imagens PNG 1080x1350, usando HTML/CSS +
+Playwright (Chromium headless) no lugar do desenho direto em PIL usado antes. Segue
+a linguagem visual do sistema "Gerador de Carrosseis Instagram": fundos claros e
+escuros alternados para dar ritmo, barra de progresso e seta de arrastar embutidas
+na propria imagem, pilula de categoria e selo de marca (iniciais) na capa, e
+slide final em gradiente de marca com assinatura do autor (quando a conta
+tiver autor).
+
+As fontes continuam sendo as mesmas ja usadas pelo escritorio (Poppins Bold/Medium/
+Regular, em assets/fonts/), embutidas como base64 direto no HTML -- sem nenhuma
+dependencia de rede (nada de Google Fonts), para o pipeline continuar confiavel
+independente do acesso a internet do runner.
+
+A assinatura da funcao publica (render_carousel) e identica a versao anterior em
+PIL, entao render_draft.py e o restante do pipeline continuam funcionando sem
+nenhuma mudanca.
 """
+import base64
+import colorsys
+import html
 import os
 
-from PIL import Image, ImageDraw, ImageFont
+from playwright.sync_api import sync_playwright
 
 WIDTH, HEIGHT = 1080, 1350
-FONTS_DIR = os.path.join(os.path.dirname(__file__), "..", "assets", "fonts")
-LOGO_PATH = os.path.join(os.path.dirname(__file__), "..", "assets", "logo", "logo_mark.png")
+VIEW_W, VIEW_H = 420, 525
+SCALE = WIDTH / VIEW_W
 
+FONTS_DIR = os.path.join(os.path.dirname(__file__), "..", "assets", "fonts")
 FONT_BOLD = os.path.join(FONTS_DIR, "Poppins-Bold.ttf")
 FONT_MEDIUM = os.path.join(FONTS_DIR, "Poppins-Medium.ttf")
 FONT_REGULAR = os.path.join(FONTS_DIR, "Poppins-Regular.ttf")
 
 WHITE = "#FFFFFF"
-WHITE_SOFT = "#FAF6F0"
-GRAY_MUTED = "#4B4B4B"
+WHITE_MUTED = "rgba(255,255,255,0.62)"
+DARK_TEXT = "#1A1918"
+DARK_TEXT_SOFT = "#5C5750"
 
-WATERMARK_HEIGHT_RATIO = 0.62  # altura da marca d'agua em relacao a altura do slide
-WATERMARK_OPACITY = 0.16  # 0 a 1
-WATERMARK_Y_RATIO = 0.46  # posicao vertical do centro da marca d'agua
-
-MARGIN_X = 96
-MARGIN_RIGHT = 70
-LEFT_BAR_WIDTH = 10
-CONTENT_MAX_WIDTH = WIDTH - MARGIN_X - MARGIN_RIGHT
-
-_watermark_cache = None
+_font_cache = {}
 
 
-def _get_watermark():
-    """Logo grande e translucida, pre-processada e cacheada -- usada como marca
-    d'agua de fundo em todo slide."""
-    global _watermark_cache
-    if _watermark_cache is None:
-        if not os.path.exists(LOGO_PATH):
-            return None
-        logo = Image.open(LOGO_PATH).convert("RGBA")
-        target_h = int(HEIGHT * WATERMARK_HEIGHT_RATIO)
-        ratio = target_h / logo.height
-        new_size = (max(1, int(logo.width * ratio)), target_h)
-        big_logo = logo.resize(new_size, Image.LANCZOS)
-        r, g, b, a = big_logo.split()
-        a = a.point(lambda p: int(p * WATERMARK_OPACITY))
-        big_logo.putalpha(a)
-        _watermark_cache = big_logo
-    return _watermark_cache
-
-
-def _apply_watermark(img):
-    logo = _get_watermark()
-    if logo is None:
-        return img
-    x = (WIDTH - logo.width) // 2
-    y = int(HEIGHT * WATERMARK_Y_RATIO) - logo.height // 2
-    base = img.convert("RGBA")
-    base.paste(logo, (x, y), logo)
-    return base.convert("RGB")
+def _font_data_uri(path):
+    if path not in _font_cache:
+        with open(path, "rb") as f:
+            b64 = base64.b64encode(f.read()).decode("ascii")
+        _font_cache[path] = f"data:font/ttf;base64,{b64}"
+    return _font_cache[path]
 
 
 def _hex_to_rgb(hex_color):
@@ -70,269 +53,248 @@ def _hex_to_rgb(hex_color):
     return tuple(int(hex_color[i:i + 2], 16) for i in (0, 2, 4))
 
 
-def _blend_rgb(rgb_a, rgb_b, t):
-    """Mistura duas cores RGB; t=0 -> rgb_a, t=1 -> rgb_b."""
-    return tuple(int(rgb_a[i] + (rgb_b[i] - rgb_a[i]) * t) for i in range(3))
+def _rgb_to_hex(rgb):
+    return "#" + "".join(f"{max(0, min(255, int(round(c)))):02X}" for c in rgb)
 
 
-def _wrap(draw, text, font, max_width):
+def _lighten(hex_color, amount):
+    r, g, b = _hex_to_rgb(hex_color)
+    return _rgb_to_hex((r + (255 - r) * amount, g + (255 - g) * amount, b + (255 - b) * amount))
+
+
+def _darken(hex_color, amount):
+    r, g, b = _hex_to_rgb(hex_color)
+    return _rgb_to_hex((r * (1 - amount), g * (1 - amount), b * (1 - amount)))
+
+
+def _blend(hex_a, hex_b, t):
+    a, b = _hex_to_rgb(hex_a), _hex_to_rgb(hex_b)
+    return _rgb_to_hex(tuple(a[i] + (b[i] - a[i]) * t for i in range(3)))
+
+
+def _is_warm(hex_color):
+    r, g, b = _hex_to_rgb(hex_color)
+    h, _s, _v = colorsys.rgb_to_hsv(r / 255, g / 255, b / 255)
+    return h <= 0.17 or h >= 0.92
+
+
+def derive_palette(account):
+    """A partir da cor de destaque (accent_color) da conta, deriva a paleta
+    completa de tokens usada no novo sistema visual (ver projeto "Gerador de
+    Carrosseis Instagram")."""
+    primary = account["accent_color"]
+    warm = _is_warm(primary)
+    return {
+        "primary": primary,
+        "light": _lighten(primary, 0.22),
+        "dark": _darken(primary, 0.32),
+        "light_bg": "#F7F3EC" if warm else "#F2F4F7",
+        "light_border": "#EAE3D6" if warm else "#E1E5EA",
+        "dark_bg": _blend("#141210" if warm else "#0E1420", primary, 0.10),
+    }
+
+
+def _gradient(palette):
+    return f"linear-gradient(165deg, {palette['dark']} 0%, {palette['primary']} 50%, {palette['light']} 100%)"
+
+
+def _fmt_body(text):
+    """Escapa o texto e transforma quebras de linha explicitas (\\n) em <br>,
+    preservando a formatacao em paragrafos curtos que o autor escreveu -- ao
+    contrario da versao PIL anterior, que colapsava as quebras manuais."""
     if not text:
-        return []
-    words = text.split()
-    lines, current = [], ""
-    for word in words:
-        trial = (current + " " + word).strip()
-        if draw.textlength(trial, font=font) <= max_width:
-            current = trial
-        else:
-            if current:
-                lines.append(current)
-            current = word
-    if current:
-        lines.append(current)
-    return lines
+        return ""
+    escaped = html.escape(text)
+    return escaped.replace("\n\n", "<br><br>").replace("\n", "<br>")
 
 
-def _draw_wrapped(draw, text, font, x, y, max_width, fill, line_spacing=1.3):
-    lines = _wrap(draw, text, font, max_width)
-    line_height = font.size * line_spacing
-    for i, line in enumerate(lines):
-        draw.text((x, y + i * line_height), line, font=font, fill=fill)
-    return y + len(lines) * line_height
+def _progress_and_arrow(index, total, is_light, ig_username, show_arrow):
+    track_color = "rgba(0,0,0,0.08)" if is_light else "rgba(255,255,255,0.14)"
+    fill_color = "#1A1918" if is_light else "#FFFFFF"
+    label_color = "rgba(0,0,0,0.4)" if is_light else "rgba(255,255,255,0.55)"
+    handle_color = "rgba(0,0,0,0.55)" if is_light else "rgba(255,255,255,0.7)"
+    pct = ((index + 1) / total) * 100
+
+    footer = f"""
+    <div style="position:absolute;left:0;right:0;bottom:0;padding:0 28px 20px;z-index:10;">
+      <div style="font-size:11px;font-weight:500;color:{handle_color};margin-bottom:10px;">@{html.escape(ig_username)}</div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="flex:1;height:3px;background:{track_color};border-radius:2px;overflow:hidden;">
+          <div style="height:100%;width:{pct:.2f}%;background:{fill_color};border-radius:2px;"></div>
+        </div>
+        <span style="font-size:11px;color:{label_color};font-weight:500;">{index + 1}/{total}</span>
+      </div>
+    </div>
+    """
+
+    if not show_arrow:
+        return footer, ""
+
+    arrow_bg = "rgba(0,0,0,0.06)" if is_light else "rgba(255,255,255,0.08)"
+    arrow_stroke = "rgba(0,0,0,0.28)" if is_light else "rgba(255,255,255,0.4)"
+    arrow = f"""
+    <div style="position:absolute;right:0;top:0;bottom:0;width:44px;z-index:9;display:flex;align-items:center;justify-content:center;background:linear-gradient(to right,transparent,{arrow_bg});">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <path d="M9 6l6 6-6 6" stroke="{arrow_stroke}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    """
+    return footer, arrow
 
 
-def _block_height(headline_lines, body_lines, headline_size, body_size,
-                   headline_spacing, body_spacing, gap):
-    h = headline_lines * headline_size * headline_spacing
-    if body_lines:
-        h += gap + body_lines * body_size * body_spacing
-    return h
+def _logo_lockup(account, palette, is_light):
+    initial = account["page_name"].strip()[0].upper()
+    name_color = DARK_TEXT if is_light else WHITE
+    return f"""
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:28px;">
+      <div style="width:40px;height:40px;border-radius:50%;background:{palette['primary']};display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <span style="font-family:'Poppins';font-weight:700;font-size:17px;color:#FFFFFF;">{html.escape(initial)}</span>
+      </div>
+      <span style="font-family:'Poppins';font-weight:600;font-size:13px;letter-spacing:0.3px;color:{name_color};">{html.escape(account['page_name'])}</span>
+    </div>
+    """
 
 
-def _base_slide(brand_color, accent_color):
-    """Fundo com leve gradiente vertical (banho sutil da cor de destaque no topo,
-    esmaecendo para a cor de marca solida embaixo) + marca d'agua grande do logo
-    ao fundo + brilho suave no canto superior direito."""
-    brand_rgb = _hex_to_rgb(brand_color)
-    accent_rgb = _hex_to_rgb(accent_color)
-    top_rgb = _blend_rgb(brand_rgb, accent_rgb, 0.16)
-
-    img = Image.new("RGB", (WIDTH, HEIGHT), brand_rgb)
-    px = img.load()
-    fade_height = int(HEIGHT * 0.55)
-    for y in range(fade_height):
-        t = y / fade_height
-        row_rgb = _blend_rgb(top_rgb, brand_rgb, t)
-        for x in range(WIDTH):
-            px[x, y] = row_rgb
-
-    img = _apply_watermark(img)
-    img = _add_corner_glow(img, accent_color)
-    return img
+def _tag_pill(text, color):
+    return f"""<span style="display:inline-block;font-family:'Poppins';font-weight:600;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:{color};margin-bottom:16px;">{html.escape(text)}</span>"""
 
 
-def _add_corner_glow(img, accent_color):
-    """Brilho suave e desfocado no canto superior direito, na cor de destaque da
-    conta -- textura discreta, nao compete com o texto."""
-    accent_rgb = _hex_to_rgb(accent_color)
-    overlay = Image.new("RGBA", img.size, (0, 0, 0, 0))
-    odraw = ImageDraw.Draw(overlay)
-    cx, cy, r = WIDTH + 60, -80, 520
-    odraw.ellipse((cx - r, cy - r, cx + r, cy + r), fill=accent_rgb + (26,))
-    return Image.alpha_composite(img.convert("RGBA"), overlay).convert("RGB")
+def _divider(color):
+    return f"""<div style="width:56px;height:3px;background:{color};margin:18px 0 22px;border-radius:2px;"></div>"""
 
 
-def _left_accent_bar(draw, accent_color):
-    """Barra vertical de acento na lateral esquerda -- assinatura visual presente
-    em todo slide, reforca identidade de marca mesmo sem o logo."""
-    draw.rectangle((0, 0, LEFT_BAR_WIDTH, HEIGHT), fill=_hex_to_rgb(accent_color))
+def _signature_block(account, is_light, bottom_px):
+    """Bloco de assinatura do fechamento -- posicionado de forma absoluta,
+    ancorado a uma distancia fixa do rodape, para NUNCA se sobrepor ao
+    headline/corpo do slide (independente do tamanho do texto do slide)."""
+    name_color = DARK_TEXT if is_light else WHITE
+    meta_color = DARK_TEXT_SOFT if is_light else WHITE_MUTED
+    divider_color = "rgba(0,0,0,0.12)" if is_light else "rgba(255,255,255,0.18)"
+    return f"""
+    <div style="position:absolute;left:34px;right:34px;bottom:{bottom_px}px;padding-top:14px;border-top:1px solid {divider_color};z-index:2;">
+      <div style="font-family:'Poppins';font-weight:600;font-size:15px;color:{name_color};margin-bottom:3px;">{html.escape(account['author_name'])}</div>
+      <div style="font-family:'Poppins';font-weight:400;font-size:12px;color:{meta_color};line-height:1.35;">{html.escape(account['author_title'])}</div>
+      <div style="font-family:'Poppins';font-weight:400;font-size:12px;color:{meta_color};line-height:1.35;">Escritorio Rafael Rocha e Santos Advocacia</div>
+    </div>
+    """
 
 
-def _pill_badge(draw, text, x, y, accent_color, font, text_color=None):
-    """Selo em formato de pilula (fundo arredondado na cor de destaque) -- usado
-    para a categoria/area de atuacao na capa. Retorna a altura do selo."""
-    pad_x, pad_y = 22, 12
-    text_w = draw.textlength(text, font=font)
-    text_h = font.size
-    box = (x, y, x + text_w + pad_x * 2, y + text_h + pad_y * 2)
-    fill_rgb = _hex_to_rgb(accent_color)
-    draw.rounded_rectangle(box, radius=(text_h + pad_y * 2) / 2, fill=fill_rgb)
-    fg = text_color or WHITE
-    draw.text((x + pad_x, y + pad_y - 1), text, font=font, fill=fg)
-    return box[3] - box[1]
+FOOTER_RESERVE = 74  # espaco reservado no rodape (@handle + barra + contador)
+SIGNATURE_RESERVE = 92  # espaco extra reservado acima do rodape para a assinatura
 
 
-def _number_badge(img, number, x, y, accent_color):
-    """Circulo numerado (selo de indice). Nao e mais usado nos slides de conteudo
-    (removido a pedido do Rafael), mas a funcao fica disponivel caso volte a ser
-    necessaria em outro lugar."""
-    d = 64
-    overlay = Image.new("RGBA", img.size, (0, 0, 0, 0))
-    odraw = ImageDraw.Draw(overlay)
-    accent_rgb = _hex_to_rgb(accent_color)
-    odraw.ellipse((x, y, x + d, y + d), fill=accent_rgb + (255,))
-    composed = Image.alpha_composite(img.convert("RGBA"), overlay).convert("RGB")
-    draw = ImageDraw.Draw(composed)
-    font_num = ImageFont.truetype(FONT_BOLD, 30)
-    label = str(number)
-    tw = draw.textlength(label, font=font_num)
-    draw.text((x + (d - tw) / 2, y + (d - 34) / 2), label, font=font_num, fill=WHITE)
-    return composed, d
-
-
-def _divider(draw, x, y, width, accent_color):
-    draw.rectangle((x, y, x + width, y + 3), fill=_hex_to_rgb(accent_color))
-
-
-def _footer(draw, index, total, ig_username, accent_color):
-    accent_rgb = _hex_to_rgb(accent_color)
-
-    # barra de progresso fina, borda a borda, no rodape absoluto
-    progress_w = WIDTH * ((index + 1) / total)
-    draw.rectangle((0, HEIGHT - 6, WIDTH, HEIGHT), fill=_hex_to_rgb(GRAY_MUTED))
-    draw.rectangle((0, HEIGHT - 6, progress_w, HEIGHT), fill=accent_rgb)
-
-    font_small = ImageFont.truetype(FONT_MEDIUM, 26)
-    draw.text((MARGIN_X, HEIGHT - 100), "@" + ig_username, font=font_small, fill=WHITE_SOFT)
-
-    # Numeracao "NN / NN" removida do rodape a pedido do Rafael -- mantidos apenas
-    # o @usuario, a barra de progresso e os pontos de paginacao abaixo.
-
-    dots_y = HEIGHT - 62
-    dot_gap = 20
-    total_width = (total - 1) * dot_gap
-    start_x = WIDTH - MARGIN_RIGHT - total_width
-    for i in range(total):
-        cx = start_x + i * dot_gap
-        r = 6 if i == index else 4
-        color = accent_rgb if i == index else _hex_to_rgb(GRAY_MUTED)
-        draw.ellipse((cx - r, dots_y - r, cx + r, dots_y + r), fill=color)
-
-
-def render_cover(headline, body, practice_area, account):
-    """Capa do carrossel. Suporta um subtitulo opcional (body) abaixo do headline
-    principal -- usado quando a copy inclui uma linha de contexto logo na capa,
-    alem do gancho. Se body vier vazio, o layout fica identico ao anterior."""
-    accent = account["accent_color"]
-    img = _base_slide(account["brand_color"], accent)
-    draw = ImageDraw.Draw(img)
-    _left_accent_bar(draw, accent)
-
-    font_eyebrow = ImageFont.truetype(FONT_MEDIUM, 26)
-    badge_h = _pill_badge(draw, practice_area.upper(), MARGIN_X, 130, accent, font_eyebrow)
-
-    font_headline = ImageFont.truetype(FONT_BOLD, 76)
-    font_sub = ImageFont.truetype(FONT_REGULAR, 32)
-    max_width = CONTENT_MAX_WIDTH
-
-    h_lines = _wrap(draw, headline, font_headline, max_width)
-    b_lines = _wrap(draw, body, font_sub, max_width) if body else []
-    block_h = _block_height(len(h_lines), len(b_lines), font_headline.size, font_sub.size, 1.15, 1.4, 32)
-
-    top = 130 + badge_h + 50
-    bottom = HEIGHT - 220
-    y = top + max(0, (bottom - top - block_h) / 2)
-    y = _draw_wrapped(draw, headline, font_headline, MARGIN_X, y, max_width, WHITE, line_spacing=1.15)
-    if body:
-        _draw_wrapped(draw, body, font_sub, MARGIN_X, y + 32, max_width, WHITE_SOFT, line_spacing=1.4)
-
-    font_cta = ImageFont.truetype(FONT_REGULAR, 30)
-    draw.text((MARGIN_X, HEIGHT - 170), "Arraste para o lado >>", font=font_cta, fill=WHITE_SOFT)
-    return img
-
-
-def render_content_slide(headline, body, account, slide_number=None):
-    accent = account["accent_color"]
-    img = _base_slide(account["brand_color"], accent)
-
-    # Selo numerico removido dos slides de conteudo a pedido do Rafael.
-    draw = ImageDraw.Draw(img)
-    _left_accent_bar(draw, accent)
-
-    font_headline = ImageFont.truetype(FONT_BOLD, 54)
-    font_body = ImageFont.truetype(FONT_REGULAR, 37)
-    max_width = CONTENT_MAX_WIDTH
-
-    h_lines = _wrap(draw, headline, font_headline, max_width)
-    b_lines = _wrap(draw, body, font_body, max_width) if body else []
-    # gap aumentado (era 40) para dar mais respiro entre headline e corpo
-    block_h = _block_height(len(h_lines), len(b_lines), font_headline.size, font_body.size, 1.2, 1.4, 96)
-    if b_lines:
-        block_h += 36  # espaco extra para a linha divisoria
-
-    top = 170
-    bottom = HEIGHT - 170
-    y = top + max(0, (bottom - top - block_h) / 2)
-
-    y = _draw_wrapped(draw, headline, font_headline, MARGIN_X, y, max_width, WHITE, line_spacing=1.2)
-    if body:
-        y += 56  # espaco antes da linha divisoria (era 18)
-        _divider(draw, MARGIN_X, y, 64, accent)
-        y += 74  # espaco depois da linha divisoria, antes do corpo (era 36)
-        _draw_wrapped(draw, body, font_body, MARGIN_X, y, max_width, WHITE_SOFT, line_spacing=1.4)
-    return img
-
-
-def render_closing_slide(headline, body, account):
-    accent = account["accent_color"]
-    img = _base_slide(account["brand_color"], accent)
-    draw = ImageDraw.Draw(img)
-    _left_accent_bar(draw, accent)
-
-    font_headline = ImageFont.truetype(FONT_BOLD, 50)
-    font_body = ImageFont.truetype(FONT_REGULAR, 35)
-    max_width = CONTENT_MAX_WIDTH
-
-    h_lines = _wrap(draw, headline, font_headline, max_width)
-    b_lines = _wrap(draw, body, font_body, max_width) if body else []
-    block_h = _block_height(len(h_lines), len(b_lines), font_headline.size, font_body.size, 1.2, 1.4, 40)
-
+def _slide_html(index, total, headline, body, account, palette, fonts):
+    is_first = index == 0
+    is_last = index == total - 1
     has_author = bool(account.get("author_name"))
-    reserved_bottom = 220 if has_author else 0
-    top = 170
-    bottom = HEIGHT - 170 - reserved_bottom
-    y = top + max(0, (bottom - top - block_h) / 2)
+    show_signature = is_last and has_author
 
-    y = _draw_wrapped(draw, headline, font_headline, MARGIN_X, y, max_width, WHITE, line_spacing=1.2)
+    if is_first:
+        bg = palette["light_bg"]
+        is_light = True
+        justify = "center"
+        tag_color = palette["primary"]
+    elif is_last:
+        bg = _gradient(palette)
+        is_light = False
+        justify = "flex-start"
+        tag_color = "rgba(255,255,255,0.65)"
+    else:
+        is_light = index % 2 == 0
+        bg = palette["light_bg"] if is_light else palette["dark_bg"]
+        justify = "center"
+        tag_color = palette["primary"] if is_light else palette["light"]
+
+    heading_color = DARK_TEXT if is_light else WHITE
+    body_color = DARK_TEXT_SOFT if is_light else WHITE_MUTED
+    accent_bar = f"""<div style="position:absolute;left:0;top:0;bottom:0;width:6px;background:{palette['primary']};z-index:3;"></div>"""
+
+    # A pilula de categoria e o selo de marca aparecem so na capa -- repeti-los
+    # no fechamento so consumiria espaco (que o fechamento precisa para a
+    # assinatura) sem agregar, ja que a marca ja foi apresentada no slide 1.
+    tag_html = ""
+    logo_html = ""
+    if is_first:
+        tag_html = _tag_pill(account["practice_area"].upper(), tag_color)
+        logo_html = _logo_lockup(account, palette, is_light)
+
+    # Fechamento usa um headline um pouco menor (mesma proporcao da versao
+    # anterior em PIL) para sobrar mais espaco vertical para corpo + assinatura.
+    headline_size = "24px" if is_last else "29px"
+
+    body_html = ""
+    divider_html = ""
     if body:
-        _draw_wrapped(draw, body, font_body, MARGIN_X, y + 40, max_width, WHITE_SOFT, line_spacing=1.4)
+        if not is_first:
+            divider_html = _divider(palette["primary"] if is_light else palette["light"])
+        body_html = f"""<p style="font-family:'Poppins';font-weight:400;font-size:14.5px;line-height:1.55;color:{body_color};margin-top:{'10px' if is_first else '0'};">{_fmt_body(body)}</p>"""
 
-    if has_author:
-        # Assinatura sem numero de OAB (pedido do Rafael): nome, titulo/especialidade e,
-        # por pedido posterior, mencao explicita ao escritorio em todo fechamento.
-        divider_y = HEIGHT - 300
-        _divider(draw, MARGIN_X, divider_y, 64, accent)
+    # A area de headline/corpo fica em uma caixa de posicao absoluta, com uma
+    # margem inferior reservada para o rodape (e, no fechamento, tambem para a
+    # assinatura) -- assim o texto nunca pode se sobrepor a esses elementos,
+    # nao importa o quao longo seja o slide. overflow:hidden e uma rede de
+    # seguranca final caso algum slide venha com texto excepcionalmente longo.
+    bottom_reserve = FOOTER_RESERVE + (SIGNATURE_RESERVE if show_signature else 0)
+    top_pad = 48 if is_last else 64
+    signature_html = _signature_block(account, is_light, FOOTER_RESERVE + 10) if show_signature else ""
 
-        font_name = ImageFont.truetype(FONT_MEDIUM, 30)
-        font_meta = ImageFont.truetype(FONT_REGULAR, 26)
-        font_firm = ImageFont.truetype(FONT_REGULAR, 24)
+    footer_html, arrow_html = _progress_and_arrow(
+        index, total, is_light, account["ig_username"], show_arrow=not is_last
+    )
 
-        name_y = divider_y + 26
-        draw.text((MARGIN_X, name_y), account["author_name"], font=font_name, fill=WHITE)
-
-        title_y = name_y + 40
-        firm_y = _draw_wrapped(draw, account["author_title"], font_meta, MARGIN_X, title_y, CONTENT_MAX_WIDTH, WHITE_SOFT, line_spacing=1.25)
-
-        draw.text((MARGIN_X, firm_y + 8), "Escritorio Rafael Rocha e Santos Advocacia", font=font_firm, fill=WHITE_SOFT)
-    return img
+    return f"""<!DOCTYPE html>
+<html><head><meta charset="utf-8"/>
+<style>
+  @font-face {{ font-family:'Poppins'; src:url({fonts['bold']}) format('truetype'); font-weight:700; }}
+  @font-face {{ font-family:'Poppins'; src:url({fonts['medium']}) format('truetype'); font-weight:500; }}
+  @font-face {{ font-family:'Poppins'; src:url({fonts['regular']}) format('truetype'); font-weight:400; }}
+  * {{ margin:0; padding:0; box-sizing:border-box; -webkit-font-smoothing:antialiased; }}
+  html, body {{ width:{VIEW_W}px; height:{VIEW_H}px; overflow:hidden; }}
+</style></head>
+<body>
+  <div style="position:relative;width:{VIEW_W}px;height:{VIEW_H}px;background:{bg};overflow:hidden;font-family:'Poppins',sans-serif;">
+    {accent_bar}
+    <div style="position:absolute;top:0;left:0;right:0;bottom:{bottom_reserve}px;padding:{top_pad}px 34px 12px;overflow:hidden;display:flex;flex-direction:column;justify-content:{justify};z-index:2;">
+      {tag_html}
+      {logo_html}
+      <h1 style="font-family:'Poppins';font-weight:700;font-size:{headline_size};letter-spacing:-0.3px;line-height:1.16;color:{heading_color};">{_fmt_body(headline)}</h1>
+      {divider_html}
+      {body_html}
+    </div>
+    {signature_html}
+    {footer_html}
+    {arrow_html}
+  </div>
+</body></html>"""
 
 
 def render_carousel(content, account, output_dir):
     os.makedirs(output_dir, exist_ok=True)
     slides = content["slides"]
     total = len(slides)
+    palette = derive_palette(account)
+    fonts = {
+        "bold": _font_data_uri(FONT_BOLD),
+        "medium": _font_data_uri(FONT_MEDIUM),
+        "regular": _font_data_uri(FONT_REGULAR),
+    }
+
     paths = []
-    for i, slide in enumerate(slides):
-        if i == 0:
-            img = render_cover(slide["headline"], slide.get("body", ""), account["practice_area"], account)
-        elif i == total - 1:
-            img = render_closing_slide(slide["headline"], slide["body"], account)
-        else:
-            img = render_content_slide(slide["headline"], slide["body"], account, slide_number=i + 1)
-        draw = ImageDraw.Draw(img)
-        _footer(draw, i, total, account["ig_username"], account["accent_color"])
-        filename = "slide_" + str(i + 1).zfill(2) + ".png"
-        path = os.path.join(output_dir, filename)
-        img.save(path, "PNG")
-        paths.append(path)
+    with sync_playwright() as p:
+        browser = p.chromium.launch()
+        page = browser.new_page(
+            viewport={"width": VIEW_W, "height": VIEW_H},
+            device_scale_factor=SCALE,
+        )
+        for i, slide in enumerate(slides):
+            slide_html = _slide_html(
+                i, total, slide["headline"], slide.get("body", ""), account, palette, fonts
+            )
+            page.set_content(slide_html, wait_until="load")
+            page.wait_for_timeout(150)
+            filename = "slide_" + str(i + 1).zfill(2) + ".png"
+            path = os.path.join(output_dir, filename)
+            page.screenshot(path=path, clip={"x": 0, "y": 0, "width": VIEW_W, "height": VIEW_H})
+            paths.append(path)
+        browser.close()
     return paths

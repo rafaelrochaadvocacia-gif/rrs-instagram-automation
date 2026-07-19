@@ -19,9 +19,11 @@ nenhuma mudanca.
 import base64
 import colorsys
 import html
+import io
 import os
 
 from playwright.sync_api import sync_playwright
+from PIL import Image
 
 WIDTH, HEIGHT = 1080, 1350
 VIEW_W, VIEW_H = 420, 525
@@ -32,12 +34,15 @@ FONT_BOLD = os.path.join(FONTS_DIR, "Poppins-Bold.ttf")
 FONT_MEDIUM = os.path.join(FONTS_DIR, "Poppins-Medium.ttf")
 FONT_REGULAR = os.path.join(FONTS_DIR, "Poppins-Regular.ttf")
 
+LOGO_PATH = os.path.join(os.path.dirname(__file__), "..", "assets", "logo", "logo_mark_web.png")
+
 WHITE = "#FFFFFF"
 WHITE_MUTED = "rgba(255,255,255,0.62)"
 DARK_TEXT = "#1A1918"
 DARK_TEXT_SOFT = "#5C5750"
 
 _font_cache = {}
+_watermark_cache = {}
 
 
 def _font_data_uri(path):
@@ -96,6 +101,30 @@ def derive_palette(account):
 
 def _gradient(palette):
     return f"linear-gradient(165deg, {palette['dark']} 0%, {palette['primary']} 50%, {palette['light']} 100%)"
+
+
+def _watermark_data_uri(tint_hex, opacity=0.10):
+    """Le o logo do escritorio (assets/logo/logo_mark_web.png), aplica uma cor
+    solida (tint_hex) usando apenas o formato/alfa original da marca como
+    mascara, e reduz a opacidade -- para usar como marca d'agua discreta no
+    fundo da capa. Cacheia por combinacao de cor/opacidade."""
+    cache_key = (tint_hex, opacity)
+    if cache_key in _watermark_cache:
+        return _watermark_cache[cache_key]
+    if not os.path.exists(LOGO_PATH):
+        _watermark_cache[cache_key] = None
+        return None
+    logo = Image.open(LOGO_PATH).convert("RGBA")
+    _r, _g, _b, alpha = logo.split()
+    tint_rgb = _hex_to_rgb(tint_hex)
+    solid = Image.new("RGBA", logo.size, tint_rgb + (0,))
+    scaled_alpha = alpha.point(lambda p: int(p * opacity))
+    solid.putalpha(scaled_alpha)
+    buf = io.BytesIO()
+    solid.save(buf, format="PNG")
+    data_uri = "data:image/png;base64," + base64.b64encode(buf.getvalue()).decode("ascii")
+    _watermark_cache[cache_key] = data_uri
+    return data_uri
 
 
 def _fmt_body(text):
@@ -214,9 +243,18 @@ def _slide_html(index, total, headline, body, account, palette, fonts):
     # assinatura) sem agregar, ja que a marca ja foi apresentada no slide 1.
     tag_html = ""
     logo_html = ""
+    watermark_html = ""
     if is_first:
         tag_html = _tag_pill(account["practice_area"].upper(), tag_color)
         logo_html = _logo_lockup(account, palette, is_light)
+        # Marca d'agua do logo do escritorio no fundo da capa, a pedido do
+        # Rafael -- tom neutro e opacidade baixa para nao competir com o texto.
+        wm_uri = _watermark_data_uri(DARK_TEXT_SOFT if is_light else WHITE, opacity=0.10)
+        if wm_uri:
+            watermark_html = (
+                f'<img src="{wm_uri}" style="position:absolute;top:52%;left:50%;'
+                f'transform:translate(-50%,-50%);width:320px;z-index:1;pointer-events:none;" />'
+            )
 
     # Fechamento usa um headline um pouco menor (mesma proporcao da versao
     # anterior em PIL) para sobrar mais espaco vertical para corpo + assinatura.
@@ -254,6 +292,7 @@ def _slide_html(index, total, headline, body, account, palette, fonts):
 <body>
   <div style="position:relative;width:{VIEW_W}px;height:{VIEW_H}px;background:{bg};overflow:hidden;font-family:'Poppins',sans-serif;">
     {accent_bar}
+    {watermark_html}
     <div style="position:absolute;top:0;left:0;right:0;bottom:{bottom_reserve}px;padding:{top_pad}px 34px 12px;overflow:hidden;display:flex;flex-direction:column;justify-content:{justify};z-index:2;">
       {tag_html}
       {logo_html}

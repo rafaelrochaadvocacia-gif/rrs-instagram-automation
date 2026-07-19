@@ -35,6 +35,9 @@ jobs:
       - name: Instalar dependências Python
         run: pip install -r requirements.txt
 
+      - name: Instalar Chromium do Playwright (renderizador HTML dos slides)
+        run: python -m playwright install --with-deps chromium
+
       - name: Aplicar edição (${{ github.event.inputs.account_key }})
         env:
           ACCOUNT_KEY: ${{ github.event.inputs.account_key }}

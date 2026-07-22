@@ -54,5 +54,8 @@
     "https://res.cloudinary.com/ydunkkl0/image/upload/v1784736322/c8x4tiqcw34kyy7nggqp.png"
   ],
   "generated_at": "2026-07-22T16:05:22.544277+00:00",
-  "revision": 1
+  "revision": 1,
+  "published_at": "2026-07-22T19:45:40.368895+00:00",
+  "media_id": "18019713305696354",
+  "facebook_error": "403 Client Error: Forbidden for url: https://graph.facebook.com/v25.0/234156119783270/photos"
 }

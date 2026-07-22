@@ -5,7 +5,7 @@
   "topic": "Defesa em busca e apreensão: falhas comuns no contrato",
   "slides": [
     {
-      "headline": "3 falhas que podem travar sua busca e apreensão",
+      "headline": "3 falhas que podem te ajudar na ação de busca e apreensão de um veículo",
       "body": ""
     },
     {
@@ -17,15 +17,15 @@
       "body": "A lei aceita que a notificação seja enviada por carta com aviso de recebimento, sem exigir a assinatura do próprio devedor. Mas se ela for enviada a um endereço diferente do que consta no contrato, ou devolvida por endereço incompleto, a mora pode não ficar configurada."
     },
     {
-      "headline": "Falha 2: juros embutidos sem nenhuma comparação",
+      "headline": "Falha 2: juros abusivos",
       "body": "Bancos não seguem o limite de 12% ao ano da Lei de Usura -- isso já é entendimento consolidado. Mas juros muito acima da taxa média de mercado, para aquele tipo de contrato, podem ser considerados abusivos e revistos."
     },
     {
-      "headline": "O que conta como \"muito acima da média\"",
-      "body": "Ultrapassar 12% ao ano, sozinho, não prova abuso. O que pode indicar abusividade é a comparação com a taxa média praticada pelo mercado para operações semelhantes, no mesmo período."
+      "headline": "O que pode ser considerado \"muito acima da média\"?",
+      "body": "Juros acima de 12% ao ano não são automaticamente abusivos. O principal parâmetro utilizado pela Justiça é a comparação com a taxa média do Banco Central para contratos semelhantes. Em muitos casos, a abusividade é reconhecida quando a taxa contratada supera cerca de 1,5 vez a média de mercado."
     },
     {
-      "headline": "Falha 3: capitalização de juros que ninguém pactuou",
+      "headline": "Falha 3: capitalização de juros não pactuada",
       "body": "Capitalizar juros com periodicidade menor que anual é permitido em contratos bancários desde 2000 -- mas só quando isso está expressamente previsto no contrato. Cobrança de juros sobre juros sem essa previsão clara pode ser contestada."
     },
     {
@@ -37,10 +37,22 @@
       "body": "Mesmo com a notificação em ordem, o contrato pode ter cláusulas que mudam o valor da dívida ou as condições da cobrança. A análise do contrato completo é o que revela isso."
     },
     {
-      "headline": "Antes de perder o veículo, analise o contrato",
+      "headline": "Antes de deixar seu veículo se perder, analise o contrato",
       "body": "Salve este carrossel, comente se já passou ou está passando por uma busca e apreensão e compartilhe com quem financiou um veículo. Entender esses pontos pode mudar o rumo do processo."
     }
   ],
   "caption": "Nem toda busca e apreensão termina com a perda do veículo -- às vezes o problema está no próprio contrato.\n\nMuita gente que recebe uma ação de busca e apreensão acredita que só resta pagar ou perder o carro. Mas a lei exige que o banco comprove a mora corretamente, conforme o Decreto-Lei 911/69 e a Súmula 72 do STJ -- e falhas nesse processo podem ser discutidas na defesa. Um erro comum é a notificação extrajudicial enviada a um endereço diferente do contrato ou devolvida por endereço incompleto, o que pode descaracterizar a mora.\n\nOutros pontos frequentes: juros muito acima da taxa média de mercado (o simples fato de passar de 12% ao ano não configura abuso sozinho, mas a comparação com o mercado pode indicar isso) e a capitalização de juros cobrada sem previsão expressa no contrato, quando a lei exige justamente essa previsão clara. Mais de uma dessas falhas pode aparecer no mesmo contrato.\n\nJá passou ou está passando por uma busca e apreensão? Comenta aqui embaixo, salva esse post para consultar quando precisar e compartilha com quem financiou um veículo.\n\nSe você identificou uma busca e apreensão que parece ter alguma dessas falhas, o escritório Rafael Rocha e Santos Advocacia é especializado em direito do consumidor bancário e pode analisar o seu contrato, sem compromisso.\n\n📩 Envie uma mensagem no WhatsApp clicando no link da nossa bio para conversarmos sem compromisso.\n\n#BuscaEApreensao #AlienacaoFiduciaria #DireitoBancario #JurosAbusivos #CapitalizacaoDeJuros #DireitoDoConsumidor #DefesaDoConsumidor #ContratoBancario #CDC #ConsumidorProtegido #JuizDeFora #JuizDeForaMG #AdvocaciaJF #RafaelRochaESantos",
-  "generated_at": "2026-07-22T14:40:56.065442+00:00"
+  "image_urls": [
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1784744166/chxxjfx0vs1yipe8owbh.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1784744167/pquomjx4dxosndv7vrpw.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1784744167/ddcldjamp7sbch9wifl4.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1784744168/sg3nejr5y7zndfwriwpa.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1784744169/zqv4tinjloixds6ldte0.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1784744170/cttkgxrmc0lwx6g1zf60.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1784744170/dy8u4avksspbtu44iaqs.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1784744171/wrve73rvbx6arij7soev.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1784744172/qwmoz24nfly8ag7epotw.png"
+  ],
+  "generated_at": "2026-07-22T18:16:12.889598+00:00",
+  "revision": 1
 }

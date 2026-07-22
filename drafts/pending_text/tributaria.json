@@ -2,45 +2,45 @@
   "account_key": "tributaria",
   "page_name": "RRS Advocacia Tributária",
   "ig_username": "rrsadvocaciatributaria",
-  "topic": "Recuperação de tributos pagos indevidamente pela empresa",
+  "topic": "Recuperação de PIS/Cofins para empresas do Simples Nacional",
   "slides": [
     {
-      "headline": "Sua empresa pode ter crédito parado com o Fisco",
+      "headline": "Seu Simples pode estar cobrando PIS e Cofins duas vezes",
       "body": ""
     },
     {
-      "headline": "O que é pagar tributo indevidamente",
-      "body": "Erro de cálculo, alíquota errada, tributo cobrado sobre base que a lei não permite ou recolhimento em duplicidade. Em qualquer desses casos, a empresa pagou mais do que devia -- e tem direito a reaver a diferença."
+      "headline": "O que é o regime monofásico",
+      "body": "Para alguns produtos, a lei concentra a cobrança do PIS e da Cofins em uma única etapa da cadeia -- geralmente na indústria ou no importador, com alíquota mais alta. Quem revende esse produto depois não deveria pagar essas contribuições de novo."
     },
     {
-      "headline": "O prazo que corre mesmo sem você perceber",
-      "body": "O artigo 168 do Código Tributário Nacional dá 5 anos para pedir a restituição, contados do próprio pagamento -- e não da data em que o erro foi descoberto. Quanto mais tempo passa, mais créditos antigos se perdem."
+      "headline": "O problema é como o Simples calcula o DAS",
+      "body": "O DAS cobra PIS e Cofins sobre a receita total da empresa, sem separar automaticamente o que já foi tributado antes na cadeia. Isso pode gerar cobrança em duplicidade sobre a revenda de produtos monofásicos."
     },
     {
-      "headline": "Dois caminhos para reaver o valor",
-      "body": "Restituição: pedir o dinheiro de volta.\n\nCompensação: usar o crédito para abater tributos futuros, via PER/DCOMP, o sistema eletrônico da Receita Federal para esse tipo de pedido."
+      "headline": "Quem costuma vender esse tipo de produto",
+      "body": "Farmácias e drogarias (medicamentos), mercados e supermercados, bares e restaurantes (bebidas), lojas de autopeças e pneus, revendas de veículos e motos, entre outros comércios varejistas que revendem produtos sujeitos à tributação concentrada."
     },
     {
-      "headline": "O valor não fica parado no tempo",
-      "body": "Os créditos reconhecidos são corrigidos pela taxa Selic acumulada desde o pagamento indevido até o momento da restituição ou compensação."
+      "headline": "A lei já garante esse direito",
+      "body": "O parágrafo 4º-A do artigo 18 da Lei Complementar 123/2006 permite excluir do cálculo do Simples o PIS e a Cofins relativos à revenda desses produtos monofásicos -- entendimento já confirmado pela própria Receita Federal em solução de consulta."
     },
     {
-      "headline": "Um exemplo que ficou conhecido: a \"tese do século\"",
-      "body": "O STF decidiu que o ICMS não deveria compor a base de cálculo do PIS e da COFINS. Empresas que buscaram esse direito por mandado de segurança conseguiram reaver valores pagos no passado e reduzir o recolhimento desses tributos dali para frente."
+      "headline": "O detalhe que pode travar o pedido",
+      "body": "A exclusão exige a segregação contábil das receitas -- separar, desde antes do pedido, o que vem da venda de produtos monofásicos do restante do faturamento. Sem esse controle, a Receita pode não reconhecer o direito."
     },
     {
-      "headline": "Nem toda tese pode ser aproveitada sem ação judicial",
-      "body": "Quando o entendimento ainda é discutido nos tribunais, compensar por conta própria sem uma decisão judicial que reconheça o direito pode ser arriscado -- a Receita pode não aceitar o crédito e cobrar o valor de volta, com multa e juros."
+      "headline": "Vale para quanto tempo",
+      "body": "Assim como outros créditos tributários, o prazo para reaver valores pagos a mais costuma ser de 5 anos, contados de cada recolhimento -- quanto mais cedo identificado, mais crédito pode ser recuperado."
     },
     {
-      "headline": "Auditoria antes de agir evita prejuízo",
-      "body": "Levantar o que foi pago, identificar o tributo certo, confirmar o entendimento dos tribunais sobre a tese e calcular o valor correto é o que separa uma recuperação segura de uma autuação futura."
+      "headline": "Antes de agir, é preciso conferir o cenário completo",
+      "body": "Levantar quais produtos vendidos se enquadram no regime monofásico, organizar a segregação contábil e calcular o valor correto é o que separa uma recuperação segura de um problema com o Fisco."
     },
     {
-      "headline": "Guarde esse post antes de decidir",
-      "body": "Salve este carrossel, compartilhe com quem cuida da parte fiscal da sua empresa e comente se já ouviu falar em recuperação de tributos. Entender esses prazos pode representar créditos que sua empresa ainda não sabe que tem."
+      "headline": "Descubra se sua empresa tem esse direito",
+      "body": "Salve este carrossel, compartilhe com quem administra um comércio no Simples Nacional e comente se já ouviu falar nessa exclusão. Muita empresa paga a mais sem saber que pode recuperar."
     }
   ],
-  "caption": "Sua empresa pode estar deixando dinheiro parado com o Fisco sem saber.\n\nErro de cálculo, alíquota aplicada errada, tributo cobrado sobre uma base que a lei não permite: tudo isso pode gerar um crédito a favor da empresa. O problema é que o prazo para reaver esse valor -- 5 anos, conforme o artigo 168 do Código Tributário Nacional -- corre a partir do próprio pagamento, e não da data em que o erro é descoberto.\n\nExistem dois caminhos para recuperar esse crédito: pedir a restituição em dinheiro ou usar o valor para compensar tributos futuros, por meio do PER/DCOMP. Em ambos os casos, o valor é corrigido pela Selic acumulada desde o pagamento indevido.\n\nUm exemplo conhecido é a chamada \"tese do século\", em que o STF reconheceu que o ICMS não deveria compor a base de cálculo do PIS e da COFINS -- e empresas que buscaram esse direito por mandado de segurança conseguiram reaver valores do passado e reduzir o recolhimento futuro. Mas atenção: quando a tese ainda está em discussão nos tribunais, compensar por conta própria sem uma decisão judicial pode gerar autuação, multa e juros.\n\nJá ouviu falar em recuperação de tributos ou tem dúvida se a sua empresa pode ter créditos a reaver? Comenta aqui embaixo, salva esse post para consultar com o seu contador e compartilha com quem administra um negócio.\n\nSe você quer entender se a sua empresa tem créditos tributários a recuperar com segurança, nossa equipe pode analisar o seu caso, sem compromisso.\n\n📩 Envie uma mensagem no WhatsApp clicando no link da nossa bio para conversarmos sem compromisso.\n\nDr. Rafael Rocha, Advogado Tributarista -- Escritório Rafael Rocha e Santos Advocacia.\n\n#DireitoTributario #RecuperacaoDeTributos #PlanejamentoTributario #PERDCOMP #TeseDoSeculo #GestaoEmpresarial #AdvocaciaTributaria #DireitoEmpresarial #Empresarios #JuizDeFora #MinasGerais #ContenciosoTributario #ReceitaFederal #RafaelRochaESantos",
-  "generated_at": "2026-07-21T19:53:24.023766+00:00"
+  "caption": "Empresas do Simples Nacional que revendem certos produtos podem estar pagando PIS e Cofins duas vezes -- sem saber disso.\n\nPara produtos como medicamentos, bebidas, autopeças e pneus, a lei concentra a cobrança do PIS e da Cofins em uma única etapa da cadeia, geralmente na indústria, com alíquota mais alta. Quem revende esses produtos não deveria pagar essas contribuições de novo -- mas o DAS do Simples Nacional cobra PIS e Cofins sobre a receita total, sem separar automaticamente o que já foi tributado antes.\n\nO parágrafo 4º-A do artigo 18 da Lei Complementar 123/2006 permite excluir esse valor do cálculo do Simples, entendimento já confirmado pela Receita Federal. Farmácias, mercados, bares e restaurantes, lojas de autopeças e revendas de veículos estão entre os comércios que mais costumam se beneficiar. O ponto de atenção é a segregação contábil das receitas, exigida antes do pedido -- e o prazo de 5 anos para reaver valores já pagos.\n\nJá ouviu falar nessa exclusão ou tem dúvida se o seu negócio se enquadra? Comenta aqui embaixo, salva esse post para consultar com o seu contador e compartilha com quem administra um comércio no Simples Nacional.\n\nSe você quer entender se a sua empresa tem créditos de PIS/Cofins a recuperar, nossa equipe pode analisar o seu caso, sem compromisso.\n\n📩 Envie uma mensagem no WhatsApp clicando no link da nossa bio para conversarmos sem compromisso.\n\nDr. Rafael Rocha, Advogado Tributarista -- Escritório Rafael Rocha e Santos Advocacia.\n\n#SimplesNacional #RecuperacaoTributaria #PISCOFINS #DireitoTributario #TributacaoMonofasica #PlanejamentoTributario #Empresarios #AdvocaciaTributaria #GestaoEmpresarial #ReceitaFederal #JuizDeFora #JuizDeForaMG #MinasGerais #RafaelRochaESantos",
+  "generated_at": "2026-07-22T14:40:56.065442+00:00"
 }

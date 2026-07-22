@@ -2,45 +2,45 @@
   "account_key": "previdenciaria",
   "page_name": "RRS Advocacia Previdenciária",
   "ig_username": "rrsadvocaciaprevidenciaria",
-  "topic": "Auxílio-doença: quem paga, quando começa e quanto você recebe",
+  "topic": "Aposentadoria por idade urbana: qual regra vale para você",
   "slides": [
     {
-      "headline": "O 16º dia que decide sua renda no INSS",
+      "headline": "O ano que você começou a contribuir muda tudo",
       "body": ""
     },
     {
-      "headline": "Afastamento não vira auxílio automaticamente",
-      "body": "A lei exige incapacidade para o trabalho por mais de 15 dias, seguidos ou somados dentro de 60 dias. Menos que isso, o benefício normalmente não é devido."
+      "headline": "Duas reformas, duas formas de contar seu tempo",
+      "body": "A Reforma da Previdência (EC 103/2019) mudou as regras da aposentadoria por idade urbana. Mas quem já contribuía antes de 13/11/2019 segue um caminho diferente de quem começou depois dessa data."
     },
     {
-      "headline": "Quem paga a conta nesses primeiros dias?",
-      "body": "Se você é empregado com carteira assinada, a empresa paga o seu salário nos primeiros 15 dias. Só a partir do 16º dia o INSS assume o pagamento.\n\nJá para autônomos e contribuintes individuais, não existe esse intervalo pago por outra fonte: o INSS paga desde o início da incapacidade reconhecida na perícia -- mas só se o afastamento passar de 15 dias."
+      "headline": "Se você já contribuía antes de novembro de 2019",
+      "body": "Homem: 65 anos + 15 anos de contribuição. Mulher: hoje, 62 anos + 15 anos de contribuição -- essa idade subiu aos poucos, 6 meses por ano, até chegar a 62 em 2023. Em ambos os casos, também é preciso completar 180 meses de contribuição (carência)."
     },
     {
-      "headline": "A regra da carência que pega muita gente",
-      "body": "Em geral, é preciso ter 12 meses de contribuição ao INSS antes do início da incapacidade. Sem esse tempo mínimo, o pedido pode ser negado -- mas existem exceções importantes."
+      "headline": "Já quem só começou a contribuir depois",
+      "body": "Segue a chamada Aposentadoria Programada, com regras próprias -- entre elas, mais tempo mínimo de contribuição exigido do homem. É o que mais gera confusão em quem pesquisa sozinho."
     },
     {
-      "headline": "Algumas doenças dispensam essa espera",
-      "body": "Câncer, AIDS, tuberculose ativa, cardiopatia grave, Parkinson, esclerose múltipla, hanseníase, AVC agudo e outras doenças graves previstas em lei dispensam os 12 meses de carência. Acidentes de trabalho também entram nessa exceção."
+      "headline": "Um detalhe que reduz a carência de alguns segurados",
+      "body": "Quem se filiou à Previdência Social antes de 25/07/1991 e completou a idade mínima até 2010 pode ter direito a uma carência menor que 180 meses, conforme o artigo 142 da Lei 8.213/91."
     },
     {
-      "headline": "Quanto o INSS realmente paga",
-      "body": "O valor corresponde a 91% do seu salário de benefício, respeitando o piso de um salário mínimo e o teto do INSS. Quanto maior e mais regular o seu histórico de contribuições, maior tende a ser o valor mensal."
+      "headline": "Como o valor do benefício é calculado",
+      "body": "A base é a média de todos os salários de contribuição desde julho de 1994, com coeficiente inicial de 60%, que sobe 2% para cada ano de contribuição que passar do tempo mínimo exigido. Em alguns casos, o fator previdenciário pode ser aplicado, se for mais vantajoso."
     },
     {
-      "headline": "A perícia decide, não o atestado sozinho",
-      "body": "Atestados, laudos e exames médicos são a base do pedido, mas quem reconhece a incapacidade é a perícia do INSS -- presencial ou por análise documental. Documentação incompleta é uma das causas mais comuns de negativa."
+      "headline": "Pediu e se arrependeu? Ainda dá tempo",
+      "body": "É possível desistir do pedido de aposentadoria, desde que isso seja comunicado antes do recebimento do primeiro pagamento ou do saque do FGTS/PIS gerado pela aposentadoria."
     },
     {
-      "headline": "Discordou da perícia? Ainda há caminho",
-      "body": "Uma negativa ou uma alta médica que você considera precipitada pode ser contestada -- administrativamente ou na Justiça, com nova avaliação da sua real capacidade de trabalho."
+      "headline": "Continuar trabalhando depois de aposentado também tem regra",
+      "body": "Quem volta a trabalhar após se aposentar continua contribuindo para o INSS, de acordo com a categoria e a faixa salarial -- e pode ter direito a salário-família, salário-maternidade e reabilitação profissional."
     },
     {
-      "headline": "Guarde esse prazo antes de precisar dele",
-      "body": "Salve este carrossel, comente se já passou por um afastamento assim e compartilhe com quem trabalha registrado ou por conta própria. Entender essas regras antes de precisar evita perda de renda nos dias mais difíceis."
+      "headline": "Confira se você já tem esse direito",
+      "body": "Salve este carrossel, comente se já pesquisou sobre a sua aposentadoria e compartilhe com quem está perto da idade mínima. Entender qual regra vale para o seu caso pode significar meses ou até anos de diferença."
     }
   ],
-  "caption": "Entre o 15º e o 16º dia do seu afastamento existe uma diferença que pode valer o seu salário inteiro -- e quase ninguém presta atenção nisso até precisar.\n\nMuita gente só descobre como funciona o auxílio-doença (hoje chamado de auxílio por incapacidade temporária) quando já está afastado e sem saber quem vai pagar a conta daquele mês. A resposta muda dependendo de como você contribui para o INSS: empregado com carteira assinada tem os primeiros 15 dias pagos pela empresa, enquanto autônomos e contribuintes individuais dependem diretamente do reconhecimento da perícia desde o início da incapacidade.\n\nOutro ponto que gera dúvida é a carência de 12 meses de contribuição. Essa exigência existe, mas não é absoluta: doenças graves como câncer, AIDS, cardiopatia grave, Parkinson e AVC agudo, entre outras previstas em lei, dispensam esse prazo. Isso sem falar no valor do benefício, calculado sobre 91% do salário de benefício, e na possibilidade de contestar uma perícia que negou ou encerrou o auxílio antes da hora.\n\nJá passou por um afastamento assim, ou tem dúvida sobre o seu caso? Comenta aqui embaixo, salva esse post para consultar quando precisar e compartilha com quem trabalha registrado ou por conta própria.\n\nSe você está afastado ou teve o auxílio negado e quer entender se tem direito ao benefício, nossa equipe pode analisar o seu caso com calma e sem compromisso.\n\n📩 Envie uma mensagem no WhatsApp clicando no link da nossa bio para conversarmos sem compromisso.\n\nDra. Fernanda Santos, Advogada Previdenciarista -- Escritório Rafael Rocha e Santos Advocacia.\n\n#AuxilioDoenca #IncapacidadeTemporaria #INSS #DireitoPrevidenciario #BeneficioINSS #PericiaMedica #DireitosDoTrabalhador #AposentadoInformado #JuizDeFora #JuizDeForaMG #MinasGerais #AdvocaciaPrevidenciaria #PrevidenciaSocial #RafaelRochaESantos",
-  "generated_at": "2026-07-21T19:53:24.023766+00:00"
+  "caption": "O ano em que você começou a contribuir pro INSS pode valer mais que a sua idade na hora de aposentar.\n\nMuita gente pesquisa sobre aposentadoria por idade urbana e se confunde, porque as regras mudaram com a Reforma da Previdência (EC 103/2019) -- e mudaram de um jeito diferente para quem já contribuía antes de 13/11/2019 e para quem começou depois. Quem já era filiado ao INSS antes dessa data pode se aposentar aos 65 anos (homem) ou 62 anos (mulher), com 15 anos de contribuição. Já quem começou a contribuir só depois segue a Aposentadoria Programada, com exigências próprias, entre elas mais tempo mínimo de contribuição para o homem.\n\nExiste ainda um detalhe pouco conhecido: quem se filiou à Previdência antes de 25/07/1991 e completou a idade mínima até 2010 pode ter direito a uma carência reduzida. E o valor do benefício é calculado sobre a média de todos os salários de contribuição desde 1994, com coeficiente que cresce conforme o tempo de contribuição.\n\nJá pesquisou sobre a sua aposentadoria e ficou com dúvida sobre qual regra se aplica ao seu caso? Comenta aqui embaixo, salva esse post para consultar quando precisar e compartilha com quem está perto da idade mínima.\n\nSe você quer confirmar se já tem direito à aposentadoria por idade urbana, ou entender qual é o melhor momento para pedir, nossa equipe pode analisar o seu caso, sem compromisso.\n\n📩 Envie uma mensagem no WhatsApp clicando no link da nossa bio para conversarmos sem compromisso.\n\nDra. Fernanda Santos, Advogada Previdenciarista -- Escritório Rafael Rocha e Santos Advocacia.\n\n#AposentadoriaPorIdade #INSS #AposentadoriaUrbana #DireitoPrevidenciario #ReformaDaPrevidencia #BeneficioINSS #AposentadoInformado #PrevidenciaSocial #DireitosDoTrabalhador #JuizDeFora #JuizDeForaMG #MinasGerais #AdvocaciaPrevidenciaria #RafaelRochaESantos",
+  "generated_at": "2026-07-22T14:40:56.065442+00:00"
 }

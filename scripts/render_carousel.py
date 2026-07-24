@@ -212,17 +212,36 @@ FOOTER_RESERVE = 74  # espaco reservado no rodape (@handle + barra + contador)
 SIGNATURE_RESERVE = 92  # espaco extra reservado acima do rodape para a assinatura
 
 
-def _slide_html(index, total, headline, body, account, palette, fonts):
+DRAFTS_PUBLISHED_DIR = os.path.join(os.path.dirname(__file__), "..", "drafts", "published")
+
+
+def _cover_is_dark(account_key):
+    """Alterna a cor de fundo da capa entre clara e escura a cada novo post
+    dessa conta -- conta quantos posts ja foram publicados (drafts/published/
+    {account_key}_*.json): quantidade par usa capa clara, impar usa capa
+    escura. Assim a alternancia se mantem correta sozinha, sem precisar
+    guardar nenhum estado extra."""
+    if not os.path.isdir(DRAFTS_PUBLISHED_DIR):
+        return False
+    count = sum(
+        1
+        for fname in os.listdir(DRAFTS_PUBLISHED_DIR)
+        if fname.startswith(f"{account_key}_") and fname.endswith(".json")
+    )
+    return count % 2 == 1
+
+
+def _slide_html(index, total, headline, body, account, palette, fonts, cover_is_dark=False):
     is_first = index == 0
     is_last = index == total - 1
     has_author = bool(account.get("author_name"))
     show_signature = is_last and has_author
 
     if is_first:
-        bg = palette["light_bg"]
-        is_light = True
+        is_light = not cover_is_dark
+        bg = palette["dark_bg"] if cover_is_dark else palette["light_bg"]
         justify = "center"
-        tag_color = palette["primary"]
+        tag_color = palette["light"] if cover_is_dark else palette["primary"]
     elif is_last:
         bg = _gradient(palette)
         is_light = False
@@ -312,6 +331,7 @@ def render_carousel(content, account, output_dir):
     slides = content["slides"]
     total = len(slides)
     palette = derive_palette(account)
+    cover_is_dark = _cover_is_dark(account["key"])
     fonts = {
         "bold": _font_data_uri(FONT_BOLD),
         "medium": _font_data_uri(FONT_MEDIUM),
@@ -327,7 +347,8 @@ def render_carousel(content, account, output_dir):
         )
         for i, slide in enumerate(slides):
             slide_html = _slide_html(
-                i, total, slide["headline"], slide.get("body", ""), account, palette, fonts
+                i, total, slide["headline"], slide.get("body", ""), account, palette, fonts,
+                cover_is_dark=cover_is_dark,
             )
             page.set_content(slide_html, wait_until="load")
             page.wait_for_timeout(150)

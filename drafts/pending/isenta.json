@@ -5,8 +5,8 @@
   "topic": "O que precisa constar no laudo médico para a isenção de Imposto de Renda por doença grave",
   "slides": [
     {
-      "headline": "Um laudo incompleto pode travar sua isenção",
-      "body": ""
+      "headline": "O que precisa constar no laudo médico para a isenção de Imposto de Renda por doença grave",
+      "body": "Um laudo incompleto pode travar sua isenção"
     },
     {
       "headline": "O laudo particular vale, mas precisa ser completo",
@@ -14,7 +14,7 @@
     },
     {
       "headline": "Comece pela identificação completa",
-      "body": "O laudo precisa trazer nome completo, CPF e data de nascimento do paciente, além do nome, CRM e especialidade do médico responsável."
+      "body": "O laudo precisa trazer nome completo, CPF e data de nascimento do paciente, além do nome, CRM e especialidade do médico responsável e assinatura."
     },
     {
       "headline": "O CID não pode faltar",
@@ -38,5 +38,16 @@
     }
   ],
   "caption": "Um laudo incompleto pode travar (ou atrasar) o seu pedido de isenção do Imposto de Renda por doença grave.\n\nHoje, tanto o pedido administrativo quanto o judicial podem aceitar laudo de médico particular -- não é mais preciso, necessariamente, um laudo pericial oficial. Mas isso só funciona se o documento reunir as informações certas.\n\nUm bom laudo traz identificação completa do paciente e do médico (nome, CRM e especialidade), o diagnóstico com a nomenclatura oficial (CID), a data em que a doença começou ou foi diagnosticada, e uma descrição do histórico clínico e dos exames que confirmam a condição -- indicando, quando for o caso, que se trata de doença grave ou irreversível.\n\nUm erro comum é confundir atestado com laudo: um atestado simples, sem CID e sem fundamentação clínica, costuma não ser suficiente para embasar o pedido.\n\nJá teve dificuldade em um pedido de isenção por causa do laudo apresentado? Comenta aqui embaixo, salva esse post para revisar antes do seu pedido e compartilha com quem tem uma doença grave listada em lei.\n\nSe quiser que a nossa equipe analise se o seu laudo reúne o que é necessário, fale com a gente, sem compromisso.\n\n📩 Envie uma mensagem no WhatsApp clicando no link da nossa bio para conversarmos sem compromisso.\n\nDr. Rafael Rocha, Advogado Especialista em Isenção de Imposto de Renda -- Escritório Rafael Rocha e Santos Advocacia.\n\n#IsençãoIR #ImpostoDeRenda #DoençaGrave #LaudoMédico #Aposentados #Pensionista #DireitoTributário #CID #AposentadoInformado #RestituiçãoIR #JuizDeFora #JuizDeForaMG #RafaelRochaESantos",
-  "generated_at": "2026-07-24T11:11:37Z"
+  "image_urls": [
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1784900227/ipupdduaeda42akyscb6.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1784900228/lfp57ttrkmbnq6yj9ftq.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1784900229/ws1xirg9w1qhdsux9q0b.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1784900230/geqcrkw4gdp6dz3prody.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1784900231/wmqkt5uhifyaj1oeaod2.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1784900232/aqivvfv9anlsd7f9qjmf.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1784900233/xtdfqkyowlnktqauew4w.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1784900234/irmzel9lctzfnzfelxil.png"
+  ],
+  "generated_at": "2026-07-24T13:37:14.604957+00:00",
+  "revision": 1
 }

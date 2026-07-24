@@ -1,11 +1,11 @@
 {
   "account_key": "bancaria",
-  "page_name": "Rafael Rocha e Santos Advocacia Bancária",
+  "page_name": "RRS Advocacia Bancária",
   "ig_username": "rrsadvocaciabancaria",
   "topic": "Negativação indevida no nome: o que a lei garante",
   "slides": [
     {
-      "headline": "Uma dívida que não é sua pode te negativar",
+      "headline": "Negativação indevida no nome: o que fala a lei?",
       "body": ""
     },
     {
@@ -38,5 +38,16 @@
     }
   ],
   "caption": "Uma dívida que nunca foi sua pode negativar o seu nome -- e muita gente só descobre isso na hora de fazer uma compra a prazo.\n\nO Código de Defesa do Consumidor exige que você seja avisado antes de ter o nome inscrito em cadastros como SPC e Serasa -- mas, pela Súmula 404 do STJ, esse aviso não precisa de confirmação de recebimento, apenas ser enviado ao seu endereço. Além disso, nem toda negativação indevida garante indenização: pela Súmula 385 do STJ, se você já tinha outra inscrição legítima em seu nome, a nova negativação indevida pode não gerar dano moral. Já quando o nome estava limpo, o entendimento costuma ser diferente.\n\nOutro prazo importante: depois de pagar uma dívida, pela Súmula 548 do STJ, a instituição tem até 5 dias úteis para retirar o seu nome dos cadastros de restrição.\n\nJá foi negativado por uma cobrança que não reconhecia, ou conhece alguém que passou por isso? Comenta aqui embaixo, salva esse post para consultar quando precisar e compartilha com quem também pode estar com o nome sujo sem saber.\n\nSe você identificou uma negativação que parece indevida, o escritório Rafael Rocha e Santos Advocacia é especializado em direito do consumidor bancário e pode analisar o seu caso, sem compromisso.\n\n📩 Envie uma mensagem no WhatsApp clicando no link da nossa bio para conversarmos sem compromisso.\n\n#NegativaçãoIndevida #SPC #Serasa #DireitoDoConsumidor #CDC #NomeSujo #ProteçãoAoCrédito #DireitosDoConsumidor #ConsumidorProtegido #JuizDeFora #JuizDeForaMG #AdvocaciaJF #RafaelRochaESantos",
-  "generated_at": "2026-07-24T11:11:37Z"
+  "image_urls": [
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1784899421/d1p7obw7lkabwcsw4c3o.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1784899422/s8jjdsyruzdnq8mgkwf6.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1784899423/oprfvtfnnqplmx6l6z4r.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1784899424/zuvqjsdeps7yjxdws3lt.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1784899426/pxwakxqgcbkiptlshpna.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1784899427/xuvlg1luzbbcmoc0obqa.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1784899428/uxtzhgzsu6a0s4bp6nzz.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1784899429/wz3kcoq6xw7urh42nde8.png"
+  ],
+  "generated_at": "2026-07-24T13:23:49.749858+00:00",
+  "revision": 1
 }

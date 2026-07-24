@@ -248,7 +248,7 @@ def _slide_html(index, total, headline, body, account, palette, fonts, cover_is_
         justify = "flex-start"
         tag_color = "rgba(255,255,255,0.65)"
     else:
-        is_light = index % 2 == 0
+        is_light = (index % 2 == 0) != cover_is_dark
         bg = palette["light_bg"] if is_light else palette["dark_bg"]
         justify = "center"
         tag_color = palette["primary"] if is_light else palette["light"]

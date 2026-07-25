@@ -54,5 +54,8 @@
     "https://res.cloudinary.com/ydunkkl0/image/upload/v1784933975/dlxlyduf3kqdzo0rxmiq.png"
   ],
   "generated_at": "2026-07-24T22:59:35.950258+00:00",
-  "revision": 1
+  "revision": 1,
+  "published_at": "2026-07-25T20:00:04.278373+00:00",
+  "media_id": "18107395345840551",
+  "facebook_error": "400 Client Error: Bad Request for url: https://graph.facebook.com/v25.0/me?access_token=EAAOUrr9WYNsBSG4tNgxZAwzAcLCrvUmKeLZBxyrnBZBl6mSXqEZCQIZCTzB7zsXNcYitpZC8vWkcLwH92mYLO5FB1RjiMZCai0dbgs4HDeVpgs3PNEuELPdS653WA6s0mdFSOlzuUTbhLYw9ph4ddSTwoyZAPZCm505sIdibd9REpbeGZBrQlTz4FZBjHXoWKwpjU0oUmKbhQQqrqbATGbUJ30oQ1iuZCNpbVZCQmVhDdYgZAZAFwZDZD"
 }

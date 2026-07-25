@@ -5,6 +5,95 @@ aprovado por Rafael (drafts/pending/{account_key}.json).
 As imagens ja estao hospedadas no Cloudinary (feito na etapa de geracao do rascunho),
 entao aqui so criamos os containers do carrossel na Graph API e publicamos.
 
+O Page Access Token usado na publicacao e obtido na hora, a partir do token
+permanente do System User (META_SYSTEM_USER_TOKEN), trocando-o por um Page Access
+Token fresco para a pagina da conta (secrets["page_id"]). Isso evita o problema de
+tokens de pagina salvos previamente expirarem (mesmo vindo de um System User
+permanente, o token de pagina derivado tem validade curta).
+
+Se a publicacao no Facebook falhar (ex.: token sem a permissao pages_manage_posts),
+isso NAO impede a publicacao no Instagram -- o erro fica registrado no rascunho
+publicado para revisao posterior.
+
+Depois de publicar com sucesso no Instagram, move o rascunho de drafts/pending/ para
+drafts/published/ (com timestamp), para manter historico e liberar o slot "pendente"
+da conta para o proximo carrossel.
+"""
+import json
+import os
+import shutil
+from datetime import datetime, timezone
+
+from publish_instagram import publish_carousel, publish_facebook_carousel, refresh_page_access_token
+
+DRAFTS_PENDING_DIR = os.path.join(os.path.dirname(__file__), "..", "drafts", "pending")
+DRAFTS_PUBLISHED_DIR = os.path.join(os.path.dirname(__file__), "..", "drafts", "published")
+
+def load_secrets_for_account(account_key: str) -> dict:
+    raw = os.environ["INSTAGRAM_ACCOUNTS_JSON"]
+    data = json.loads(raw)
+    for entry in data:
+        if entry["key"] == account_key:
+            return entry
+    raise KeyError(f"Conta '{account_key}' nao encontrada em INSTAGRAM_ACCOUNTS_JSON")
+
+def run(account_key: str):
+    draft_path = os.path.join(DRAFTS_PENDING_DIR, f"{account_key}.json")
+    if not os.path.exists(draft_path):
+        raise SystemExit(f"Nao ha rascunho pendente para '{account_key}' em {draft_path}")
+
+    with open(draft_path, encoding="utf-8") as f:
+        draft = json.load(f)
+
+    secrets = load_secrets_for_account(account_key)
+    system_user_token = os.environ["META_SYSTEM_USER_TOKEN"]
+    access_token = refresh_page_access_token(secrets["page_id"], system_user_token)
+
+    print(f"[{account_key}] publicando carrossel aprovado no Instagram -- tema: {draft['topic']}")
+    media_id = publish_carousel(
+        ig_business_id=secrets["ig_business_id"],
+        access_token=access_token,
+        image_urls=draft["image_urls"],
+        caption=draft["caption"],
+    )
+    print(f"[{account_key}] publicado no Instagram! media_id={media_id}")
+
+    draft["published_at"] = datetime.now(timezone.utc).isoformat()
+    draft["media_id"] = media_id
+
+    print(f"[{account_key}] publicando o mesmo carrossel na Pagina do Facebook...")
+    try:
+        facebook_post_id = publish_facebook_carousel(
+            access_token=access_token,
+            image_urls=draft["image_urls"],
+            caption=draft["caption"],
+        )
+        draft["facebook_post_id"] = facebook_post_id
+        print(f"[{account_key}] publicado no Facebook! post_id={facebook_post_id}")
+    except Exception as e:
+        draft["facebook_error"] = str(e)[:500]
+        print(f"[{account_key}] AVISO: falha ao publicar no Facebook (Instagram ja publicado com sucesso). Erro: {str(e)[:500]}")
+
+    os.makedirs(DRAFTS_PUBLISHED_DIR, exist_ok=True)
+    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    dest = os.path.join(DRAFTS_PUBLISHED_DIR, f"{account_key}_{stamp}.json")
+    with open(dest, "w", encoding="utf-8") as f:
+        json.dump(draft, f, ensure_ascii=False, indent=2)
+    os.remove(draft_path)
+    print(f"[{account_key}] rascunho movido para {dest}")
+
+if __name__ == "__main__":
+    key = os.environ.get("ACCOUNT_KEY")
+    if not key:
+        raise SystemExit("Defina ACCOUNT_KEY (env var).")
+    run(key)
+"""
+Publica no Instagram (e, em seguida, na Pagina do Facebook vinculada) um rascunho ja
+aprovado por Rafael (drafts/pending/{account_key}.json).
+
+As imagens ja estao hospedadas no Cloudinary (feito na etapa de geracao do rascunho),
+entao aqui so criamos os containers do carrossel na Graph API e publicamos.
+
 A publicacao no Facebook usa o mesmo Page Access Token da conta (uma Page Access Token
 ja autoriza postar na propria Pagina). Se a publicacao no Facebook falhar (ex.: token
 sem a permissao pages_manage_posts), isso NAO impede a publicacao no Instagram -- o

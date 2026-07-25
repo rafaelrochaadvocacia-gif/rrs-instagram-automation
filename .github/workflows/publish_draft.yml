@@ -1,10 +1,10 @@
 name: Publicar rascunho aprovado no Instagram
 
 on:
-  workflow_dispatch:   # sempre manual -- só roda depois que Rafael aprovar o rascunho
+  workflow_dispatch: # sempre manual -- so roda depois que Rafael aprovar o rascunho
     inputs:
       account_key:
-        description: "Conta cujo rascunho aprovado será publicado"
+        description: "Conta cujo rascunho aprovado sera publicado"
         required: true
         type: choice
         options:
@@ -20,7 +20,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout do repositório
+      - name: Checkout do repositorio
         uses: actions/checkout@v4
 
       - name: Configurar Python
@@ -28,17 +28,18 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Instalar dependências Python
+      - name: Instalar dependencias Python
         run: pip install -r requirements.txt
 
       - name: Publicar rascunho aprovado (${{ github.event.inputs.account_key }})
         env:
           ACCOUNT_KEY: ${{ github.event.inputs.account_key }}
           INSTAGRAM_ACCOUNTS_JSON: ${{ secrets.INSTAGRAM_ACCOUNTS_JSON }}
+          META_SYSTEM_USER_TOKEN: ${{ secrets.META_SYSTEM_USER_TOKEN }}
         working-directory: scripts
         run: python publish_draft.py
 
-      - name: Registrar publicação no repositório (com retry em caso de push concorrente)
+      - name: Registrar publicacao no repositorio (com retry em caso de push concorrente)
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"

@@ -1,0 +1,38 @@
+name: Descartar rascunho pendente
+
+on:
+  workflow_dispatch:
+    inputs:
+      account_key:
+        description: "Conta cujo rascunho pendente sera descartado (nao publica nada)"
+        required: true
+        type: choice
+        options:
+          - previdenciaria
+          - isenta
+          - tributaria
+          - familia
+
+permissions:
+  contents: write
+
+jobs:
+  discard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do repositorio
+        uses: actions/checkout@v4
+
+      - name: Mover rascunho para drafts/discarded/
+        run: |
+          key="${{ github.event.inputs.account_key }}"
+          if [ ! -f "drafts/pending/$key.json" ]; then
+            echo "Nao ha rascunho pendente para $key"
+            exit 1
+          fi
+          mkdir -p drafts/discarded
+          git mv "drafts/pending/$key.json" "drafts/discarded/${key}_$(date -u +%Y%m%dT%H%M%SZ).json"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -m "Rascunho descartado: $key"
+          git pull --rebase origin main && git push origin main

@@ -12,6 +12,7 @@ on:
           - isenta
           - tributaria
           - bancaria
+          - familia
 
 permissions:
   contents: write

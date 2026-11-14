@@ -1,0 +1,15 @@
+{
+  "_comment": "mode: 'sombra' = o revisor da o parecer e Rafael confirma a publicacao; 'automatico' = publica direto quando o revisor aprova. Criar o arquivo PAUSAR na raiz do repositorio suspende tudo.",
+  "mode": "sombra",
+  "feed_url": "https://www.rochaesantosadvocacia.com.br/blog-feed.xml",
+  "max_per_account_per_run": 1,
+  "review_max_rounds": 2,
+  "writer_model": "sonnet",
+  "reviewer_model": "opus",
+  "category_map": [
+    {"categories": ["Previdenciário"], "account": "previdenciaria"},
+    {"categories": ["Tributário pessoa física"], "title_keywords": ["isenção", "isencao", "isento", "isenta"], "account": "isenta"},
+    {"categories": ["Tributário pessoa física", "Tributário empresarial"], "account": "tributaria"},
+    {"categories": ["Direito de Família", "Divórcio"], "account": "familia"}
+  ]
+}

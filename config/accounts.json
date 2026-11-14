@@ -58,7 +58,8 @@
     },
     {
       "key": "bancaria",
-        "page_name": "RRS Advocacia Bancária",
+      "enabled": false,
+      "page_name": "RRS Advocacia Bancária",
       "ig_username": "rrsadvocaciabancaria",
       "practice_area": "Direito Bancário e do Consumidor",
       "author_name": "",
@@ -74,6 +75,24 @@
       ],
       "brand_color": "#000000",
       "accent_color": "#4B4B4B"
+    },
+    {
+      "key": "familia",
+      "enabled": false,
+      "page_name": "RRS Advocacia Família",
+      "ig_username": "PREENCHER_QUANDO_A_CONTA_EXISTIR",
+      "practice_area": "Direito de Família",
+      "author_name": "Dra. Fernanda Santos",
+      "author_title": "Advogada especialista em Direito de Família",
+      "author_oab": "OAB/MG 199.347",
+      "topics": [
+        "divórcio e partilha de bens",
+        "pensão alimentícia",
+        "guarda dos filhos",
+        "união estável"
+      ],
+      "brand_color": "#000000",
+      "accent_color": "#5B6B8C"
     }
   ]
 }

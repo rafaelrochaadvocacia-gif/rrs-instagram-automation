@@ -307,6 +307,7 @@ def _run_claude_code(
     allowed_tools: str = "",
     max_turns: int = 5,
     timeout: int = 180,
+    model: str = "claude-sonnet-5",
 ) -> str:
     """
     Chama o Claude Code CLI em modo nao interativo (-p) para gerar texto.
@@ -319,7 +320,7 @@ def _run_claude_code(
         "-p", user_prompt,
         "--append-system-prompt", system_prompt,
         "--output-format", "json",
-        "--model", "claude-sonnet-5",
+        "--model", model,
         "--max-turns", str(max_turns),
         "--allowedTools", allowed_tools,
     ]
@@ -440,6 +441,37 @@ def generate_carousel_content(
         avoid_topics=recent_topics,
     )
 
+    author_line, signing_instruction = signing_rules(account)
+
+    extra_instruction_block = (
+        EXTRA_INSTRUCTION_BLOCK.format(extra_instruction=extra_instruction.strip())
+        if extra_instruction and extra_instruction.strip()
+        else ""
+    )
+
+    user_prompt = USER_PROMPT_TEMPLATE.format(
+        practice_area=account["practice_area"],
+        topic=topic,
+        research=research,
+        author_line=author_line,
+        signing_instruction=signing_instruction,
+        extra_instruction_block=extra_instruction_block,
+    )
+
+    return parse_json_reply(_run_claude_code(SYSTEM_PROMPT, user_prompt))
+
+
+def parse_json_reply(text: str) -> dict:
+    text = text.strip()
+    if text.startswith("```"):
+        text = text.split("```")[1]
+        if text.startswith("json"):
+            text = text[4:]
+    return json.loads(text)
+
+
+def signing_rules(account: dict) -> tuple[str, str]:
+    """Retorna (author_line, signing_instruction) conforme a conta tenha ou nao autor."""
     has_author = bool(account.get("author_name"))
     if has_author:
         author_line = f"Autor que assina: {account['author_name']}, {account['author_title']}"
@@ -464,29 +496,7 @@ def generate_carousel_content(
             )
         else:
             signing_instruction = "Nao assine com nome de pessoa nenhuma -- feche em nome do escritorio (ex: 'Fale com a nossa equipe')."
-
-    extra_instruction_block = (
-        EXTRA_INSTRUCTION_BLOCK.format(extra_instruction=extra_instruction.strip())
-        if extra_instruction and extra_instruction.strip()
-        else ""
-    )
-
-    user_prompt = USER_PROMPT_TEMPLATE.format(
-        practice_area=account["practice_area"],
-        topic=topic,
-        research=research,
-        author_line=author_line,
-        signing_instruction=signing_instruction,
-        extra_instruction_block=extra_instruction_block,
-    )
-
-    text = _run_claude_code(SYSTEM_PROMPT, user_prompt).strip()
-    if text.startswith("```"):
-        text = text.split("```")[1]
-        if text.startswith("json"):
-            text = text[4:]
-    data = json.loads(text)
-    return data
+    return author_line, signing_instruction
 
 
 if __name__ == "__main__":

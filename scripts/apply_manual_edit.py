@@ -41,7 +41,8 @@ def run(account_key: str, edited_content: dict):
             "esta ferramenta so aceita editar o texto dos slides existentes, nao adicionar/remover slides."
         )
 
-    content = {"topic": draft["topic"], "slides": new_slides, "caption": new_caption}
+    content = {"topic": draft["topic"], "slides": new_slides, "caption": new_caption,
+               "qr_url": draft.get("qr_url")}
 
     with tempfile.TemporaryDirectory() as tmp_dir:
         print(f"[{account_key}] renderizando slides com o texto editado...")

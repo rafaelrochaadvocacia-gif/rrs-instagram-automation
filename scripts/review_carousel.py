@@ -22,7 +22,8 @@ afirmacao juridica (lei, artigo, sumula, prazo, valor, percentual, data, requisi
 que nao esteja no artigo-fonte ou que o contradiga; requisito apresentado como obrigatorio \
 quando o artigo usa linguagem de possibilidade; assinatura com autor ou titulo errado; numero \
 de OAB na legenda; texto cortado, sobreposto ou ilegivel nas imagens; erro de portugues \
-visivel; slide fora de ordem ou sem sentido; link do artigo ausente ou diferente do informado.
+visivel; slide fora de ordem ou sem sentido; QR Code ausente, cortado ou encoberto no ultimo \
+slide; legenda com link ou endereco de site (o artigo e indicado so pelo QR Code).
 - "ajuste": melhoraria a publicacao, mas nao impede (gancho mais forte, frase mais curta, \
 hashtag melhor).
 
@@ -40,7 +41,10 @@ voce acredite que esteja correto.
 
 IMAGENS: abra TODAS as imagens com a ferramenta Read, na ordem, antes de dar o parecer. \
 Verifique legibilidade, texto cortado ou saindo da area, sobreposicao com a logo ou a barra de \
-progresso, contraste e erros de digitacao.
+progresso, contraste e erros de digitacao. O ultimo slide traz, embaixo, um quadro branco com o \
+QR Code do artigo, a chamada "Leia o artigo completo" e a assinatura -- isso e gerado \
+automaticamente e esta correto; confira apenas se esta inteiro, visivel e sem sobreposicao com o \
+texto do slide. O conteudo do QR Code ja e verificado por outro meio.
 
 Responda SOMENTE com JSON valido, sem markdown:
 {"aprovado": true|false,
@@ -55,7 +59,6 @@ REVIEW_PROMPT_TEMPLATE = """Revise o carrossel abaixo antes da publicacao.
 CONTA: {page_name} (@{ig_username}) -- area: {practice_area}
 {author_line}
 Regra de assinatura da legenda: {signing_instruction}
-LINK DO ARTIGO (deve aparecer na legenda exatamente assim): {article_url}
 
 IMAGENS RENDERIZADAS (abra todas com Read, nesta ordem):
 {image_list}
@@ -76,7 +79,6 @@ def review_carousel(account: dict, post: dict, article_text: str, content: dict,
         practice_area=account["practice_area"],
         author_line=author_line,
         signing_instruction=signing_instruction,
-        article_url=post["link"],
         image_list="\n".join(f"{i}. {p}" for i, p in enumerate(image_paths, 1)),
         carousel_json=json.dumps(
             {"slides": content["slides"], "caption": content["caption"]}, ensure_ascii=False, indent=2

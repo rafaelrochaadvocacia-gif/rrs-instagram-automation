@@ -22,6 +22,7 @@ import html
 import io
 import os
 
+import segno
 from playwright.sync_api import sync_playwright
 from PIL import Image
 
@@ -203,13 +204,45 @@ def _signature_block(account, is_light, bottom_px):
     <div style="position:absolute;left:34px;right:34px;bottom:{bottom_px}px;padding-top:14px;border-top:1px solid {divider_color};z-index:2;">
       <div style="font-family:'Poppins';font-weight:600;font-size:15px;color:{name_color};margin-bottom:3px;">{html.escape(account['author_name'])}</div>
       <div style="font-family:'Poppins';font-weight:400;font-size:12px;color:{meta_color};line-height:1.35;">{html.escape(account['author_title'])}</div>
-      <div style="font-family:'Poppins';font-weight:400;font-size:12px;color:{meta_color};line-height:1.35;">Escritorio Rafael Rocha e Santos Advocacia</div>
+      <div style="font-family:'Poppins';font-weight:400;font-size:12px;color:{meta_color};line-height:1.35;">Escritório Rafael Rocha e Santos Advocacia</div>
+    </div>
+    """
+
+
+def _qr_block(account, qr_url, is_light, bottom_px):
+    """Fechamento com QR Code do artigo do blog: quadro branco com o QR a direita e,
+    a esquerda, a chamada para ler o artigo seguida da assinatura (quando houver autor)."""
+    qr_uri = segno.make(qr_url, error="m").svg_data_uri(scale=4, border=0, dark="#111111")
+    name_color = DARK_TEXT if is_light else WHITE
+    meta_color = DARK_TEXT_SOFT if is_light else WHITE_MUTED
+    divider_color = "rgba(0,0,0,0.12)" if is_light else "rgba(255,255,255,0.18)"
+    signature = ""
+    if account.get("author_name"):
+        signature = f"""
+        <div style="margin-top:12px;">
+          <div style="font-family:'Poppins';font-weight:600;font-size:13.5px;color:{name_color};margin-bottom:2px;">{html.escape(account['author_name'])}</div>
+          <div style="font-family:'Poppins';font-weight:400;font-size:11px;color:{meta_color};line-height:1.35;">{html.escape(account['author_title'])}</div>
+          <div style="font-family:'Poppins';font-weight:400;font-size:11px;color:{meta_color};line-height:1.35;">Escritório Rafael Rocha e Santos Advocacia</div>
+        </div>"""
+    return f"""
+    <div style="position:absolute;left:34px;right:34px;bottom:{bottom_px}px;padding-top:14px;border-top:1px solid {divider_color};display:flex;align-items:flex-end;gap:16px;z-index:2;">
+      <div style="flex:1;min-width:0;">
+        <div style="font-family:'Poppins';font-weight:700;font-size:11px;letter-spacing:1.6px;text-transform:uppercase;color:{name_color};">Leia o artigo completo</div>
+        <div style="font-family:'Poppins';font-weight:400;font-size:11px;line-height:1.4;color:{meta_color};margin-top:3px;">Aponte a câmera para o QR Code</div>
+        {signature}
+      </div>
+      <div style="width:{QR_BOX}px;height:{QR_BOX}px;flex-shrink:0;background:#FFFFFF;border-radius:10px;padding:8px;box-shadow:0 2px 10px rgba(0,0,0,0.18);">
+        <img src="{qr_uri}" style="width:100%;height:100%;display:block;image-rendering:pixelated;" />
+      </div>
     </div>
     """
 
 
 FOOTER_RESERVE = 74  # espaco reservado no rodape (@handle + barra + contador)
 SIGNATURE_RESERVE = 92  # espaco extra reservado acima do rodape para a assinatura
+QR_BOX = 116  # lado do quadro branco do QR Code no fechamento
+QR_RESERVE = QR_BOX + 30  # espaco extra reservado acima do rodape para o bloco do QR
+QR_SIGNATURE_RESERVE = 170  # idem, quando o bloco do QR inclui a assinatura do autor
 
 
 DRAFTS_PUBLISHED_DIR = os.path.join(os.path.dirname(__file__), "..", "drafts", "published")
@@ -231,11 +264,12 @@ def _cover_is_dark(account_key):
     return count % 2 == 1
 
 
-def _slide_html(index, total, headline, body, account, palette, fonts, cover_is_dark=False):
+def _slide_html(index, total, headline, body, account, palette, fonts, cover_is_dark=False, qr_url=None):
     is_first = index == 0
     is_last = index == total - 1
     has_author = bool(account.get("author_name"))
-    show_signature = is_last and has_author
+    show_qr = is_last and bool(qr_url)
+    show_signature = is_last and has_author and not show_qr
 
     if is_first:
         is_light = not cover_is_dark
@@ -291,9 +325,16 @@ def _slide_html(index, total, headline, body, account, palette, fonts, cover_is_
     # assinatura) -- assim o texto nunca pode se sobrepor a esses elementos,
     # nao importa o quao longo seja o slide. overflow:hidden e uma rede de
     # seguranca final caso algum slide venha com texto excepcionalmente longo.
-    bottom_reserve = FOOTER_RESERVE + (SIGNATURE_RESERVE if show_signature else 0)
+    if show_qr:
+        bottom_reserve = FOOTER_RESERVE + (QR_SIGNATURE_RESERVE if has_author else QR_RESERVE)
+        signature_html = _qr_block(account, qr_url, is_light, FOOTER_RESERVE + 10)
+    elif show_signature:
+        bottom_reserve = FOOTER_RESERVE + SIGNATURE_RESERVE
+        signature_html = _signature_block(account, is_light, FOOTER_RESERVE + 10)
+    else:
+        bottom_reserve = FOOTER_RESERVE
+        signature_html = ""
     top_pad = 48 if is_last else 64
-    signature_html = _signature_block(account, is_light, FOOTER_RESERVE + 10) if show_signature else ""
 
     footer_html, arrow_html = _progress_and_arrow(
         index, total, is_light, account["ig_username"], show_arrow=not is_last
@@ -348,7 +389,7 @@ def render_carousel(content, account, output_dir):
         for i, slide in enumerate(slides):
             slide_html = _slide_html(
                 i, total, slide["headline"], slide.get("body", ""), account, palette, fonts,
-                cover_is_dark=cover_is_dark,
+                cover_is_dark=cover_is_dark, qr_url=content.get("qr_url"),
             )
             page.set_content(slide_html, wait_until="load")
             page.wait_for_timeout(150)

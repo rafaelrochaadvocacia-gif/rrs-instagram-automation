@@ -59,13 +59,17 @@ LEGENDA (campo "caption"), em paragrafos curtos separados por linha em branco (\
 (1) gancho que funciona sozinho; (2) contexto especifico do tema; (3) o insight principal, \
 reforcando autoridade tecnica sem jargao; (4) convite a comentar, salvar ou compartilhar; \
 (5) convite sobrio para falar com a equipe, sem forcar venda, com a assinatura conforme a regra \
-acima; (6) uma linha exatamente assim: "Leia o artigo completo no blog: {article_url}"; \
-(7) ultima linha com 10 a 15 hashtags em portugues (amplas, nichadas, juridicas e locais de \
-Juiz de Fora/MG). Nunca inclua numero de registro na OAB na legenda.
+acima; (6) uma frase avisando que o artigo completo esta no blog e pode ser lido pelo QR Code do \
+ultimo slide; (7) ultima linha com 10 a 15 hashtags em portugues (amplas, nichadas, juridicas e \
+locais de Juiz de Fora/MG). Nao coloque link nem endereco de site na legenda. Nunca inclua numero \
+de registro na OAB na legenda.
 
 SLIDES: slide 1 e a capa (headline forte e especifico, ate 8 palavras, body vazio). Slides do \
 meio: headline curto + body de 1-2 frases (ate 220 caracteres), UMA ideia concreta por slide. \
-Ultimo slide: fechamento que prioriza salvar/compartilhar/comentar antes do convite a contato.
+Ultimo slide: fechamento que prioriza salvar/compartilhar/comentar antes do convite a contato, \
+com body de no maximo 160 caracteres -- a parte de baixo desse slide e ocupada automaticamente \
+pelo QR Code do artigo e pela assinatura, entao nao escreva no slide "escaneie o QR Code" nem \
+repita a assinatura.
 {feedback_block}
 Formato de resposta (JSON estrito, sem markdown):
 {{"topic": "tema em poucas palavras", "slides": [{{"headline": "...", "body": "..."}}], "caption": "..."}}
@@ -124,7 +128,6 @@ def write_carousel(account, post, article_text, model, previous=None, feedback="
         practice_area=account["practice_area"],
         author_line=author_line,
         signing_instruction=signing_instruction,
-        article_url=post["link"],
         feedback_block=feedback_block,
         article_title=post["title"],
         article_text=article_text,
@@ -132,7 +135,16 @@ def write_carousel(account, post, article_text, model, previous=None, feedback="
     content = parse_json_reply(_run_claude_code(SYSTEM_PROMPT, prompt, timeout=300, model=model))
     if not 5 <= len(content.get("slides", [])) <= 10:
         raise ValueError(f"Redator devolveu {len(content.get('slides', []))} slides (esperado 8 a 10)")
+    content["qr_url"] = post["link"]
     return content
+
+
+def verify_qr(image_path: str, expected_url: str):
+    import cv2
+
+    decoded, _, _ = cv2.QRCodeDetector().detectAndDecode(cv2.imread(image_path))
+    if decoded != expected_url:
+        raise RuntimeError(f"QR Code do ultimo slide leva a '{decoded}', esperado '{expected_url}'")
 
 
 def open_issue(title: str, body: str):
@@ -202,6 +214,7 @@ def process_post(post, account, cfg, mode) -> str:
             out_dir = os.path.join(tmp_dir, f"v{round_no}")
             os.makedirs(out_dir)
             image_paths = render_carousel(content, account, out_dir)
+            verify_qr(image_paths[-1], post["link"])
             review = review_carousel(account, post, article_text, content, image_paths, cfg["reviewer_model"])
             rounds.append(review)
             print(f"[{key}] revisao {round_no + 1}: {'aprovado' if review['aprovado'] else 'reprovado'} -- {review.get('resumo', '')}")
@@ -220,6 +233,7 @@ def process_post(post, account, cfg, mode) -> str:
         "topic": content.get("topic", post["title"]),
         "slides": content["slides"],
         "caption": content["caption"],
+        "qr_url": post["link"],
         "image_urls": image_urls,
         "generated_at": now_iso(),
         "origin": "blog",

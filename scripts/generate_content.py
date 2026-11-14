@@ -308,6 +308,7 @@ def _run_claude_code(
     max_turns: int = 5,
     timeout: int = 180,
     model: str = "claude-sonnet-5",
+    disallowed_tools: str = "",
 ) -> str:
     """
     Chama o Claude Code CLI em modo nao interativo (-p) para gerar texto.
@@ -324,6 +325,8 @@ def _run_claude_code(
         "--max-turns", str(max_turns),
         "--allowedTools", allowed_tools,
     ]
+    if disallowed_tools:
+        cmd += ["--disallowedTools", disallowed_tools]
     result = subprocess.run(
         cmd,
         capture_output=True,

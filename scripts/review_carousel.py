@@ -10,6 +10,9 @@ import json
 
 from generate_content import _run_claude_code, parse_json_reply, signing_rules
 
+NON_READ_TOOLS = ["Bash", "Edit", "Write", "MultiEdit", "NotebookEdit", "Glob", "Grep",
+                  "WebFetch", "WebSearch", "Task", "TodoWrite"]
+
 REVIEW_SYSTEM_PROMPT = """Voce e o revisor final das publicacoes de Instagram e Facebook do \
 escritorio Rafael Rocha e Santos Advocacia (Juiz de Fora - MG). Nada e publicado sem a sua \
 aprovacao, e o que voce aprovar vai ao ar com o nome do escritorio e dos advogados. Voce nao \
@@ -93,6 +96,7 @@ def review_carousel(account: dict, post: dict, article_text: str, content: dict,
         max_turns=len(image_paths) + 6,
         timeout=600,
         model=model,
+        disallowed_tools=",".join(NON_READ_TOOLS),
     )
     review = parse_json_reply(raw)
     problems = review.get("problemas") or []

@@ -34,7 +34,7 @@ from generate_content import SYSTEM_PROMPT, _run_claude_code, parse_json_reply, 
 from publish_draft import facebook_caption
 from publish_instagram import upload_to_cloudinary
 from render_carousel import render_carousel
-from review_carousel import format_feedback, review_carousel
+from review_carousel import NON_READ_TOOLS, format_feedback, review_carousel
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 PIPELINE_CONFIG = os.path.join(ROOT, "config", "blog_pipeline.json")
@@ -72,6 +72,7 @@ com body de no maximo 160 caracteres -- a parte de baixo desse slide e ocupada a
 pelo QR Code do artigo e pela assinatura, entao nao escreva no slide "escaneie o QR Code" nem \
 repita a assinatura.
 {feedback_block}
+Nao use ferramentas: responda diretamente, numa unica mensagem, apenas com o JSON.
 Formato de resposta (JSON estrito, sem markdown):
 {{"topic": "tema em poucas palavras", "slides": [{{"headline": "...", "body": "..."}}], "caption": "..."}}
 
@@ -133,7 +134,9 @@ def write_carousel(account, post, article_text, model, previous=None, feedback="
         article_title=post["title"],
         article_text=article_text,
     )
-    content = parse_json_reply(_run_claude_code(SYSTEM_PROMPT, prompt, timeout=300, model=model))
+    content = parse_json_reply(_run_claude_code(
+        SYSTEM_PROMPT, prompt, timeout=300, model=model, disallowed_tools=",".join(NON_READ_TOOLS + ["Read"]),
+    ))
     if not 5 <= len(content.get("slides", [])) <= 10:
         raise ValueError(f"Redator devolveu {len(content.get('slides', []))} slides (esperado 8 a 10)")
     content["qr_url"] = post["link"]

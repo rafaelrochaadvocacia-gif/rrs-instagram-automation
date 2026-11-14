@@ -37,6 +37,20 @@ def load_secrets_for_account(account_key: str) -> dict:
             return entry
     raise KeyError(f"Conta '{account_key}' nao encontrada em INSTAGRAM_ACCOUNTS_JSON")
 
+def facebook_caption(draft: dict) -> str:
+    """No Facebook o link e clicavel, entao carrosseis vindos do blog ganham o link do
+    artigo antes das hashtags (no Instagram o artigo e indicado so pelo QR Code)."""
+    caption = draft["caption"]
+    url = draft.get("qr_url")
+    if not url:
+        return caption
+    link_line = f"Leia o artigo completo: {url}"
+    paragraphs = caption.rstrip().split("\n\n")
+    if paragraphs[-1].lstrip().startswith("#"):
+        return "\n\n".join(paragraphs[:-1] + [link_line, paragraphs[-1]])
+    return caption.rstrip() + "\n\n" + link_line
+
+
 def run(account_key: str):
     draft_path = os.path.join(DRAFTS_PENDING_DIR, f"{account_key}.json")
     if not os.path.exists(draft_path):
@@ -66,7 +80,7 @@ def run(account_key: str):
         facebook_post_id = publish_facebook_carousel(
             access_token=access_token,
             image_urls=draft["image_urls"],
-            caption=draft["caption"],
+            caption=facebook_caption(draft),
         )
         draft["facebook_post_id"] = facebook_post_id
         print(f"[{account_key}] publicado no Facebook! post_id={facebook_post_id}")

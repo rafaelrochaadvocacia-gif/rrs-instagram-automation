@@ -31,6 +31,7 @@ import requests
 
 from blog_source import fetch_article_text, fetch_feed
 from generate_content import SYSTEM_PROMPT, _run_claude_code, parse_json_reply, signing_rules
+from publish_draft import facebook_caption
 from publish_instagram import upload_to_cloudinary
 from render_carousel import render_carousel
 from review_carousel import format_feedback, review_carousel
@@ -192,9 +193,14 @@ def draft_issue_body(draft: dict, reason: str) -> str:
 
 Enquanto este rascunho estiver pendente, nenhum outro carrossel desta conta é gerado.
 
-### Legenda
+### Legenda do Instagram
 ```
 {draft['caption']}
+```
+
+### Legenda do Facebook
+```
+{facebook_caption(draft)}
 ```
 
 ### Slides

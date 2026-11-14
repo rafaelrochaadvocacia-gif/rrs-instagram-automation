@@ -1,9 +1,12 @@
 {
   "posts": {
     "https://www.rochaesantosadvocacia.com.br/post/bpc-loas-negado": {
-      "status": "baseline",
+      "status": "erro",
+      "account": "previdenciaria",
       "title": "BPC LOAS Negado Depois da Perícia: Os Três Caminhos Para Contestar a Negativa do INSS (2026)",
-      "at": "2026-11-14T10:19:53+00:00"
+      "attempts": 1,
+      "error": "claude -p falhou (codigo 1)\nstdout: {\"type\":\"result\",\"subtype\":\"error_max_turns\",\"duration_ms\":103631,\"duration_api_ms\":102928,\"is_error\":true,\"num_turns\":6,\"stop_reason\":\"tool_use\",\"session_id\":\"8866cf3a-b681-4a85-9a06-813cb6006d3c\",\"total_cost_usd\":0.40564630000000007,\"usage\":{\"input_tokens\":2579,\"cache_creation_input_tokens\":29902,\"cache_read_input_tokens\":218571,\"output_tokens\":9770,\"server_tool_use\":{\"web_search_requests\":0,\"web_fetch_requests\":0},\"service_tier\":\"standard\",\"cache_creation\":",
+      "at": "2026-11-14T10:37:10+00:00"
     },
     "https://www.rochaesantosadvocacia.com.br/post/revis%C3%A3o-de-pens%C3%A3o-aliment%C3%ADcia": {
       "status": "baseline",

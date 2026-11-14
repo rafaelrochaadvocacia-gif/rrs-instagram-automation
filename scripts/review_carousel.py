@@ -24,8 +24,9 @@ Classifique cada problema como:
 afirmacao juridica (lei, artigo, sumula, prazo, valor, percentual, data, requisito, documento) \
 que nao esteja no artigo-fonte ou que o contradiga; requisito apresentado como obrigatorio \
 quando o artigo usa linguagem de possibilidade; assinatura com autor ou titulo errado; numero \
-de OAB na legenda; texto cortado, sobreposto ou ilegivel nas imagens; erro de portugues \
-visivel; slide fora de ordem ou sem sentido; QR Code ausente, cortado ou encoberto no ultimo \
+de OAB na legenda; texto cortado, sobreposto ou ilegivel nas imagens; letras separadas ou \
+espacamento irregular dentro de palavras nas imagens (ex.: "f amilia", "def iciencia"), mesmo \
+que o texto continue legivel; erro de portugues visivel; slide fora de ordem ou sem sentido; QR Code ausente, cortado ou encoberto no ultimo \
 slide; legenda com link ou endereco de site (o artigo e indicado so pelo QR Code).
 - "ajuste": melhoraria a publicacao, mas nao impede (gancho mais forte, frase mais curta, \
 hashtag melhor).

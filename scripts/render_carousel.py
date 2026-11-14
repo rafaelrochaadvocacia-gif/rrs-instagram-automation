@@ -346,7 +346,7 @@ def _slide_html(index, total, headline, body, account, palette, fonts, cover_is_
   @font-face {{ font-family:'Poppins'; src:url({fonts['bold']}) format('truetype'); font-weight:700; }}
   @font-face {{ font-family:'Poppins'; src:url({fonts['medium']}) format('truetype'); font-weight:500; }}
   @font-face {{ font-family:'Poppins'; src:url({fonts['regular']}) format('truetype'); font-weight:400; }}
-  * {{ margin:0; padding:0; box-sizing:border-box; -webkit-font-smoothing:antialiased; }}
+  * {{ margin:0; padding:0; box-sizing:border-box; -webkit-font-smoothing:antialiased; text-rendering:geometricPrecision; font-kerning:normal; }}
   html, body {{ width:{VIEW_W}px; height:{VIEW_H}px; overflow:hidden; }}
 </style></head>
 <body>
@@ -381,7 +381,9 @@ def render_carousel(content, account, output_dir):
 
     paths = []
     with sync_playwright() as p:
-        browser = p.chromium.launch()
+        # Sem isto o Chromium do Linux arredonda a largura das letras e o texto fino sai
+        # com espacamento irregular ("f amilia", "Previdenciaris ta").
+        browser = p.chromium.launch(args=["--font-render-hinting=none"])
         page = browser.new_page(
             viewport={"width": VIEW_W, "height": VIEW_H},
             device_scale_factor=SCALE,

@@ -16,6 +16,7 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 jobs:
   publish:
@@ -37,6 +38,7 @@ jobs:
           ACCOUNT_KEY: ${{ github.event.inputs.account_key }}
           INSTAGRAM_ACCOUNTS_JSON: ${{ secrets.INSTAGRAM_ACCOUNTS_JSON }}
           META_SYSTEM_USER_TOKEN: ${{ secrets.META_SYSTEM_USER_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         working-directory: scripts
         run: python publish_draft.py
 

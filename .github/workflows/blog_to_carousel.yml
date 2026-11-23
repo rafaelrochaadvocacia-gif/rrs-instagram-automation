@@ -2,7 +2,9 @@ name: Carrossel a partir de artigo novo do blog
 
 on:
   schedule:
-    - cron: "0 21 * * *"   # todo dia as 18h de Brasilia
+    # 14h17 de Brasilia. O GitHub costuma atrasar o agendamento em 3 a 6 horas,
+    # entao na pratica roda no fim da tarde / inicio da noite.
+    - cron: "17 17 * * *"
   workflow_dispatch:
     inputs:
       post_url:

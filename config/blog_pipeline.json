@@ -8,8 +8,8 @@
   "reviewer_model": "opus",
   "category_map": [
     {"categories": ["Previdenciário"], "account": "previdenciaria"},
-    {"categories": ["Tributário pessoa física"], "title_keywords": ["isenção", "isencao", "isento", "isenta"], "account": "isenta"},
-    {"categories": ["Tributário pessoa física", "Tributário empresarial"], "account": "tributaria"},
+    {"categories": ["Tributário empresarial"], "account": "tributaria"},
+    {"categories": ["Tributário pessoa física"], "account": "isenta"},
     {"categories": ["Direito de Família", "Divórcio"], "account": "familia"}
   ]
 }

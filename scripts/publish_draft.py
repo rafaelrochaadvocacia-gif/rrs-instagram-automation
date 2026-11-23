@@ -22,6 +22,8 @@ da conta para o proximo carrossel.
 import json
 import os
 import shutil
+
+import requests
 from datetime import datetime, timezone
 
 from publish_instagram import publish_carousel, publish_facebook_carousel, refresh_page_access_token
@@ -95,7 +97,23 @@ def run(account_key: str):
         json.dump(draft, f, ensure_ascii=False, indent=2)
     os.remove(draft_path)
     print(f"[{account_key}] rascunho movido para {dest}")
+    close_issue(draft.get("issue_number"), "Publicado no Instagram e no Facebook.")
     return draft
+
+
+def close_issue(number, comment: str):
+    token = os.environ.get("GITHUB_TOKEN")
+    repo = os.environ.get("GITHUB_REPOSITORY")
+    if not number or not token or not repo:
+        return
+    headers = {"Authorization": f"Bearer {token}", "Accept": "application/vnd.github+json"}
+    base = f"https://api.github.com/repos/{repo}/issues/{number}"
+    try:
+        requests.post(f"{base}/comments", headers=headers, json={"body": comment}, timeout=30).raise_for_status()
+        requests.patch(base, headers=headers, json={"state": "closed"}, timeout=30).raise_for_status()
+        print(f"issue #{number} fechada")
+    except Exception as e:
+        print(f"AVISO: nao foi possivel fechar a issue #{number}: {e}")
 
 if __name__ == "__main__":
     key = os.environ.get("ACCOUNT_KEY")

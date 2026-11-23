@@ -164,9 +164,9 @@ def open_issue(title: str, body: str):
         timeout=30,
     )
     resp.raise_for_status()
-    url = resp.json()["html_url"]
-    print(f"[issue] {url}")
-    return url
+    issue = resp.json()
+    print(f"[issue] {issue['html_url']}")
+    return issue
 
 
 def review_markdown(review: dict) -> str:
@@ -265,7 +265,10 @@ def process_post(post, account, cfg, mode) -> str:
     reason = ("Modo sombra: o revisor **aprovou**, mas a publicação aguarda a sua confirmação."
               if review["aprovado"] else
               f"O revisor **reprovou** o carrossel depois de {len(rounds)} rodada(s). Nada foi publicado.")
-    open_issue(f"[{key}] Carrossel aguardando decisão: {draft['topic']}", draft_issue_body(draft, reason))
+    issue = open_issue(f"[{key}] Carrossel aguardando decisão: {draft['topic']}", draft_issue_body(draft, reason))
+    if issue:
+        draft["issue_number"] = issue["number"]
+        save_json(os.path.join(PENDING_DIR, f"{key}.json"), draft)
     return "aguardando_aprovacao" if review["aprovado"] else "reprovado"
 
 

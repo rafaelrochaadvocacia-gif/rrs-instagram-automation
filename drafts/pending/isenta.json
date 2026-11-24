@@ -30,7 +30,7 @@
     },
     {
       "headline": "O valor volta corrigido, não é só o que foi descontado",
-      "body": "A lei determina correção pela taxa Selic acumulada desde cada pagamento indevido até a devolução, mais 1% no mês do pagamento."
+      "body": "A lei determina correção pela taxa Selic acumulada desde cada pagamento indevido até o mês anterior à devolução, mais 1% no mês em que a restituição é paga."
     },
     {
       "headline": "A nova isenção até R$ 5 mil não resolve o passado",
@@ -48,16 +48,16 @@
   "caption": "Se você é aposentado, pensionista ou reformado e tem uma doença grave, o imposto que desconta do seu benefício pode estar errado — e isso vale também para os últimos 5 anos.\n\nMuita gente acha que a isenção de Imposto de Renda por doença grave só vale daqui para frente. Mas a lei permite pedir de volta o que já foi descontado, mês a mês, dentro de um prazo que corre sem avisar.\n\nO prazo para recuperar cada desconto é de 5 anos, contado mês a mês — e o valor volta corrigido pela Selic. Doença controlada com remédio não tira esse direito, segundo o STJ, e pensionistas também podem pedir.\n\nSalva esse post pra não perder esse direito de vista, compartilha com quem tem uma doença grave e ainda vê imposto descontado, e comenta aqui se essa é a sua situação.\n\nSe ficou alguma dúvida sobre o seu caso, nossa equipe pode conversar com você com calma, sem compromisso. Dr. Rafael Rocha, Advogado Especialista em Isenção de Imposto de Renda — Escritório Rafael Rocha e Santos Advocacia.\n\nO artigo completo, com a simulação de quanto pode voltar e o passo a passo do processo, está no nosso blog — leia pelo QR Code do último slide.\n\n#IsençãoDeImpostoDeRenda #ImpostoDeRenda #DoençaGrave #AposentadoPorDoença #DireitoTributário #RestituiçãoDeImposto #AdvogadoPrevidenciário #DireitosDoAposentado #Pensionista #JuizDeFora #MinasGerais #DireitoDoContribuinte #AdvocaciaEspecializada #RafaelRochaESantos",
   "qr_url": "https://www.rochaesantosadvocacia.com.br/post/advogado-para-restitui%C3%A7%C3%A3o-de-imposto-de-renda",
   "image_urls": [
-    "https://res.cloudinary.com/ydunkkl0/image/upload/v1795478688/kbj1zkhnokdz74ubi9r0.png",
-    "https://res.cloudinary.com/ydunkkl0/image/upload/v1795478689/capf3f2vis6yllq3nnae.png",
-    "https://res.cloudinary.com/ydunkkl0/image/upload/v1795478690/juzh9lp4uwedoxzv8okt.png",
-    "https://res.cloudinary.com/ydunkkl0/image/upload/v1795478690/e96fzhxfc8cvvf4urcnl.png",
-    "https://res.cloudinary.com/ydunkkl0/image/upload/v1795478691/dtzyq56eouzesjhb9sdl.png",
-    "https://res.cloudinary.com/ydunkkl0/image/upload/v1795478692/v1chinugnbgeypqfr5y7.png",
-    "https://res.cloudinary.com/ydunkkl0/image/upload/v1795478693/nydwmnsfox0uan0bp46r.png",
-    "https://res.cloudinary.com/ydunkkl0/image/upload/v1795478694/u0vtajij9z3gbtybrgdv.png",
-    "https://res.cloudinary.com/ydunkkl0/image/upload/v1795478695/atkv2bpbe36mlraw02og.png",
-    "https://res.cloudinary.com/ydunkkl0/image/upload/v1795478695/lrf8tbfearbmjhneij27.png"
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1795479904/iyqsiantrwlrwxhbztbn.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1795479904/uqkayg2fenklg5ixqdry.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1795479905/kws6jz9f76b6vtdbkjx6.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1795479905/qw4dlv5dyklrscdnt27i.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1795479906/l1kzsbkggenep0blhtdv.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1795479907/grm43rktmz1wdsmaz2tr.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1795479908/etxwobyfe43jqr1lyrek.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1795479908/vpo1nrd4vyxaj9v05bpy.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1795479909/ctori6jfcmdthbltiea2.png",
+    "https://res.cloudinary.com/ydunkkl0/image/upload/v1795479910/cfh1kt8gydizhamm6vdw.png"
   ],
   "generated_at": "2026-11-24T00:04:56+00:00",
   "origin": "blog",
@@ -89,5 +89,7 @@
     "resumo": "Carrossel sólido, fiel ao artigo e dentro das regras da OAB (linguagem de possibilidade, convite sóbrio, assinatura correta, sem OAB na legenda e QR Code íntegro). Nenhum problema bloqueante; apenas ajustes de clareza, com destaque para a redação do 1% no slide 7."
   },
   "review_rounds": 1,
-  "issue_number": 4
+  "issue_number": 4,
+  "revision": 2,
+  "manually_edited_at": "2026-11-24T00:25:10.392214+00:00"
 }

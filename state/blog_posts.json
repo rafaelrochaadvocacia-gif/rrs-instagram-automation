@@ -112,6 +112,20 @@
       "account": "familia",
       "title": "Pensão Alimentícia É Isenta de Imposto de Renda? O Que o STF Decidiu e Como Recuperar o Que Foi Pago (2026)",
       "at": "2026-11-19T02:24:18+00:00"
+    },
+    "https://www.rochaesantosadvocacia.com.br/post/bloqueio-teimosinha": {
+      "status": "erro",
+      "account": "tributaria",
+      "title": "Bloqueio Teimosinha: A Justiça Está Bloqueando Sua Conta Todo Dia? Como Pedir a Liberação do Dinheiro (2026)",
+      "attempts": 1,
+      "error": "Expecting value: line 1 column 1 (char 0)",
+      "at": "2026-11-25T01:29:40+00:00"
+    },
+    "https://www.rochaesantosadvocacia.com.br/post/a%C3%A7%C3%A3o-de-isen%C3%A7%C3%A3o-de-imposto-de-renda": {
+      "status": "aguardando_aprovacao",
+      "account": "isenta",
+      "title": "Ação de Isenção de Imposto de Renda por Doença Grave: O Que Levar, Quanto Tempo Leva e o Que Você Recebe no Fim (2026)",
+      "at": "2026-11-25T01:31:22+00:00"
     }
   }
 }

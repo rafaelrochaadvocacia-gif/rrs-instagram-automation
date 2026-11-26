@@ -117,9 +117,9 @@
       "status": "erro",
       "account": "tributaria",
       "title": "Bloqueio Teimosinha: A Justiça Está Bloqueando Sua Conta Todo Dia? Como Pedir a Liberação do Dinheiro (2026)",
-      "attempts": 1,
+      "attempts": 2,
       "error": "Expecting value: line 1 column 1 (char 0)",
-      "at": "2026-11-25T01:29:40+00:00"
+      "at": "2026-11-26T01:04:02+00:00"
     },
     "https://www.rochaesantosadvocacia.com.br/post/a%C3%A7%C3%A3o-de-isen%C3%A7%C3%A3o-de-imposto-de-renda": {
       "status": "aguardando_aprovacao",
